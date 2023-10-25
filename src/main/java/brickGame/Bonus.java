@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.Serializable;
 import java.util.Random;
 
-public class Bonus implements Serializable {
+public class Bonus implements Serializable { //Methods include: Bonus and draw
     public Rectangle choco;
 
     public double x;

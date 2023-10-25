@@ -1,7 +1,7 @@
 package brickGame;
 
 
-public class GameEngine {
+public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
 
     private OnAction onAction;
     private int fps = 15;

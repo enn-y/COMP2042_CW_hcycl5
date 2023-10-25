@@ -7,17 +7,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 //import sun.plugin2.message.Message;
 
-public class Score {
+public class Score { //Methods include: show, showMessage, showGameOver, and showWin
     public void show(final double x, final double y, int score, final Main main) {
         String sign;
-        if (score >= 0) {
+        if (score >= 0) { // if score is positive, add the "+" sign
             sign = "+";
-        } else {
+        } else { // if score is negative, add the "-" sign
             sign = "";
         }
-        final Label label = new Label(sign + score);
-        label.setTranslateX(x);
-        label.setTranslateY(y);
+        final Label label = new Label(sign + score); //Create the label and assign the sign and score
+        label.setTranslateX(x); //Position of label on x-axis
+        label.setTranslateY(y); //Position of label on y-axis
 
         Platform.runLater(new Runnable() {
             @Override
@@ -29,11 +29,11 @@ public class Score {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 21; i++) {
+                for (int i = 0; i < 21; i++) { //Loop to animate the label, condition is i < 21 because we want to animate the label for 20 times
                     try {
                         label.setScaleX(i);
                         label.setScaleY(i);
-                        label.setOpacity((20 - i) / 20.0);
+                        label.setOpacity((20 - i) / 20.0); //To make the label disappear after 20 times, creates a fade effect
                         Thread.sleep(15);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
