@@ -14,7 +14,6 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public int row;
     public int column;
 
-
     public boolean isDestroyed = false;
 
     private Color color;
@@ -40,7 +39,6 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int BLOCK_CHOCOLATE = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
-
 
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -79,29 +77,22 @@ public class Block implements Serializable { //Methods include: Block, draw, che
 
     }
 
-
     public int checkHitToBlock(double xBall, double yBall) {
-
         if (isDestroyed) {
             return NO_HIT;
         }
-
         if (xBall >= x && xBall <= x + width && yBall == y + height) {
             return HIT_BOTTOM;
         }
-
         if (xBall >= x && xBall <= x + width && yBall == y) {
             return HIT_TOP;
         }
-
         if (yBall >= y && yBall <= y + height && xBall == x + width) {
             return HIT_RIGHT;
         }
-
         if (yBall >= y && yBall <= y + height && xBall == x) {
             return HIT_LEFT;
         }
-
         return NO_HIT;
     }
 
@@ -120,5 +111,4 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int getWidth() {
         return block.width;
     }
-
 }

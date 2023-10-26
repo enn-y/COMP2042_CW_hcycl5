@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-
     private int currentLevel = 0;
 
     private double paddleXPosition = 0.0f; //Variable for the paddle that the user controls
@@ -86,14 +85,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean loadFromSavedFile = false; //Status of loading from saved file
 
-    Stage primaryStage;
+    Stage primaryStage; //Stage is the top level JavaFX container, the window
     Button loadButton = null; //Button to load game
     Button newGameButton = null; //Button to start new game
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
-        this.primaryStage = primaryStage; //Set primaryStage
-
+        this.primaryStage = primaryStage; //Set primaryStage which is the game window
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
@@ -115,9 +113,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             loadButton.setTranslateY(300); //Set the size of the load button, y-coordinate (300)
             newGameButton.setTranslateX(220); //Set the size of the new game button, x-coordinate (220)
             newGameButton.setTranslateY(340); //Set the size of the new game button, y-coordinate (340)
-
         }
-
 
         root = new Pane(); //Initialize the root pane, root is the instance of the JavaFX Pane class where Pane is a container to hold JavaFX elements
         scoreLabel = new Label("Score: " + currentScore); //Initialize the score label
@@ -150,7 +146,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 engine.setFps(120); //Set FPS
                 engine.start(); //Start the game engine
             }
-
             loadButton.setOnAction(new EventHandler<ActionEvent>() { //Listen for LOAD button press
                 @Override
                 public void handle(ActionEvent event) { //Handle load button press
@@ -160,7 +155,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     newGameButton.setVisible(false); //Hide the new game button
                 }
             });
-
             newGameButton.setOnAction(new EventHandler<ActionEvent>() { //Listen for NEW GAME button press
                 @Override
                 public void handle(ActionEvent event) { //Handle new game button press
@@ -180,8 +174,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             engine.start(); //Start the game engine
             loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game
         }
-
-
     }
 
     private void initializeBoard() { //Initialize the blocks
@@ -235,7 +227,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
+    //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
 
     private void move(final int direction) { //Move paddle method
         new Thread(new Runnable() { //Thread runs in parallel with main thread, using the runnable interface
@@ -266,8 +258,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
             }
         }).start();
-
-
     }
 
     private void initializeBall() { //Initialize the ball
@@ -293,8 +283,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean goDownBall = true; //Status for ball moving downwards
     private boolean goRightBall  = true; //Status for ball moving to the right
-    private boolean collideToBreak = false; //Status for ball colliding with the paddle, set to FALSE
-    private boolean collideToBreakAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right
+    private boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
+    private boolean collideToPaddleAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right
     private boolean collideToRightWall = false; //Status for ball colliding with the right wall, set to FALSE
     private boolean collideToLeftWall = false; //Status for ball colliding with the left wall, set to FALSE
     private boolean collideToRightBlock = false; //Status for ball colliding to the right side of the block, set to FALSE
@@ -306,9 +296,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private double ballVerticalSpeed = 1.000; //Vertical velocity of ball
 
     private void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
-
-        collideToBreak = false;
-        collideToBreakAndMoveToRight = false;
+        collideToPaddle = false;
+        collideToPaddleAndMoveToRight = false;
         collideToRightWall = false;
         collideToLeftWall = false;
 
@@ -350,17 +339,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     new Score().showGameOver(this);
                     engine.stop();
                 }
-
             }
             //return;
         }
 
         if (ballYCoordinate >= paddleYPosition - ballRadius) {
-            //System.out.println("Colide1");
+            //System.out.println("Collide1");
             if (ballXCoordinate >= paddleXPosition && ballXCoordinate <= paddleXPosition + paddleWidth) {
                 hitTime = currentTime;
                 resetCollideFlags();
-                collideToBreak = true;
+                collideToPaddle = true;
                 goDownBall = false;
 
                 double relation = (ballXCoordinate - paddleCenter) / (paddleWidth / 2);
@@ -377,11 +365,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
 
                 if (ballXCoordinate - paddleCenter > 0) {
-                    collideToBreakAndMoveToRight = true;
+                    collideToPaddleAndMoveToRight = true;
                 } else {
-                    collideToBreakAndMoveToRight = false;
+                    collideToPaddleAndMoveToRight = false;
                 }
-                //System.out.println("Colide2");
+                //System.out.println("Collide2");
             }
         }
 
@@ -397,15 +385,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             collideToLeftWall = true;
         }
 
-        if (collideToBreak) {
-            if (collideToBreakAndMoveToRight) {
+        if (collideToPaddle) {
+            if (collideToPaddleAndMoveToRight) {
                 goRightBall = true;
             } else {
                 goRightBall = false;
             }
         }
 
-        //Wall Colide
+        //Wall Collide
 
         if (collideToRightWall) {
             goRightBall = false;
@@ -415,7 +403,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             goRightBall = true;
         }
 
-        //Block Colide
+        //Block Collide
 
         if (collideToRightBlock) {
             goRightBall = true;
@@ -473,8 +461,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeBoolean(goldBall);
                     outputStream.writeBoolean(goDownBall);
                     outputStream.writeBoolean(goRightBall);
-                    outputStream.writeBoolean(collideToBreak);
-                    outputStream.writeBoolean(collideToBreakAndMoveToRight);
+                    outputStream.writeBoolean(collideToPaddle);
+                    outputStream.writeBoolean(collideToPaddleAndMoveToRight);
                     outputStream.writeBoolean(collideToRightWall);
                     outputStream.writeBoolean(collideToLeftWall);
                     outputStream.writeBoolean(collideToRightBlock);
@@ -516,17 +504,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         loadSave.read(); //Read the saved file, assign the variables to the saved variables
 
         existHeartBlock = loadSave.isExistHeartBlock;
-        goldBall = loadSave.isGoldStauts;
+        goldBall = loadSave.isGoldStatus;
         goDownBall = loadSave.goDownBall;
         goRightBall = loadSave.goRightBall;
-        collideToBreak = loadSave.colideToBreak;
-        collideToBreakAndMoveToRight = loadSave.colideToBreakAndMoveToRight;
-        collideToRightWall = loadSave.colideToRightWall;
-        collideToLeftWall = loadSave.colideToLeftWall;
-        collideToRightBlock = loadSave.colideToRightBlock;
-        collideToBottomBlock = loadSave.colideToBottomBlock;
-        collideToLeftBlock = loadSave.colideToLeftBlock;
-        collideToTopBlock = loadSave.colideToTopBlock;
+        collideToPaddle = loadSave.collideToPaddle;
+        collideToPaddleAndMoveToRight = loadSave.collideToPaddleAndMoveToRight;
+        collideToRightWall = loadSave.collideToRightWall;
+        collideToLeftWall = loadSave.collideToLeftWall;
+        collideToRightBlock = loadSave.collideToRightBlock;
+        collideToBottomBlock = loadSave.collideToBottomBlock;
+        collideToLeftBlock = loadSave.collideToLeftBlock;
+        collideToTopBlock = loadSave.collideToTopBlock;
         currentLevel = loadSave.level;
         currentScore = loadSave.score;
         numberOfHearts = loadSave.heart;

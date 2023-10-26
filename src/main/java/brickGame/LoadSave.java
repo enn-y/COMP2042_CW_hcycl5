@@ -7,45 +7,40 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class LoadSave { //Methods include: read
-    public boolean          isExistHeartBlock;
-    public boolean          isGoldStauts;
-    public boolean          goDownBall;
-    public boolean          goRightBall;
-    public boolean          colideToBreak;
-    public boolean          colideToBreakAndMoveToRight;
-    public boolean          colideToRightWall;
-    public boolean          colideToLeftWall;
-    public boolean          colideToRightBlock;
-    public boolean          colideToBottomBlock;
-    public boolean          colideToLeftBlock;
-    public boolean          colideToTopBlock;
-    public int              level;
-    public int              score;
-    public int              heart;
-    public int              destroyedBlockCount;
-    public double           xBall;
-    public double           yBall;
-    public double           xBreak;
-    public double           yBreak;
-    public double           centerBreakX;
-    public long             time;
-    public long             goldTime;
-    public double           vX;
+    public boolean isExistHeartBlock;
+    public boolean isGoldStatus;
+    public boolean goDownBall;
+    public boolean goRightBall;
+    public boolean collideToPaddle;
+    public boolean collideToPaddleAndMoveToRight;
+    public boolean collideToRightWall;
+    public boolean collideToLeftWall;
+    public boolean collideToRightBlock;
+    public boolean collideToBottomBlock;
+    public boolean collideToLeftBlock;
+    public boolean collideToTopBlock;
+    public int level;
+    public int score;
+    public int heart;
+    public int destroyedBlockCount;
+    public double xBall;
+    public double yBall;
+    public double xBreak;
+    public double yBreak;
+    public double centerBreakX;
+    public long time;
+    public long goldTime;
+    public double vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
-
     public void read() {
-
-
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
-
 
             level = inputStream.readInt();
             score = inputStream.readInt();
             heart = inputStream.readInt();
             destroyedBlockCount = inputStream.readInt();
-
 
             xBall = inputStream.readDouble();
             yBall = inputStream.readDouble();
@@ -56,20 +51,18 @@ public class LoadSave { //Methods include: read
             goldTime = inputStream.readLong();
             vX = inputStream.readDouble();
 
-
             isExistHeartBlock = inputStream.readBoolean();
-            isGoldStauts = inputStream.readBoolean();
+            isGoldStatus = inputStream.readBoolean();
             goDownBall = inputStream.readBoolean();
             goRightBall = inputStream.readBoolean();
-            colideToBreak = inputStream.readBoolean();
-            colideToBreakAndMoveToRight = inputStream.readBoolean();
-            colideToRightWall = inputStream.readBoolean();
-            colideToLeftWall = inputStream.readBoolean();
-            colideToRightBlock = inputStream.readBoolean();
-            colideToBottomBlock = inputStream.readBoolean();
-            colideToLeftBlock = inputStream.readBoolean();
-            colideToTopBlock = inputStream.readBoolean();
-
+            collideToPaddle = inputStream.readBoolean();
+            collideToPaddleAndMoveToRight = inputStream.readBoolean();
+            collideToRightWall = inputStream.readBoolean();
+            collideToLeftWall = inputStream.readBoolean();
+            collideToRightBlock = inputStream.readBoolean();
+            collideToBottomBlock = inputStream.readBoolean();
+            collideToLeftBlock = inputStream.readBoolean();
+            collideToTopBlock = inputStream.readBoolean();
 
             try {
                 blocks = (ArrayList<BlockSerializable>) inputStream.readObject();
@@ -80,6 +73,5 @@ public class LoadSave { //Methods include: read
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

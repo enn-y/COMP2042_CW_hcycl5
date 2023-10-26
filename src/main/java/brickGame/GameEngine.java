@@ -100,7 +100,6 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
         timeThread.start();
     }
 
-
     public interface OnAction {
         void onUpdate();
 
@@ -110,5 +109,4 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
 
         void onTime(long time);
     }
-
 }
