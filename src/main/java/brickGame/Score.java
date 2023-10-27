@@ -93,7 +93,6 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 });
 
                 main.root.getChildren().addAll(label, restart);
-
             }
         });
     }
@@ -108,9 +107,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-
                 main.root.getChildren().addAll(label);
-
             }
         });
     }

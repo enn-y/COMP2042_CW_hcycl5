@@ -62,7 +62,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public static String savePathDir = "D:/save/"; //Path to save directory
 
     private ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
-    private ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the chocos/bonus items
+    private ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     private Color[] blockColors = new Color[]{ //Array of colors for the blocks
             Color.MAGENTA,
             Color.RED,
@@ -104,13 +104,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
 
             initializeBall(); //Initialize the ball
-            initializeBreak(); //Initialize the paddle
-            initializeBoard(); //Initialize the blocks
+            initializePaddle(); //Initialize the paddle
+            initializeBlocks(); //Initialize the blocks
 
             loadButton = new Button("Load Game"); //Initialize the load button
-            newGameButton = new Button("Start New Game"); //Initialize the new game button
             loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
             loadButton.setTranslateY(300); //Set the size of the load button, y-coordinate (300)
+
+            newGameButton = new Button("Start New Game"); //Initialize the new game button
             newGameButton.setTranslateX(220); //Set the size of the new game button, x-coordinate (220)
             newGameButton.setTranslateY(340); //Set the size of the new game button, y-coordinate (340)
         }
@@ -123,7 +124,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
         if (!loadFromSavedFile) { //If NOT loading from saved file
             root.getChildren().addAll(paddle, ball, scoreLabel, heartLabel, levelLabel, newGameButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
-        } else { //But if IS loading from saved file
+        } else { //But if IT IS loading from saved file
             root.getChildren().addAll(paddle, ball, scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
         }
         for (Block block : blocks) { //For each block in the blocks ArrayList
@@ -167,7 +168,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     newGameButton.setVisible(false); //Hide the new game button
                 }
             });
-        } else { //But if IS loading from saved file
+        } else { //But if IT IS loading from saved file
             engine = new GameEngine(); //Initialize the game engine, to start the game
             engine.setOnAction(this); //Listen for events
             engine.setFps(120); //Set FPS
@@ -176,9 +177,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    private void initializeBoard() { //Initialize the blocks
-        for (int i = 0; i < 4; i++) { //For each row
-            for (int j = 0; j < currentLevel + 1; j++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
+    private void initializeBlocks() { //Initialize the blocks
+        for (int row = 0; row < 4; row++) { //For each row
+            for (int column = 0; column < currentLevel + 1; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
                 int r = new Random().nextInt(500); //Random number generator
                 if (r % 5 == 0) { //If the remainder is 0
                     continue; //Block will not be created
@@ -198,12 +199,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = Block.BLOCK_NORMAL; //Create a normal block
                 }
-                blocks.add(new Block(j, i, blockColors[r % (blockColors.length)], type)); //Add the block to the ArrayList
+                blocks.add(new Block(column, row, blockColors[r % (blockColors.length)], type)); //Add the block to the ArrayList
                 //System.out.println("colors " + r % (colors.length));
             }
         }
     }
-
 
     public static void main(String[] args) { //Main method HERE
         launch(args); //LAUNCH GAME
@@ -269,7 +269,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball.setFill(new ImagePattern(new Image("ball.png"))); //Using ball.png as the image of the ball
     }
 
-    private void initializeBreak() { //Initialize the paddle
+    private void initializePaddle() { //Initialize the paddle
         paddle = new Rectangle(); //Create the paddle using the rectangle object
         paddle.setWidth(paddleWidth); //Set the width of the paddle
         paddle.setHeight(paddleHeight); //Set the height of the paddle
@@ -394,34 +394,26 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //Wall Collide
-
         if (collideToRightWall) {
             goRightBall = false;
         }
-
         if (collideToLeftWall) {
             goRightBall = true;
         }
 
         //Block Collide
-
         if (collideToRightBlock) {
             goRightBall = true;
         }
-
         if (collideToLeftBlock) {
             goRightBall = true;
         }
-
         if (collideToTopBlock) {
             goDownBall = false;
         }
-
         if (collideToBottomBlock) {
             goDownBall = true;
         }
-
-
     }
 
     private void blockDestroyedCount() { //Check the number of destroyed blocks
@@ -533,7 +525,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         for (BlockSerializable ser : loadSave.blocks) {
             int r = new Random().nextInt(200);
-            blocks.add(new Block(ser.row, ser.j, blockColors[r % blockColors.length], ser.type));
+            blocks.add(new Block(ser.row, ser.column, blockColors[r % blockColors.length], ser.type));
         }
 
         try {
@@ -615,7 +607,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 ball.setCenterY(ballYCoordinate);
 
                 for (Bonus choco : bonusItems) {
-                    choco.choco.setY(choco.y);
+                    choco.chocolateBlock.setY(choco.y);
                 }
             }
         });
@@ -640,7 +632,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                root.getChildren().add(choco.choco);
+                                root.getChildren().add(choco.chocolateBlock);
                             }
                         });
                         bonusItems.add(choco);
@@ -697,7 +689,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
-                choco.choco.setVisible(false);
+                choco.chocolateBlock.setVisible(false);
                 currentScore += 3;
                 new Score().show(choco.x, choco.y, 3, this);
             }

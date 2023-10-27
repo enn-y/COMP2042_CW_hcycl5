@@ -46,10 +46,10 @@ public class Block implements Serializable { //Methods include: Block, draw, che
         this.color = color;
         this.type = type;
 
-        draw();
+        create();
     }
 
-    private void draw() {
+    private void create() {
         x = (column * width) + paddingH;
         y = (row * height) + paddingTop;
 
