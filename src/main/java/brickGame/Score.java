@@ -31,10 +31,11 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             public void run() {
                 for (int i = 0; i < 21; i++) { //Loop to animate the label, condition is i < 21 because we want to animate the label for 20 times
                     try {
-                        label.setScaleX(i);
-                        label.setScaleY(i);
+                        double scale = 1.0 + i * 0.1; //Make the label smaller
+                        label.setScaleX(scale);
+                        label.setScaleY(scale);
                         label.setOpacity((20 - i) / 20.0); //To make the label disappear after 20 times, creates a fade effect
-                        Thread.sleep(15);
+                        Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -60,8 +61,9 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             public void run() {
                 for (int i = 0; i < 21; i++) {
                     try {
-                        label.setScaleX(Math.abs(i-10));
-                        label.setScaleY(Math.abs(i-10));
+                        double scale = Math.abs(i - 10) * 0.1 + 1.0; // Smaller scaling effect
+                        label.setScaleX(scale);
+                        label.setScaleY(scale);
                         label.setOpacity((20 - i) / 20.0);
                         Thread.sleep(15);
                     } catch (InterruptedException e) {

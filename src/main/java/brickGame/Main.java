@@ -672,17 +672,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     @Override
-    public void onPhysicsUpdate() {
+    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
         blockDestroyedCount();
         setPhysicsToBall();
 
-        if (currentTime - goldTime > 5000) {
+        if (currentTime - goldTime > 5000) { //Gold Ball
             ball.setFill(new ImagePattern(new Image("ball.png")));
             root.getStyleClass().remove("goldRoot");
             goldBall = false;
         }
 
-        for (Bonus choco : bonusItems) {
+        for (Bonus choco : bonusItems) { //Bonus Items
             if (choco.y > windowHeight || choco.taken) {
                 continue;
             }
