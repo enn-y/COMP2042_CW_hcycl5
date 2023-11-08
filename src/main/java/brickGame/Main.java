@@ -322,13 +322,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             ballXCoordinate -= ballHorizontalSpeed; //Decrement the horizontal velocity of the ball
         }
 
-        if (ballYCoordinate <= 0) { //If the ball collides with top wall
+        if (ballYCoordinate < 0 + ballRadius*1.5) { //If the ball collides with top wall
             //vX = 1.000;
             resetCollideFlags();
             goDownBall = true; //Ball moves downwards
             return;
         }
-        if (ballYCoordinate >= windowHeight) { //If the ball collides with bottom wall
+        if (ballYCoordinate > windowHeight - ballRadius*1.5) { //If the ball collides with bottom wall
             goDownBall = false; //Ball moves upwards
             if (!goldBall) { //If the ball is NOT gold
                 //TODO gameover
@@ -343,7 +343,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //return;
         }
 
-        if (ballYCoordinate >= paddleYPosition - ballRadius) {
+        if (ballYCoordinate > paddleYPosition - ballRadius*1.5) {
             //System.out.println("Collide1");
             if (ballXCoordinate >= paddleXPosition && ballXCoordinate <= paddleXPosition + paddleWidth) {
                 hitTime = currentTime;
@@ -373,13 +373,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
 
-        if (ballXCoordinate >= windowWidth) {
+        if (ballXCoordinate > windowWidth - ballRadius*1.5) {
             resetCollideFlags();
             //vX = 1.000;
             collideToRightWall = true;
         }
 
-        if (ballXCoordinate <= 0) {
+        if (ballXCoordinate < 0 + ballRadius*1.5) {
             resetCollideFlags();
             //vX = 1.000;
             collideToLeftWall = true;
