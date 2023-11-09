@@ -335,10 +335,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 numberOfHearts--; //Decrement the heart
                 new Score().show(windowWidth / 2, windowHeight / 2, -1, this);
 
-                if (numberOfHearts == 0) {
-                    new Score().showGameOver(this);
-                    engine.stop();
-                }
+                checkGameOver();
             }
             //return;
         }
@@ -618,7 +615,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (hitCode != Block.NO_HIT) {
                     currentScore += 1;
 
-                    new Score().show(block.x, block.y, 1, this);
+                    new Score().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -703,5 +700,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     @Override
     public void onTime(long time) { //Update the time
         this.currentTime = time;
+    }
+
+    private void checkGameOver() {
+        if(!goldBall){
+            if (numberOfHearts == 0) {
+                new Score().showGameOver(this);
+                engine.stop();
+            }
+        }
     }
 }

@@ -19,12 +19,12 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     private Color color;
     public int type;
 
-    public int x;
-    public int y;
+    public int blockXCoordinate; //x coordinate of block
+    public int blockYCoordinate; //y coordinate of block
 
     private int width = 100;
     private int height = 30;
-    private int paddingTop = height * 2;
+    private int paddingTop = height*2;
     private int paddingH = 50;
     public Rectangle rect;
 
@@ -50,14 +50,14 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     }
 
     private void create() {
-        x = (column * width) + paddingH;
-        y = (row * height) + paddingTop;
+        blockXCoordinate = (column * width) + paddingH;
+        blockYCoordinate = (row * height) + paddingTop;
 
         rect = new Rectangle();
         rect.setWidth(width);
         rect.setHeight(height);
-        rect.setX(x);
-        rect.setY(y);
+        rect.setX(blockXCoordinate);
+        rect.setY(blockYCoordinate);
 
         if (type == BLOCK_CHOCOLATE) {
             Image image = new Image("choco.jpg");
@@ -81,20 +81,46 @@ public class Block implements Serializable { //Methods include: Block, draw, che
         if (isDestroyed) {
             return NO_HIT;
         }
-        if (xBall >= x && xBall <= x + width && yBall == y + height) {
+        if (xBall + 10 > blockXCoordinate && xBall - 10 < blockXCoordinate + width && yBall + 10 == blockYCoordinate + height) {
             return HIT_BOTTOM;
         }
-        if (xBall >= x && xBall <= x + width && yBall == y) {
+        if (xBall + 10 > blockXCoordinate && xBall - 10 < blockXCoordinate + width && yBall - 10 == blockYCoordinate) {
             return HIT_TOP;
         }
-        if (yBall >= y && yBall <= y + height && xBall == x + width) {
+        if (yBall + 10 > blockYCoordinate && yBall - 10 < blockYCoordinate + height && xBall + 10 == blockXCoordinate + width) {
             return HIT_RIGHT;
         }
-        if (yBall >= y && yBall <= y + height && xBall == x) {
+        if (yBall + 10 > blockYCoordinate && yBall - 10 < blockYCoordinate + height && xBall - 10 == blockXCoordinate) {
             return HIT_LEFT;
         }
         return NO_HIT;
     }
+
+    /*public int checkHitToBlock(double xBall, double yBall) {
+        if (isDestroyed) {
+            return NO_HIT;
+        }
+        double ballRadius = 15;
+
+        if (xBall + ballRadius >= x && xBall + ballRadius <= x + width && yBall + ballRadius >= y && yBall + ballRadius <= y + height) {
+            if (yBall + ballRadius >= y && yBall - ballRadius <= y) {
+                return HIT_TOP;
+            }
+            if (yBall + ballRadius >= y + height && yBall + ballRadius <= y + height) {
+                return HIT_BOTTOM;
+            }
+            if (xBall + ballRadius >= x && xBall - ballRadius <= x) {
+                return HIT_LEFT;
+            }
+            if (xBall + ballRadius >= x + width && xBall - ballRadius <= x + width) {
+                return HIT_RIGHT;
+            }
+        }
+
+        return NO_HIT;
+    }
+*/
+
 
     public static int getPaddingTop() {
         return block.paddingTop;

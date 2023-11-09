@@ -35,7 +35,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                         label.setScaleX(scale);
                         label.setScaleY(scale);
                         label.setOpacity((20 - i) / 20.0); //To make the label disappear after 20 times, creates a fade effect
-                        Thread.sleep(10);
+                        Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -65,7 +65,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                         label.setScaleX(scale);
                         label.setScaleY(scale);
                         label.setOpacity((20 - i) / 20.0);
-                        Thread.sleep(15);
+                        Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
