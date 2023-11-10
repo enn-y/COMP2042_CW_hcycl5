@@ -77,49 +77,53 @@ public class Block implements Serializable { //Methods include: Block, draw, che
 
     }
 
-    public int checkHitToBlock(double xBall, double yBall) {
+    /*public int checkHitToBlock(double xBall, double yBall) {
         if (isDestroyed) {
             return NO_HIT;
         }
-        if (xBall >= blockXCoordinate && xBall <= blockXCoordinate + width && yBall == blockYCoordinate + height) {
+        if (xBall -5 >= blockXCoordinate && xBall +5 <= blockXCoordinate + width && yBall + 5 == blockYCoordinate + height) {
             return HIT_BOTTOM;
         }
-        if (xBall >= blockXCoordinate && xBall <= blockXCoordinate + width && yBall == blockYCoordinate) {
+        if (xBall -5 >= blockXCoordinate && xBall +5 <= blockXCoordinate + width && yBall - 5 == blockYCoordinate) {
             return HIT_TOP;
         }
-        if (yBall >= blockYCoordinate && yBall <= blockYCoordinate + height && xBall == blockXCoordinate + width) {
+        if (yBall + 5 >= blockYCoordinate && yBall -5<= blockYCoordinate + height && xBall +5== blockXCoordinate + width) {
             return HIT_RIGHT;
         }
-        if (yBall >= blockYCoordinate && yBall <= blockYCoordinate + height && xBall == blockXCoordinate) {
+        if (yBall + 5>= blockYCoordinate && yBall -5<= blockYCoordinate + height && xBall +5== blockXCoordinate) {
             return HIT_LEFT;
         }
         return NO_HIT;
     }
 
-    /*public int checkHitToBlock(double xBall, double yBall) {
-        if (isDestroyed) {
-            return NO_HIT;
-        }
-        double ballRadius = 15;
+     */
 
-        if (xBall + ballRadius >= x && xBall + ballRadius <= x + width && yBall + ballRadius >= y && yBall + ballRadius <= y + height) {
-            if (yBall + ballRadius >= y && yBall - ballRadius <= y) {
-                return HIT_TOP;
-            }
-            if (yBall + ballRadius >= y + height && yBall + ballRadius <= y + height) {
-                return HIT_BOTTOM;
-            }
-            if (xBall + ballRadius >= x && xBall - ballRadius <= x) {
-                return HIT_LEFT;
-            }
-            if (xBall + ballRadius >= x + width && xBall - ballRadius <= x + width) {
-                return HIT_RIGHT;
-            }
-        }
-
+    public int checkHitToBlock(double xBall, double yBall) {
+    if (isDestroyed) {
         return NO_HIT;
     }
-*/
+
+    // Check if the ball is within the block's boundaries
+    if (xBall + 5 >= blockXCoordinate && xBall - 5 <= blockXCoordinate + width &&
+        yBall + 5 >= blockYCoordinate && yBall - 5 <= blockYCoordinate + height) {
+
+        // Check which side of the block the ball hits
+        if (yBall + 5 == blockYCoordinate + height) {
+            return HIT_BOTTOM;
+        }
+        if (yBall - 5 == blockYCoordinate) {
+            return HIT_TOP;
+        }
+        if (xBall + 5 == blockXCoordinate + width) {
+            return HIT_RIGHT;
+        }
+        if (xBall - 5 == blockXCoordinate) {
+            return HIT_LEFT;
+        }
+    }
+
+    return NO_HIT;
+}
 
 
     public static int getPaddingTop() {

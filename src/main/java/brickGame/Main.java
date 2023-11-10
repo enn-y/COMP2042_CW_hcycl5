@@ -708,7 +708,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 new Score().showGameOver(this);
 
                 try {
-                    Thread.sleep(2000); // Sleep for 2000 milliseconds (2 seconds)
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
