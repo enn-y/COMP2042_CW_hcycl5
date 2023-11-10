@@ -81,16 +81,16 @@ public class Block implements Serializable { //Methods include: Block, draw, che
         if (isDestroyed) {
             return NO_HIT;
         }
-        if (xBall + 10 > blockXCoordinate && xBall - 10 < blockXCoordinate + width && yBall + 10 == blockYCoordinate + height) {
+        if (xBall >= blockXCoordinate && xBall <= blockXCoordinate + width && yBall == blockYCoordinate + height) {
             return HIT_BOTTOM;
         }
-        if (xBall + 10 > blockXCoordinate && xBall - 10 < blockXCoordinate + width && yBall - 10 == blockYCoordinate) {
+        if (xBall >= blockXCoordinate && xBall <= blockXCoordinate + width && yBall == blockYCoordinate) {
             return HIT_TOP;
         }
-        if (yBall + 10 > blockYCoordinate && yBall - 10 < blockYCoordinate + height && xBall + 10 == blockXCoordinate + width) {
+        if (yBall >= blockYCoordinate && yBall <= blockYCoordinate + height && xBall == blockXCoordinate + width) {
             return HIT_RIGHT;
         }
-        if (yBall + 10 > blockYCoordinate && yBall - 10 < blockYCoordinate + height && xBall - 10 == blockXCoordinate) {
+        if (yBall >= blockYCoordinate && yBall <= blockYCoordinate + height && xBall == blockXCoordinate) {
             return HIT_LEFT;
         }
         return NO_HIT;

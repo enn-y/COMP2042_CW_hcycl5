@@ -334,7 +334,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //TODO gameover
                 numberOfHearts--; //Decrement the heart
                 new Score().show(windowWidth / 2, windowHeight / 2, -1, this);
-
                 checkGameOver();
             }
             //return;
@@ -606,6 +605,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 for (Bonus choco : bonusItems) {
                     choco.chocolateBlock.setY(choco.y);
                 }
+
             }
         });
 

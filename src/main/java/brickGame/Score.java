@@ -40,6 +40,12 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                         e.printStackTrace();
                     }
                 }
+                Platform.runLater(new Runnable() { //To prevent the label from remaining on the screen
+                    @Override
+                    public void run() {
+                        main.root.getChildren().remove(label);
+                    }
+                });
             }
         }).start();
     }
