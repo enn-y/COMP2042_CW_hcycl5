@@ -706,6 +706,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if(!goldBall){
             if (numberOfHearts == 0) {
                 new Score().showGameOver(this);
+
+                try {
+                    Thread.sleep(2000); // Sleep for 2000 milliseconds (2 seconds)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 engine.stop();
             }
         }
