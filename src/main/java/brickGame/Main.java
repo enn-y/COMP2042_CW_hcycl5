@@ -1,5 +1,8 @@
 package brickGame;
 
+import brickGame.Model.Block;
+import brickGame.Model.BlockSerializable;
+import brickGame.Model.Bonus;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,48 +24,48 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-    private int currentLevel = 0;
+    int currentLevel = 0;
 
-    private double paddleXPosition = 0.0f; //Variable for the paddle that the user controls
+    double paddleXPosition = 0.0f; //Variable for the paddle that the user controls
     private double paddleCenter; //Center of paddle
-    private double paddleYPosition = 640.0f; //y-coordinate of the top position of paddle
+    double paddleYPosition = 640.0f; //y-coordinate of the top position of paddle
 
-    private int paddleWidth = 130; //Width of paddle
-    private int paddleHeight = 30; //Height of paddle
+    int paddleWidth = 130; //Width of paddle
+    int paddleHeight = 30; //Height of paddle
     private int paddleWidthHalf = paddleWidth / 2; //Half of the width of paddle
 
     private int windowWidth = 500; //Game window width
-    private int windowHeight = 700; //Game window height
+    int windowHeight = 700; //Game window height
 
     private static int paddleLEFT = 1; //Direction of paddle
     private static int paddleRIGHT = 2; //Direction of paddle
 
-    private Circle ball; //Ball object
-    private double ballXCoordinate; //x-coordinate of ball
-    private double ballYCoordinate; //y-coordinate of ball
+    Circle ball; //Ball object
+    double ballXCoordinate; //x-coordinate of ball
+    double ballYCoordinate; //y-coordinate of ball
 
-    private boolean goldBall = false; //Status of gold ball
+    boolean goldBall = false; //Status of gold ball
     private boolean existHeartBlock = false; //Status of heart block
 
-    private Rectangle paddle; //Paddle object
+    Rectangle paddle; //Paddle object
     private int ballRadius = 10; //Radius of ball/Size of ball
 
-    private int destroyedBlockCount = 0; //Number of destroyed blocks
+    int destroyedBlockCount = 0; //Number of destroyed blocks
 
     private double ballVelocity = 1.000; //Velocity of ball
 
-    private int numberOfHearts = 3; //Number of hearts, initialized at 3
-    private int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
-    private long currentTime = 0; //Time, initialized at 0
+    int numberOfHearts = 3; //Number of hearts, initialized at 3
+    int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
+    long currentTime = 0; //Time, initialized at 0
     private long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
-    private long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
+    long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
 
     private GameEngine engine; //GameEngine object
     public static String savePath    = "D:/save/save.mdds"; //Path to save file
     public static String savePathDir = "D:/save/"; //Path to save directory
 
-    private ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
-    private ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
+    ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
+    ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     private Color[] blockColors = new Color[]{ //Array of colors for the blocks
             Color.MAGENTA,
             Color.RED,
@@ -79,8 +82,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Color.TAN,
     };
     public  Pane root;
-    private Label scoreLabel; //Label to display score
-    private Label heartLabel; //Label to display heart
+    Label scoreLabel; //Label to display score
+    Label heartLabel; //Label to display heart
     private Label levelLabel; //Label to display level
 
     private boolean loadFromSavedFile = false; //Status of loading from saved file
@@ -287,15 +290,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean collideToPaddleAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right
     private boolean collideToRightWall = false; //Status for ball colliding with the right wall, set to FALSE
     private boolean collideToLeftWall = false; //Status for ball colliding with the left wall, set to FALSE
-    private boolean collideToRightBlock = false; //Status for ball colliding to the right side of the block, set to FALSE
-    private boolean collideToBottomBlock = false; //Status for ball colliding to the bottom side of the block, set to FALSE
-    private boolean collideToLeftBlock = false; //Status for ball colliding to the left side of the block, set to FALSE
-    private boolean collideToTopBlock = false; //Status for ball colliding to the top side of the block, set to FALSE
+    boolean collideToRightBlock = false; //Status for ball colliding to the right side of the block, set to FALSE
+    boolean collideToBottomBlock = false; //Status for ball colliding to the bottom side of the block, set to FALSE
+    boolean collideToLeftBlock = false; //Status for ball colliding to the left side of the block, set to FALSE
+    boolean collideToTopBlock = false; //Status for ball colliding to the top side of the block, set to FALSE
 
     private double ballHorizontalSpeed = 1.000; //Horizontal velocity of ball
     private double ballVerticalSpeed = 1.000; //Vertical velocity of ball
 
-    private void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
+    void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
         collideToPaddle = false;
         collideToPaddleAndMoveToRight = false;
         collideToRightWall = false;
@@ -307,7 +310,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         collideToTopBlock = false;
     }
 
-    private void setPhysicsToBall() { //The behavior of the ball
+    void setPhysicsToBall() { //The behavior of the ball
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
         if (goDownBall) { //If the ball is moving downwards
@@ -412,7 +415,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    private void blockDestroyedCount() { //Check the number of destroyed blocks
+    void blockDestroyedCount() { //Check the number of destroyed blocks
         if (destroyedBlockCount == blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
             //TODO win level todo...
             //System.out.println("You Win");
@@ -539,7 +542,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 try {
                     ballHorizontalSpeed = 1.000;
 
-                    engine.stop();
+                    //engine.stop();
                     resetCollideFlags();
                     goDownBall = true;
 
@@ -590,6 +593,38 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     @Override
+    public void onInit() {
+
+    }
+
+    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
+        blockDestroyedCount();
+        setPhysicsToBall();
+
+        if (currentTime - goldTime > 5000) { //Gold Ball
+            ball.setFill(new ImagePattern(new Image("ball.png")));
+            root.getStyleClass().remove("goldRoot");
+            goldBall = false;
+        }
+
+        for (Bonus choco : bonusItems) { //Bonus Items
+            if (choco.y > windowHeight || choco.taken) {
+                continue;
+            }
+            if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
+                System.out.println("You Got it and +3 score for you");
+                choco.taken = true;
+                choco.chocolateBlock.setVisible(false);
+                currentScore += 3;
+                new Score().show(choco.x, choco.y, 3, this);
+            }
+            choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
+        }
+
+        //System.out.println("time is:" + time + " goldTime is " + goldTime);
+
+    }
+
     public void onUpdate() { //Update the game
         Platform.runLater(new Runnable() {
             @Override
@@ -661,40 +696,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
             }
         }
-    }
-
-    @Override
-    public void onInit() {
-
-    }
-
-    @Override
-    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        blockDestroyedCount();
-        setPhysicsToBall();
-
-        if (currentTime - goldTime > 5000) { //Gold Ball
-            ball.setFill(new ImagePattern(new Image("ball.png")));
-            root.getStyleClass().remove("goldRoot");
-            goldBall = false;
-        }
-
-        for (Bonus choco : bonusItems) { //Bonus Items
-            if (choco.y > windowHeight || choco.taken) {
-                continue;
-            }
-            if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
-                System.out.println("You Got it and +3 score for you");
-                choco.taken = true;
-                choco.chocolateBlock.setVisible(false);
-                currentScore += 3;
-                new Score().show(choco.x, choco.y, 3, this);
-            }
-            choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
-        }
-
-        //System.out.println("time is:" + time + " goldTime is " + goldTime);
-
     }
 
     @Override

@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 
 public class Score { //Methods include: show, showMessage, showGameOver, and showWin
     public void show(final double x, final double y, int score, final Main main) {
+
         String sign;
         if (score >= 0) { // if score is positive, add the "+" sign
             sign = "+";
@@ -32,9 +33,12 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 for (int i = 0; i < 21; i++) { //Loop to animate the label, condition is i < 21 because we want to animate the label for 20 times
                     try {
                         double scale = 1.0 + i * 0.1; //Make the label smaller
-                        label.setScaleX(scale);
-                        label.setScaleY(scale);
-                        label.setOpacity((20 - i) / 20.0); //To make the label disappear after 20 times, creates a fade effect
+                        int finalI = i;
+                        Platform.runLater(() -> {
+                            label.setScaleX(scale);
+                            label.setScaleY(scale);
+                            label.setOpacity((20 - finalI) / 20.0);
+                        });
                         Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -68,9 +72,12 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 for (int i = 0; i < 21; i++) {
                     try {
                         double scale = Math.abs(i - 10) * 0.1 + 1.0; // Smaller scaling effect
-                        label.setScaleX(scale);
-                        label.setScaleY(scale);
-                        label.setOpacity((20 - i) / 20.0);
+                        int finalI = i;
+                        Platform.runLater(() -> {
+                            label.setScaleX(scale);
+                            label.setScaleY(scale);
+                            label.setOpacity((20 - finalI) / 20.0);
+                        });
                         Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
