@@ -668,7 +668,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         bonusItems.add(choco);
                     }
 
-                    if (block.type == Block.BLOCK_STAR) {
+                    if (block.type == Block.BLOCK_STAR && !goldBall) {
                         goldTime = currentTime;
                         ball.setFill(new ImagePattern(new Image("goldball.png")));
                         System.out.println("gold ball");
