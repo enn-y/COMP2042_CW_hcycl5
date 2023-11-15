@@ -689,6 +689,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     } else if (hitCode == Block.HIT_TOP) {
                         collideToTopBlock = true;
                     }
+                    System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }
                 //TODO hit to break and some work here....
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
