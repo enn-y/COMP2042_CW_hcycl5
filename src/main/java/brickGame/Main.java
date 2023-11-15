@@ -490,7 +490,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void loadGame() { //Load the game
-
         LoadSave loadSave = new LoadSave();
         loadSave.read(); //Read the saved file, assign the variables to the saved variables
 
@@ -596,30 +595,33 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        Platform.runLater(() -> {
-            blockDestroyedCount();
-            setPhysicsToBall();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                blockDestroyedCount();
+                setPhysicsToBall();
 
-            if (currentTime - goldTime > 5000) { //Gold Ball
-                ball.setFill(new ImagePattern(new Image("ball.png")));
-                root.getStyleClass().remove("goldRoot");
-                goldBall = false;
-            }
+                if (currentTime - goldTime > 5000) { //Gold Ball
+                    ball.setFill(new ImagePattern(new Image("ball.png")));
+                    root.getStyleClass().remove("goldRoot");
+                    goldBall = false;
+                }
 
-            for (Bonus choco : bonusItems) { //Bonus Items
-                if (choco.y > windowHeight || choco.taken) {
-                    continue;
+                for (Bonus choco : bonusItems) { //Bonus Items
+                    if (choco.y > windowHeight || choco.taken) {
+                        continue;
+                    }
+                    if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
+                        System.out.println("You Got it and +3 score for you");
+                        choco.chocolateBlock.setVisible(false);
+                        choco.taken = true;
+                        currentScore += 3;
+                        new Score().show(choco.x, choco.y, 3, Main.this);
+                    }
+                    choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
                 }
-                if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
-                    System.out.println("You Got it and +3 score for you");
-                    choco.chocolateBlock.setVisible(false);
-                    choco.taken = true;
-                    currentScore += 3;
-                    new Score().show(choco.x, choco.y, 3, this);
-                }
-                choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
+                //System.out.println("time is:" + time + " goldTime is " + goldTime);
             }
-            //System.out.println("time is:" + time + " goldTime is " + goldTime);
         });
     }
 
