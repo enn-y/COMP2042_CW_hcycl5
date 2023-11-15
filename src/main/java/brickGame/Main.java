@@ -567,7 +567,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     public void restartGame() { //Restart the game
-
         try {
             currentLevel = 0;
             numberOfHearts = 3;
@@ -594,7 +593,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void onInit() {
-
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
@@ -704,18 +702,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void checkGameOver() {
-        if(!goldBall){
-            if (numberOfHearts == 0) {
-                new Score().showGameOver(this);
+        if (!goldBall && numberOfHearts == 0) {
+            new Score().showGameOver(this);
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                engine.stop();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            engine.stop();
         }
     }
 }
