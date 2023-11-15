@@ -598,31 +598,31 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        blockDestroyedCount();
-        setPhysicsToBall();
+        Platform.runLater(() -> {
+            blockDestroyedCount();
+            setPhysicsToBall();
 
-        if (currentTime - goldTime > 5000) { //Gold Ball
-            ball.setFill(new ImagePattern(new Image("ball.png")));
-            root.getStyleClass().remove("goldRoot");
-            goldBall = false;
-        }
-
-        for (Bonus choco : bonusItems) { //Bonus Items
-            if (choco.y > windowHeight || choco.taken) {
-                continue;
+            if (currentTime - goldTime > 5000) { //Gold Ball
+                ball.setFill(new ImagePattern(new Image("ball.png")));
+                root.getStyleClass().remove("goldRoot");
+                goldBall = false;
             }
-            if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
-                System.out.println("You Got it and +3 score for you");
-                choco.taken = true;
-                choco.chocolateBlock.setVisible(false);
-                currentScore += 3;
-                new Score().show(choco.x, choco.y, 3, this);
+
+            for (Bonus choco : bonusItems) { //Bonus Items
+                if (choco.y > windowHeight || choco.taken) {
+                    continue;
+                }
+                if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
+                    System.out.println("You Got it and +3 score for you");
+                    choco.chocolateBlock.setVisible(false);
+                    choco.taken = true;
+                    currentScore += 3;
+                    new Score().show(choco.x, choco.y, 3, this);
+                }
+                choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
             }
-            choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
-        }
-
-        //System.out.println("time is:" + time + " goldTime is " + goldTime);
-
+            //System.out.println("time is:" + time + " goldTime is " + goldTime);
+        });
     }
 
     public void onUpdate() { //Update the game
@@ -709,7 +709,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 new Score().showGameOver(this);
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

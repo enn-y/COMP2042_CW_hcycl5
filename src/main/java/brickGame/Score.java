@@ -33,11 +33,11 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 for (int i = 0; i < 21; i++) { //Loop to animate the label, condition is i < 21 because we want to animate the label for 20 times
                     try {
                         double scale = 1.0 + i * 0.1; //Make the label smaller
-                        int finalI = i;
+                        int tempI = i;
                         Platform.runLater(() -> {
                             label.setScaleX(scale);
                             label.setScaleY(scale);
-                            label.setOpacity((20 - finalI) / 20.0);
+                            label.setOpacity((20 - tempI) / 20.0);
                         });
                         Thread.sleep(20);
                     } catch (InterruptedException e) {
