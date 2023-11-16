@@ -1,5 +1,6 @@
 package brickGame;
 
+import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.Ball;
 import brickGame.Model.Block;
@@ -30,6 +31,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
+    ButtonControls buttonControls; //ButtonControls object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -42,7 +44,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     public long currentTime = 0; //Time, initialized at 0
     public long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
     long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
-    private GameEngine engine; //GameEngine object
+    public GameEngine engine; //GameEngine object
     public static String savePath    = "D:/save/save.mdds"; //Path to save file
     public static String savePathDir = "D:/save/"; //Path to save directory
     ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
@@ -68,8 +70,8 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     private Label levelLabel; //Label to display level
     private boolean loadFromSavedFile = false; //Status of loading from saved file
     Stage primaryStage; //Stage is the top level JavaFX container, the window
-    Button loadButton = null; //Button to load game
-    Button newGameButton = null; //Button to start new game
+    public Button loadButton = null; //Button to load game
+    public Button newGameButton = null; //Button to start new game
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
@@ -130,27 +132,12 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
                 engine.setFps(120); //Set FPS
                 engine.start(); //Start the game engine
             }
-            loadButton.setOnAction(new EventHandler<ActionEvent>() { //Listen for LOAD button press
-                @Override
-                public void handle(ActionEvent event) { //Handle load button press
-                    loadGame(); //Upon load button press, load the game
 
-                    loadButton.setVisible(false); //Hide the load button
-                    newGameButton.setVisible(false); //Hide the new game button
-                }
-            });
-            newGameButton.setOnAction(new EventHandler<ActionEvent>() { //Listen for NEW GAME button press
-                @Override
-                public void handle(ActionEvent event) { //Handle new game button press
-                    engine = new GameEngine(); //Initialize the game engine, to start the game
-                    engine.setOnAction(Main.this); //Listen for events
-                    engine.setFps(120); //Set FPS
-                    engine.start(); //Start the game engine
+            buttonControls = new ButtonControls(this);
 
-                    loadButton.setVisible(false); //Hide the load button
-                    newGameButton.setVisible(false); //Hide the new game button
-                }
-            });
+            loadButton.setOnAction(buttonControls.createLoadButtonHandler());
+            newGameButton.setOnAction(buttonControls.createNewGameButtonHandler());
+
         } else { //But if IT IS loading from saved file
             engine = new GameEngine(); //Initialize the game engine, to start the game
             engine.setOnAction(this); //Listen for events
@@ -313,7 +300,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         }).start();
     }
 
-    private void loadGame() { //Load the game
+    public void loadGame() { //Load the game
         LoadSave loadSave = new LoadSave();
         loadSave.read(); //Read the saved file, assign the variables to the saved variables
 
