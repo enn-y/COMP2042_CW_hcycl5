@@ -2,6 +2,7 @@ package brickGame;
 
 import brickGame.Model.Ball;
 import brickGame.Model.Block;
+import brickGame.Model.Paddle;
 import brickGame.Model.Serializables.BlockSerializable;
 import brickGame.Model.Bonus;
 import javafx.application.Application;
@@ -26,22 +27,13 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     Ball ball; //Ball object
+    Paddle paddle; //Paddle object
     public int currentLevel = 0;
-    public double paddleXPosition = 0.0f; //Variable for the paddle that the user controls
-    public double paddleCenter; //Center of paddle
-    public double paddleYPosition = 640.0f; //y-coordinate of the top position of paddle
-    public int paddleWidth = 130; //Width of paddle
-    int paddleHeight = 30; //Height of paddle
-    private int paddleWidthHalf = paddleWidth / 2; //Half of the width of paddle
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
-    private static int paddleLEFT = 1; //Direction of paddle
-    private static int paddleRIGHT = 2; //Direction of paddle
     public boolean goldBall = false; //Status of gold ball
     private boolean existHeartBlock = false; //Status of heart block
-    Rectangle paddle; //Paddle object
     int destroyedBlockCount = 0; //Number of destroyed blocks
-
     private double ballVelocity = 1.000; //Velocity of ball
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
@@ -201,10 +193,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
         switch (event.getCode()) { //Switch statement for key presses
             case LEFT: //If the left arrow key is pressed
-                move(paddleLEFT); //Move the paddle to the left
+                paddle.move(paddle.paddleLEFT); //Move the paddle to the left
                 break;
             case RIGHT: //If the right arrow key is pressed
-                move(paddleRIGHT); //Move the paddle to the right
+                paddle.move(paddle.paddleRIGHT); //Move the paddle to the right
                 break;
             case DOWN:
                 //setPhysicsToBall();
@@ -216,37 +208,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
-
-    private void move(final int direction) { //Move paddle method
-        new Thread(new Runnable() { //Thread runs in parallel with main thread, using the runnable interface
-            @Override
-            public void run() {
-                int sleepTime = 4; //Delays the movement of the paddle because if not, the paddle will move too fast
-                for (int i = 0; i < 30; i++) { //For loop to move the paddle, condition is 30 because the paddle will move 30 pixels
-                    if (paddleXPosition == (windowWidth - paddleWidth) && direction == paddleRIGHT) { //If the paddle is at the right wall and the direction is right, prevents paddle from moving out of bounds
-                        return; //Stop Moving
-                    }
-                    if (paddleXPosition == 0 && direction == paddleLEFT) { //If the paddle is at the left wall and the direction is left, prevents paddle from moving out of bounds
-                        return; //Stop Moving
-                    }
-                    if (direction == paddleRIGHT) { //Updates the x-coordinate of the paddle to move it to the right
-                        paddleXPosition++;
-                    } else {
-                        paddleXPosition--;
-                    }
-                    paddleCenter = paddleXPosition + paddleWidthHalf; //Position the paddle accurately
-                    try { //Control the speed of the paddle, sleep allows the paddle to move smoothly
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
-    }
 
     private void initializeBall() { //Initialize the ball
         ball = new Ball(this);
@@ -260,15 +221,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void initializePaddle() { //Initialize the paddle
-        paddle = new Rectangle(); //Create the paddle using the rectangle object
-        paddle.setWidth(paddleWidth); //Set the width of the paddle
-        paddle.setHeight(paddleHeight); //Set the height of the paddle
-        paddle.setX(paddleXPosition); //Set x-coordinate of the paddle
-        paddle.setY(paddleYPosition); //Set y-coordinate of the paddle
-
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg")); //Using block.jpg as the image of the paddle
-
-        paddle.setFill(pattern); //pattern as the image of the paddle
+        paddle = new Paddle(this);
+        paddle.setX(paddle.paddleXPosition); //Set the x-coordinate of the paddle
+        paddle.setY(paddle.paddleYPosition); //Set the y-coordinate of the paddle
+        paddle.setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
     }
 
     public boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
@@ -318,9 +274,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     outputStream.writeDouble(ball.ballXCoordinate);
                     outputStream.writeDouble(ball.ballYCoordinate);
-                    outputStream.writeDouble(paddleXPosition);
-                    outputStream.writeDouble(paddleYPosition);
-                    outputStream.writeDouble(paddleCenter);
+                    outputStream.writeDouble(paddle.paddleXPosition);
+                    outputStream.writeDouble(paddle.paddleYPosition);
+                    outputStream.writeDouble(paddle.paddleCenter);
                     outputStream.writeLong(currentTime);
                     outputStream.writeLong(goldTime);
                     outputStream.writeDouble(ball.ballHorizontalSpeed);
@@ -390,9 +346,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         destroyedBlockCount = loadSave.destroyedBlockCount;
         ball.ballXCoordinate = loadSave.xBall;
         ball.ballYCoordinate = loadSave.yBall;
-        paddleXPosition = loadSave.xBreak;
-        paddleYPosition = loadSave.yBreak;
-        paddleCenter = loadSave.centerBreakX;
+        paddle.paddleXPosition = loadSave.xBreak;
+        paddle.paddleYPosition = loadSave.yBreak;
+        paddle.paddleCenter = loadSave.centerBreakX;
         currentTime = loadSave.time;
         goldTime = loadSave.goldTime;
         ball.ballHorizontalSpeed = loadSave.vX;
@@ -490,7 +446,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     if (choco.y > windowHeight || choco.taken) {
                         continue;
                     }
-                    if (choco.y >= paddleYPosition && choco.y <= paddleYPosition + paddleHeight && choco.x >= paddleXPosition && choco.x <= paddleXPosition + paddleWidth) {
+                    if (choco.y >= paddle.paddleYPosition && choco.y <= paddle.paddleYPosition + paddle.paddleHeight && choco.x >= paddle.paddleXPosition && choco.x <= paddle.paddleXPosition + paddle.paddleWidth) {
                         System.out.println("You Got it and +3 score for you");
                         choco.chocolateBlock.setVisible(false);
                         choco.taken = true;
@@ -511,8 +467,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 scoreLabel.setText("Score: " + currentScore);
                 heartLabel.setText("Heart : " + numberOfHearts);
 
-                paddle.setX(paddleXPosition);
-                paddle.setY(paddleYPosition);
+                paddle.setX(paddle.paddleXPosition);
+                paddle.setY(paddle.paddleYPosition);
                 ball.setCenterX(ball.ballXCoordinate);
                 ball.setCenterY(ball.ballYCoordinate);
 
@@ -588,12 +544,20 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             new Score().showGameOver(this);
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             engine.stop();
         }
+    }
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
     }
 }
