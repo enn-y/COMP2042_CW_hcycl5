@@ -1,5 +1,6 @@
 package brickGame;
 
+import brickGame.Controller.KeyboardControls;
 import brickGame.Model.Ball;
 import brickGame.Model.Block;
 import brickGame.Model.Paddle;
@@ -25,9 +26,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
+public class Main extends Application implements GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     Ball ball; //Ball object
     Paddle paddle; //Paddle object
+    KeyboardControls keyboardControls; //KeyboardControls object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -86,6 +88,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initializeBall(); //Initialize the ball
             initializePaddle(); //Initialize the paddle
             initializeBlocks(); //Initialize the blocks
+            initializeKeyboardController(); //Initialize the controller
 
             loadButton = new Button("Load Game"); //Initialize the load button
             loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
@@ -112,7 +115,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
         Scene scene = new Scene(root, windowWidth, windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph
         scene.getStylesheets().add("style.css"); //Add the style.css file to the scene
-        scene.setOnKeyPressed(this); //Listen for key presses
+        scene.setOnKeyPressed(keyboardControls); //Listen for key presses
 
         primaryStage.setTitle("Game"); //Set the title of the game window
         primaryStage.setScene(scene); //Set the scene of the game window
@@ -189,24 +192,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         launch(args); //LAUNCH GAME
     }
 
-    @Override
-    public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
-        switch (event.getCode()) { //Switch statement for key presses
-            case LEFT: //If the left arrow key is pressed
-                paddle.move(paddle.paddleLEFT); //Move the paddle to the left
-                break;
-            case RIGHT: //If the right arrow key is pressed
-                paddle.move(paddle.paddleRIGHT); //Move the paddle to the right
-                break;
-            case DOWN:
-                //setPhysicsToBall();
-                break;
-            case S: //If the S key is pressed
-                saveGame(); //Save the game
-                break;
-        }
-    }
-
     //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
 
     private void initializeBall() { //Initialize the ball
@@ -225,6 +210,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         paddle.setX(paddle.paddleXPosition); //Set the x-coordinate of the paddle
         paddle.setY(paddle.paddleYPosition); //Set the y-coordinate of the paddle
         paddle.setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
+    }
+
+    private void initializeKeyboardController() {
+        keyboardControls = new KeyboardControls(this, paddle);
     }
 
     public boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
@@ -257,7 +246,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    private void saveGame() { //Save the game
+    public void saveGame() { //Save the game
         new Thread(new Runnable() {
             @Override
             public void run() {
