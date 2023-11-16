@@ -2,11 +2,8 @@ package brickGame;
 
 import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
-import brickGame.Model.Ball;
-import brickGame.Model.Block;
-import brickGame.Model.Paddle;
+import brickGame.Model.*;
 import brickGame.Model.Serializables.BlockSerializable;
-import brickGame.Model.Bonus;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -36,19 +33,19 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
     public boolean goldBall = false; //Status of gold ball
-    private boolean existHeartBlock = false; //Status of heart block
-    int destroyedBlockCount = 0; //Number of destroyed blocks
+    public boolean existHeartBlock = false; //Status of heart block
+    public int destroyedBlockCount = 0; //Number of destroyed blocks
     private double ballVelocity = 1.000; //Velocity of ball
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
     public long currentTime = 0; //Time, initialized at 0
     public long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
-    long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
+    public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
     public GameEngine engine; //GameEngine object
     public static String savePath    = "D:/save/save.mdds"; //Path to save file
     public static String savePathDir = "D:/save/"; //Path to save directory
-    ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
-    ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
+    public ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
+    public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     private Color[] blockColors = new Color[]{ //Array of colors for the blocks
             Color.MAGENTA,
             Color.RED,
@@ -69,7 +66,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     Label heartLabel; //Label to display heart
     private Label levelLabel; //Label to display level
     private boolean loadFromSavedFile = false; //Status of loading from saved file
-    Stage primaryStage; //Stage is the top level JavaFX container, the window
+    public Stage primaryStage; //Stage is the top level JavaFX container, the window
     public Button loadButton = null; //Button to load game
     public Button newGameButton = null; //Button to start new game
 
@@ -227,9 +224,9 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     void blockDestroyedCount() { //Check the number of destroyed blocks
         if (destroyedBlockCount == blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
             //TODO win level todo...
+            LevelManager levelManager = new LevelManager(this, ball);
             //System.out.println("You Win");
-
-            nextLevel(); //Go to the next level
+            levelManager.nextLevel();
         }
     }
 
@@ -345,37 +342,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         }
     }
 
-    private void nextLevel() { //Go to the next level
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ball.ballHorizontalSpeed = 1.000;
-
-                    //engine.stop();
-                    resetCollideFlags();
-                    ball.goDownBall = true;
-
-                    goldBall = false;
-                    existHeartBlock = false;
-
-                    hitTime = 0;
-                    currentTime = 0;
-                    goldTime = 0;
-
-                    engine.stop();
-                    blocks.clear();
-                    bonusItems.clear();
-                    destroyedBlockCount = 0;
-                    start(primaryStage);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     public void restartGame() { //Restart the game
         try {
             currentLevel = 0;
@@ -388,6 +354,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
 
             goldBall = false;
             existHeartBlock = false;
+            hitTime = 0;
             hitTime = 0;
             currentTime = 0;
             goldTime = 0;
