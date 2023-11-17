@@ -1,6 +1,7 @@
 package brickGame.Controller;
 
 import brickGame.Main;
+import brickGame.Model.Ball;
 import brickGame.Model.Paddle;
 import brickGame.View.State;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
 
     Main main;
     Paddle paddle;
+    Ball ball;
     State state;
 
     public KeyboardControls(Main main, Paddle paddle) {
@@ -29,6 +31,7 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
                 //setPhysicsToBall();
                 break;
             case S: //If the S key is pressed
+                state = new State(main, ball, paddle);
                 state.saveGame(); //Save the game
                 break;
         }
