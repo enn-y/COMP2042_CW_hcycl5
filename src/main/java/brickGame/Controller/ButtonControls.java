@@ -2,11 +2,13 @@ package brickGame.Controller;
 
 import brickGame.Model.GameEngine;
 import brickGame.Main;
+import brickGame.View.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class ButtonControls {
     Main main;
+    State state;
 
     public ButtonControls(Main main) {
         this.main = main;
@@ -16,7 +18,7 @@ public class ButtonControls {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.loadGame();
+                state.loadGame();
                 main.loadButton.setVisible(false);
                 main.newGameButton.setVisible(false);
             }

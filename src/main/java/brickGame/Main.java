@@ -4,7 +4,7 @@ import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
 import brickGame.Model.Serializables.BlockSerializable;
-import brickGame.View.LoadSave;
+import brickGame.View.State;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -35,7 +35,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     public int destroyedBlockCount = 0; //Number of destroyed blocks
     private double ballVelocity = 1.000; //Velocity of ball
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
-    int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
+    public int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
     public long currentTime = 0; //Time, initialized at 0
     public long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
     public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
@@ -63,7 +63,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     Label scoreLabel; //Label to display score
     Label heartLabel; //Label to display heart
     private Label levelLabel; //Label to display level
-    private boolean loadFromSavedFile = false; //Status of loading from saved file
+    public boolean loadFromSavedFile = false; //Status of loading from saved file
     public Stage primaryStage; //Stage is the top level JavaFX container, the window
     public Button loadButton = null; //Button to load game
     public Button newGameButton = null; //Button to start new game
@@ -152,144 +152,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     }
 
     //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
-
-    public void saveGame() { //Save the game
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new File(savePathDir).mkdirs();
-                File file = new File(savePath);
-                ObjectOutputStream outputStream = null;
-                try { //Try to save the game, save all the variables
-                    outputStream = new ObjectOutputStream(new FileOutputStream(file));
-
-                    outputStream.writeInt(currentLevel);
-                    outputStream.writeInt(currentScore);
-                    outputStream.writeInt(numberOfHearts);
-                    outputStream.writeInt(destroyedBlockCount);
-
-                    outputStream.writeDouble(ball.ballXCoordinate);
-                    outputStream.writeDouble(ball.ballYCoordinate);
-                    outputStream.writeDouble(paddle.paddleXPosition);
-                    outputStream.writeDouble(paddle.paddleYPosition);
-                    outputStream.writeDouble(paddle.paddleCenter);
-                    outputStream.writeLong(currentTime);
-                    outputStream.writeLong(goldTime);
-                    outputStream.writeDouble(ball.ballHorizontalSpeed);
-
-                    outputStream.writeBoolean(existHeartBlock);
-                    outputStream.writeBoolean(goldBall);
-                    outputStream.writeBoolean(ball.goDownBall);
-                    outputStream.writeBoolean(ball.goRightBall);
-                    outputStream.writeBoolean(ball.collideToPaddle);
-                    outputStream.writeBoolean(ball.collideToPaddleAndMoveToRight);
-                    outputStream.writeBoolean(ball.collideToRightWall);
-                    outputStream.writeBoolean(ball.collideToLeftWall);
-                    outputStream.writeBoolean(ball.collideToRightBlock);
-                    outputStream.writeBoolean(ball.collideToBottomBlock);
-                    outputStream.writeBoolean(ball.collideToLeftBlock);
-                    outputStream.writeBoolean(ball.collideToTopBlock);
-
-                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (Block block : blocks) {
-                        if (block.isDestroyed) {
-                            continue;
-                        }
-                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
-                    }
-
-                    outputStream.writeObject(blockSerializables);
-
-                    Platform.runLater(() -> {
-                        new Score().showMessage("Game Saved", Main.this); //Display "Game Saved" when the game is saved
-                    });
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        outputStream.flush();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-    }
-
-    public void loadGame() { //Load the game
-        LoadSave loadSave = new LoadSave();
-        loadSave.read(); //Read the saved file, assign the variables to the saved variables
-
-        existHeartBlock = loadSave.isExistHeartBlock;
-        goldBall = loadSave.isGoldStatus;
-        ball.goDownBall = loadSave.goDownBall;
-        ball.goRightBall = loadSave.goRightBall;
-        ball.collideToPaddle = loadSave.collideToPaddle;
-        ball.collideToPaddleAndMoveToRight = loadSave.collideToPaddleAndMoveToRight;
-        ball.collideToRightWall = loadSave.collideToRightWall;
-        ball.collideToLeftWall = loadSave.collideToLeftWall;
-        ball.collideToRightBlock = loadSave.collideToRightBlock;
-        ball.collideToBottomBlock = loadSave.collideToBottomBlock;
-        ball.collideToLeftBlock = loadSave.collideToLeftBlock;
-        ball.collideToTopBlock = loadSave.collideToTopBlock;
-        currentLevel = loadSave.level;
-        currentScore = loadSave.score;
-        numberOfHearts = loadSave.heart;
-        destroyedBlockCount = loadSave.destroyedBlockCount;
-        ball.ballXCoordinate = loadSave.xBall;
-        ball.ballYCoordinate = loadSave.yBall;
-        paddle.paddleXPosition = loadSave.xBreak;
-        paddle.paddleYPosition = loadSave.yBreak;
-        paddle.paddleCenter = loadSave.centerBreakX;
-        currentTime = loadSave.time;
-        goldTime = loadSave.goldTime;
-        ball.ballHorizontalSpeed = loadSave.vX;
-
-        blocks.clear();
-        bonusItems.clear();
-
-        for (BlockSerializable ser : loadSave.blocks) {
-            int r = new Random().nextInt(200);
-            blocks.add(new Block(ser.row, ser.column, blockColors[r % blockColors.length], ser.type));
-        }
-
-        try {
-            loadFromSavedFile = true;
-            start(primaryStage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void restartGame() { //Restart the game
-        try {
-            currentLevel = 0;
-            numberOfHearts = 3;
-            currentScore = 0;
-            ball.ballHorizontalSpeed = 1.000;
-            destroyedBlockCount = 0;
-            ball.resetCollideFlags();
-            ball.goDownBall = true;
-
-            goldBall = false;
-            existHeartBlock = false;
-            hitTime = 0;
-            hitTime = 0;
-            currentTime = 0;
-            goldTime = 0;
-
-            blocks.clear();
-            bonusItems.clear();
-
-            start(primaryStage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onInit() {

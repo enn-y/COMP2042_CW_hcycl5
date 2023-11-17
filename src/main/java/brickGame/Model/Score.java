@@ -1,6 +1,7 @@
 package brickGame.Model;
 
 import brickGame.Main;
+import brickGame.View.State;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +10,9 @@ import javafx.scene.control.Label;
 //import sun.plugin2.message.Message;
 
 public class Score { //Methods include: show, showMessage, showGameOver, and showWin
+    State state;
+    Ball ball;
+    Paddle paddle;
     public void show(final double x, final double y, int score, final Main main) {
 
         String sign;
@@ -104,7 +108,8 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        main.restartGame();
+                        state = new State(main, ball, paddle);
+                        state.restartGame();
                     }
                 });
 
