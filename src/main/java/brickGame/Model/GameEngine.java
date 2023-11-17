@@ -1,4 +1,4 @@
-package brickGame;
+package brickGame.Model;
 
 
 import javafx.application.Platform;

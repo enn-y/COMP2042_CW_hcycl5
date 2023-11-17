@@ -1,5 +1,6 @@
-package brickGame;
+package brickGame.Model;
 
+import brickGame.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

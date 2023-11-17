@@ -4,20 +4,16 @@ import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
 import brickGame.Model.Serializables.BlockSerializable;
+import brickGame.View.LoadSave;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -29,6 +25,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
     ButtonControls buttonControls; //ButtonControls object
+    GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -46,7 +43,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     public static String savePathDir = "D:/save/"; //Path to save directory
     public ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
     public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
-    private Color[] blockColors = new Color[]{ //Array of colors for the blocks
+    public Color[] blockColors = new Color[]{ //Array of colors for the blocks
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -74,6 +71,11 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     public void start(Stage primaryStage) throws Exception { //Start method
         this.primaryStage = primaryStage; //Set primaryStage which is the game window
 
+        ball = new Ball(this);
+        paddle = new Paddle(this);
+        keyboardControls = new KeyboardControls(this, paddle);
+        gameObjectInitializer = new GameObjectInitializer(this, ball, paddle, keyboardControls); //Initialize the initializer
+
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
             if (currentLevel >1){
@@ -84,10 +86,10 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
                 return;
             }
 
-            initializeBall(); //Initialize the ball
-            initializePaddle(); //Initialize the paddle
-            initializeBlocks(); //Initialize the blocks
-            initializeKeyboardController(); //Initialize the controller
+            gameObjectInitializer.initializeBall(); //Initialize the ball
+            gameObjectInitializer.initializePaddle(); //Initialize the paddle
+            gameObjectInitializer.initializeBlocks(); //Initialize the blocks
+            gameObjectInitializer.initializeKeyboardController(); //Initialize the controller
 
             loadButton = new Button("Load Game"); //Initialize the load button
             loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
@@ -144,61 +146,11 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         }
     }
 
-    private void initializeBlocks() { //Initialize the blocks
-        for (int row = 0; row < 4; row++) { //For each row
-            for (int column = 0; column < currentLevel + 1; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
-                int r = new Random().nextInt(500); //Random number generator
-                if (r % 5 == 0) { //If the remainder is 0
-                    continue; //Block will not be created
-                }
-                int type;
-                if (r % 10 == 1) { //If the remainder is 1
-                    type = Block.BLOCK_CHOCOLATE; //Create a choco block
-                } else if (r % 10 == 2) { //BUT IF the remainder is 2
-                    if (!existHeartBlock) { //AND IF there is NO heart block
-                        type = Block.BLOCK_HEART; //Create a heart block
-                        existHeartBlock = true; //Set isExistHeartBlock to true, INDICATES that there is a heart block
-                    } else { //BUT IF there IS a heart block
-                        type = Block.BLOCK_NORMAL; //Create a normal block
-                    }
-                } else if (r % 10 == 3) { //BUT IF the remainder is 3
-                    type = Block.BLOCK_STAR; //Create a star block
-                } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
-                    type = Block.BLOCK_NORMAL; //Create a normal block
-                }
-                blocks.add(new Block(column, row, blockColors[r % (blockColors.length)], type)); //Add the block to the ArrayList
-                //System.out.println("colors " + r % (colors.length));
-            }
-        }
-    }
-
     public static void main(String[] args) { //Main method HERE
         launch(args); //LAUNCH GAME
     }
 
     //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
-
-    private void initializeBall() { //Initialize the ball
-        ball = new Ball(this);
-        Random random = new Random(); //Random number generator
-        ball.setBallXCoordinate(random.nextInt(windowWidth) + 1); //Random x-coordinate of the ball
-        ball.setBallYCoordinate(random.nextInt(windowHeight - 200) + ((currentLevel + 1) * Block.getHeight()) + 15); //Random y-coordinate of the ball
-        ball.setCenterX(ball.getBallXCoordinate()); //Set the center x-coordinate of the ball
-        ball.setCenterY(ball.getBallYCoordinate());
-        ball.setRadius(ball.ballRadius); //Set the radius of the ball
-        ball.setFill(new ImagePattern(new Image("ball.png"))); //Using ball.png as the image of the ball
-    }
-
-    private void initializePaddle() { //Initialize the paddle
-        paddle = new Paddle(this);
-        paddle.setX(paddle.paddleXPosition); //Set the x-coordinate of the paddle
-        paddle.setY(paddle.paddleYPosition); //Set the y-coordinate of the paddle
-        paddle.setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
-    }
-
-    private void initializeKeyboardController() {
-        keyboardControls = new KeyboardControls(this, paddle);
-    }
 
     public boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
     public boolean collideToPaddleAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right

@@ -8,4 +8,6 @@ module brickGame {
     opens brickGame.Model to javafx.fxml;
     exports brickGame.Model.Serializables;
     opens brickGame.Model.Serializables to javafx.fxml;
+    exports brickGame.View;
+    opens brickGame.View to javafx.fxml;
 }

@@ -1,7 +1,6 @@
 package brickGame.Model;
 
 import brickGame.Main;
-import brickGame.Score;
 import javafx.scene.shape.Circle;
 
 public class Ball extends Circle {

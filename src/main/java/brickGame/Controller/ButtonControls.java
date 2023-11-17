@@ -1,6 +1,6 @@
 package brickGame.Controller;
 
-import brickGame.GameEngine;
+import brickGame.Model.GameEngine;
 import brickGame.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
