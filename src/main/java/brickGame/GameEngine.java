@@ -1,6 +1,8 @@
 package brickGame;
 
 
+import javafx.application.Platform;
+
 public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
 
     private OnAction onAction;
@@ -26,7 +28,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             public void run() {
                 while (!updateThread.isInterrupted()) {
                     try {
-                        onAction.onUpdate();
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                onAction.onUpdate();
+                            }
+                        });
                         Thread.sleep(fps);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
