@@ -153,27 +153,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
 
     //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
 
-    public boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
-    public boolean collideToPaddleAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right
-    public boolean collideToRightWall = false; //Status for ball colliding with the right wall, set to FALSE
-    public boolean collideToLeftWall = false; //Status for ball colliding with the left wall, set to FALSE
-    public boolean collideToRightBlock = false; //Status for ball colliding to the right side of the block, set to FALSE
-    public boolean collideToBottomBlock = false; //Status for ball colliding to the bottom side of the block, set to FALSE
-    public boolean collideToLeftBlock = false; //Status for ball colliding to the left side of the block, set to FALSE
-    public boolean collideToTopBlock = false; //Status for ball colliding to the top side of the block, set to FALSE
-
-    public void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
-        collideToPaddle = false;
-        collideToPaddleAndMoveToRight = false;
-        collideToRightWall = false;
-        collideToLeftWall = false;
-
-        collideToRightBlock = false;
-        collideToBottomBlock = false;
-        collideToLeftBlock = false;
-        collideToTopBlock = false;
-    }
-
     public void saveGame() { //Save the game
         new Thread(new Runnable() {
             @Override
@@ -202,14 +181,14 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
                     outputStream.writeBoolean(goldBall);
                     outputStream.writeBoolean(ball.goDownBall);
                     outputStream.writeBoolean(ball.goRightBall);
-                    outputStream.writeBoolean(collideToPaddle);
-                    outputStream.writeBoolean(collideToPaddleAndMoveToRight);
-                    outputStream.writeBoolean(collideToRightWall);
-                    outputStream.writeBoolean(collideToLeftWall);
-                    outputStream.writeBoolean(collideToRightBlock);
-                    outputStream.writeBoolean(collideToBottomBlock);
-                    outputStream.writeBoolean(collideToLeftBlock);
-                    outputStream.writeBoolean(collideToTopBlock);
+                    outputStream.writeBoolean(ball.collideToPaddle);
+                    outputStream.writeBoolean(ball.collideToPaddleAndMoveToRight);
+                    outputStream.writeBoolean(ball.collideToRightWall);
+                    outputStream.writeBoolean(ball.collideToLeftWall);
+                    outputStream.writeBoolean(ball.collideToRightBlock);
+                    outputStream.writeBoolean(ball.collideToBottomBlock);
+                    outputStream.writeBoolean(ball.collideToLeftBlock);
+                    outputStream.writeBoolean(ball.collideToTopBlock);
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
                     for (Block block : blocks) {
@@ -249,14 +228,14 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         goldBall = loadSave.isGoldStatus;
         ball.goDownBall = loadSave.goDownBall;
         ball.goRightBall = loadSave.goRightBall;
-        collideToPaddle = loadSave.collideToPaddle;
-        collideToPaddleAndMoveToRight = loadSave.collideToPaddleAndMoveToRight;
-        collideToRightWall = loadSave.collideToRightWall;
-        collideToLeftWall = loadSave.collideToLeftWall;
-        collideToRightBlock = loadSave.collideToRightBlock;
-        collideToBottomBlock = loadSave.collideToBottomBlock;
-        collideToLeftBlock = loadSave.collideToLeftBlock;
-        collideToTopBlock = loadSave.collideToTopBlock;
+        ball.collideToPaddle = loadSave.collideToPaddle;
+        ball.collideToPaddleAndMoveToRight = loadSave.collideToPaddleAndMoveToRight;
+        ball.collideToRightWall = loadSave.collideToRightWall;
+        ball.collideToLeftWall = loadSave.collideToLeftWall;
+        ball.collideToRightBlock = loadSave.collideToRightBlock;
+        ball.collideToBottomBlock = loadSave.collideToBottomBlock;
+        ball.collideToLeftBlock = loadSave.collideToLeftBlock;
+        ball.collideToTopBlock = loadSave.collideToTopBlock;
         currentLevel = loadSave.level;
         currentScore = loadSave.score;
         numberOfHearts = loadSave.heart;
@@ -293,7 +272,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
             currentScore = 0;
             ball.ballHorizontalSpeed = 1.000;
             destroyedBlockCount = 0;
-            resetCollideFlags();
+            ball.resetCollideFlags();
             ball.goDownBall = true;
 
             goldBall = false;
@@ -379,7 +358,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
                     block.isDestroyed = true;
                     destroyedBlockCount++;
                     //System.out.println("size is " + blocks.size());
-                    resetCollideFlags();
+                    ball.resetCollideFlags();
 
                     if (block.type == Block.BLOCK_CHOCOLATE) {
                         final Bonus choco = new Bonus(block.row, block.column);
@@ -406,13 +385,13 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
-                        collideToRightBlock = true;
+                        ball.collideToRightBlock = true;
                     } else if (hitCode == Block.HIT_BOTTOM) {
-                        collideToBottomBlock = true;
+                        ball.collideToBottomBlock = true;
                     } else if (hitCode == Block.HIT_LEFT) {
-                        collideToLeftBlock = true;
+                        ball.collideToLeftBlock = true;
                     } else if (hitCode == Block.HIT_TOP) {
-                        collideToTopBlock = true;
+                        ball.collideToTopBlock = true;
                     }
                     System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }

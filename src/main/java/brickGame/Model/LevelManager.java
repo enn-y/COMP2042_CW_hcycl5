@@ -21,7 +21,7 @@ public class LevelManager {
                     ball.ballHorizontalSpeed = 1.000;
 
                     //engine.stop();
-                    main.resetCollideFlags();
+                    ball.resetCollideFlags();
                     ball.goDownBall = true;
 
                     main.goldBall = false;

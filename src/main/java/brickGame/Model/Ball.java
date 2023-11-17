@@ -13,6 +13,14 @@ public class Ball extends Circle {
     public int ballRadius = 10; //Radius of ball/Size of ball
     public boolean goDownBall; //Status for ball moving downwards
     public boolean goRightBall; //Status for ball moving to the right
+    public boolean collideToPaddle = false; //Status for ball colliding with the paddle, set to FALSE
+    public boolean collideToPaddleAndMoveToRight = true; //Status for ball colliding with the paddle and moving to the right
+    public boolean collideToRightWall = false; //Status for ball colliding with the right wall, set to FALSE
+    public boolean collideToLeftWall = false; //Status for ball colliding with the left wall, set to FALSE
+    public boolean collideToRightBlock = false; //Status for ball colliding to the right side of the block, set to FALSE
+    public boolean collideToBottomBlock = false; //Status for ball colliding to the bottom side of the block, set to FALSE
+    public boolean collideToLeftBlock = false; //Status for ball colliding to the left side of the block, set to FALSE
+    public boolean collideToTopBlock = false; //Status for ball colliding to the top side of the block, set to FALSE
 
     public Ball(Main main){
         this.main = main;
@@ -35,7 +43,7 @@ public class Ball extends Circle {
 
         if (ballYCoordinate < 0 + ballRadius*1.5) { //If the ball collides with top wall
             //vX = 1.000;
-            main.resetCollideFlags();
+            resetCollideFlags();
             goDownBall = true; //Ball moves downwards
             return;
         }
@@ -55,8 +63,8 @@ public class Ball extends Circle {
             //System.out.println("Collide1");
             if (ballXCoordinate >= paddle.paddleXPosition && ballXCoordinate <= paddle.paddleXPosition + paddle.paddleWidth) {
                 main.hitTime = main.currentTime;
-                main.resetCollideFlags();
-                main.collideToPaddle = true;
+                resetCollideFlags();
+                collideToPaddle = true;
                 goDownBall = false;
 
                 double relation = (ballXCoordinate - paddle.paddleCenter) / (paddle.paddleWidth / 2);
@@ -73,28 +81,28 @@ public class Ball extends Circle {
                 }
 
                 if (ballXCoordinate - paddle.paddleCenter > 0) {
-                    main.collideToPaddleAndMoveToRight = true;
+                    collideToPaddleAndMoveToRight = true;
                 } else {
-                    main.collideToPaddleAndMoveToRight = false;
+                    collideToPaddleAndMoveToRight = false;
                 }
                 //System.out.println("Collide2");
             }
         }
 
         if (ballXCoordinate > main.windowWidth - ballRadius*1.5) {
-            main.resetCollideFlags();
+            resetCollideFlags();
             //vX = 1.000;
-            main.collideToRightWall = true;
+            collideToRightWall = true;
         }
 
         if (ballXCoordinate < 0 + ballRadius*1.5) {
-            main.resetCollideFlags();
+            resetCollideFlags();
             //vX = 1.000;
-            main.collideToLeftWall = true;
+            collideToLeftWall = true;
         }
 
-        if (main.collideToPaddle) {
-            if (main.collideToPaddleAndMoveToRight) {
+        if (collideToPaddle) {
+            if (collideToPaddleAndMoveToRight) {
                 goRightBall = true;
             } else {
                 goRightBall = false;
@@ -102,24 +110,24 @@ public class Ball extends Circle {
         }
 
         //Wall Collide
-        if (main.collideToRightWall) {
+        if (collideToRightWall) {
             goRightBall = false;
         }
-        if (main.collideToLeftWall) {
+        if (collideToLeftWall) {
             goRightBall = true;
         }
 
         //Block Collide
-        if (main.collideToRightBlock) {
+        if (collideToRightBlock) {
             goRightBall = true;
         }
-        if (main.collideToLeftBlock) {
+        if (collideToLeftBlock) {
             goRightBall = true;
         }
-        if (main.collideToTopBlock) {
+        if (collideToTopBlock) {
             goDownBall = false;
         }
-        if (main.collideToBottomBlock) {
+        if (collideToBottomBlock) {
             goDownBall = true;
         }
     }
@@ -136,6 +144,18 @@ public class Ball extends Circle {
 
             main.engine.stop();
         }
+    }
+
+    public void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
+        collideToPaddle = false;
+        collideToPaddleAndMoveToRight = false;
+        collideToRightWall = false;
+        collideToLeftWall = false;
+
+        collideToRightBlock = false;
+        collideToBottomBlock = false;
+        collideToLeftBlock = false;
+        collideToTopBlock = false;
     }
 
     public void setBallXCoordinate(double ballXCoordinate) {
