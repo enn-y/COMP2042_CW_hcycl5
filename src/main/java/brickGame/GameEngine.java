@@ -54,7 +54,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             public void run() {
                 while (!physicsThread.isInterrupted()) {
                     try {
-                        onAction.onPhysicsUpdate();
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                onAction.onPhysicsUpdate();
+                            }
+                        });
                         Thread.sleep(fps);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -96,7 +101,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
                 try {
                     while (true) {
                         time++;
-                        onAction.onTime(time);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                onAction.onTime(time);
+                            }
+                        });
                         Thread.sleep(1);
                     }
                 } catch (InterruptedException e) {
