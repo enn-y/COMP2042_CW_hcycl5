@@ -45,7 +45,7 @@ public class Ball extends Circle {
                 //TODO gameover
                 main.numberOfHearts--; //Decrement the heart
                 new Score().show(main.windowWidth / 2, main.windowHeight / 2, -1, main);
-                main.checkGameOver();
+                checkGameOver();
             }
             //return;
         }
@@ -121,6 +121,20 @@ public class Ball extends Circle {
         }
         if (main.collideToBottomBlock) {
             goDownBall = true;
+        }
+    }
+
+    public void checkGameOver() {
+        if (!main.goldBall && main.numberOfHearts == 0) {
+            new Score().showGameOver(main);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            main.engine.stop();
         }
     }
 

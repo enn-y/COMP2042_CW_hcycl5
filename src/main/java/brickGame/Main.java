@@ -434,20 +434,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         this.currentTime = time;
     }
 
-    public void checkGameOver() {
-        if (!goldBall && numberOfHearts == 0) {
-            new Score().showGameOver(this);
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            engine.stop();
-        }
-    }
-
     public Ball getBall() {
         return ball;
     }
