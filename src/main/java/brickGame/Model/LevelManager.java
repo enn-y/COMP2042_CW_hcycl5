@@ -43,4 +43,12 @@ public class LevelManager {
             }
         });
     }
+
+    public void blockDestroyedCount() { //Check the number of destroyed blocks
+        if (main.destroyedBlockCount == main.blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
+            //TODO win level todo...
+            //System.out.println("You Win");
+            nextLevel();
+        }
+    }
 }

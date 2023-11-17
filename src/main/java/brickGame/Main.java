@@ -26,6 +26,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     KeyboardControls keyboardControls; //KeyboardControls object
     ButtonControls buttonControls; //ButtonControls object
     GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
+    LevelManager levelManager; //LevelManager object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -173,15 +174,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         collideToTopBlock = false;
     }
 
-    void blockDestroyedCount() { //Check the number of destroyed blocks
-        if (destroyedBlockCount == blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
-            //TODO win level todo...
-            LevelManager levelManager = new LevelManager(this, ball);
-            //System.out.println("You Win");
-            levelManager.nextLevel();
-        }
-    }
-
     public void saveGame() { //Save the game
         new Thread(new Runnable() {
             @Override
@@ -325,10 +317,11 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
+        levelManager = new LevelManager(this, ball);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                blockDestroyedCount();
+                levelManager.blockDestroyedCount();
                 ball.setPhysicsToBall();
 
                 if (currentTime - goldTime > 5000) { //Gold Ball
