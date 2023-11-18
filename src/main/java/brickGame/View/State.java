@@ -217,7 +217,6 @@ public class State { //Methods include: read
             main.goldBall = false;
             main.existHeartBlock = false;
             main.hitTime = 0;
-            main.hitTime = 0;
             main.currentTime = 0;
             goldTime = 0;
 
