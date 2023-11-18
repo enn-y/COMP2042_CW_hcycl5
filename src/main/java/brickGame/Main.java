@@ -4,6 +4,7 @@ import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
 import brickGame.Model.Serializables.BlockSerializable;
+import brickGame.View.GameScreen;
 import brickGame.View.State;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,6 +28,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     ButtonControls buttonControls; //ButtonControls object
     GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
     LevelManager levelManager; //LevelManager object
+    GameScreen gameScreen; //GameScreen object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -60,9 +62,9 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
             Color.TAN,
     };
     public  Pane root;
-    Label scoreLabel; //Label to display score
-    Label heartLabel; //Label to display heart
-    private Label levelLabel; //Label to display level
+    public Label scoreLabel; //Label to display score
+    public Label heartLabel; //Label to display heart
+    public Label levelLabel; //Label to display level
     public boolean loadFromSavedFile = false; //Status of loading from saved file
     public Stage primaryStage; //Stage is the top level JavaFX container, the window
     public Button loadButton = null; //Button to load game
@@ -76,6 +78,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         paddle = new Paddle(this);
         keyboardControls = new KeyboardControls(this, paddle);
         gameObjectInitializer = new GameObjectInitializer(this, ball, paddle, keyboardControls); //Initialize the initializer
+        gameScreen = new GameScreen(this); //Initialize the game screen
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
@@ -91,37 +94,12 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
             gameObjectInitializer.initializePaddle(); //Initialize the paddle
             gameObjectInitializer.initializeBlocks(); //Initialize the blocks
             gameObjectInitializer.initializeKeyboardController(); //Initialize the controller
-
-            loadButton = new Button("Load Game"); //Initialize the load button
-            loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
-            loadButton.setTranslateY(300); //Set the size of the load button, y-coordinate (300)
-
-            newGameButton = new Button("Start New Game"); //Initialize the new game button
-            newGameButton.setTranslateX(220); //Set the size of the new game button, x-coordinate (220)
-            newGameButton.setTranslateY(340); //Set the size of the new game button, y-coordinate (340)
+            gameScreen.AddButtons();
         }
 
-        root = new Pane(); //Initialize the root pane, root is the instance of the JavaFX Pane class where Pane is a container to hold JavaFX elements
-        scoreLabel = new Label("Score: " + currentScore); //Initialize the score label
-        levelLabel = new Label("Level: " + currentLevel); //Initialize the level label
-        levelLabel.setTranslateY(20); //Set the size of the level label, y-coordinate (20)
-        heartLabel = new Label("Heart : " + numberOfHearts); //Initialize the heart label
-        heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
-        if (!loadFromSavedFile) { //If NOT loading from saved file
-            root.getChildren().addAll(paddle, ball, scoreLabel, heartLabel, levelLabel, newGameButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
-        } else { //But if IT IS loading from saved file
-            root.getChildren().addAll(paddle, ball, scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
-        }
-        for (Block block : blocks) { //For each block in the blocks ArrayList
-            root.getChildren().add(block.rect); //Add the block to the root pane
-        }
-        Scene scene = new Scene(root, windowWidth, windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph
-        scene.getStylesheets().add("style.css"); //Add the style.css file to the scene
-        scene.setOnKeyPressed(keyboardControls); //Listen for key presses
-
-        primaryStage.setTitle("Game"); //Set the title of the game window
-        primaryStage.setScene(scene); //Set the scene of the game window
-        primaryStage.show(); //Show the game window
+        gameScreen.AddLabels(); //Add the labels
+        gameScreen.AddElements(); //Add the elements
+        gameScreen.CreateScene(); //Create the scene
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             if (currentLevel > 1 && currentLevel < 18) { //If the level is greater than 1 and less than 18
@@ -274,5 +252,8 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
 
     public Paddle getPaddle() {
         return paddle;
+    }
+    public KeyboardControls getKeyboardControls() {
+        return keyboardControls;
     }
 }
