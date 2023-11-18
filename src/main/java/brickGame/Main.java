@@ -110,8 +110,6 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         launch(args); //LAUNCH GAME
     }
 
-    //float oldXBreak; //Variable for the old x-coordinate of the paddle, NO USAGES - CHECK IF CAN DELETE
-
     @Override
     public void onInit() {
     }
