@@ -25,10 +25,11 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
-    ButtonControls buttonControls; //ButtonControls object
+    public ButtonControls buttonControls; //ButtonControls object
     GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
     LevelManager levelManager; //LevelManager object
     GameScreen gameScreen; //GameScreen object
+    State state; //State object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -79,6 +80,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         keyboardControls = new KeyboardControls(this, paddle);
         gameObjectInitializer = new GameObjectInitializer(this, ball, paddle, keyboardControls); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
+        state = new State(this, ball, paddle); //Initialize the state
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
@@ -101,28 +103,7 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
         gameScreen.AddElements(); //Add the elements
         gameScreen.CreateScene(); //Create the scene
 
-        if (!loadFromSavedFile) { //If NOT loading from saved file
-            if (currentLevel > 1 && currentLevel < 18) { //If the level is greater than 1 and less than 18
-                loadButton.setVisible(false); //Hide the load button
-                newGameButton.setVisible(false); //Hide the new game button
-                engine = new GameEngine(); //Initialize the game engine, to start the game
-                engine.setOnAction(this); //Listen for events
-                engine.setFps(120); //Set FPS
-                engine.start(); //Start the game engine
-            }
-
-            buttonControls = new ButtonControls(this);
-
-            loadButton.setOnAction(buttonControls.createLoadButtonHandler());
-            newGameButton.setOnAction(buttonControls.createNewGameButtonHandler());
-
-        } else { //But if IT IS loading from saved file
-            engine = new GameEngine(); //Initialize the game engine, to start the game
-            engine.setOnAction(this); //Listen for events
-            engine.setFps(120); //Set FPS
-            engine.start(); //Start the game engine
-            loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game
-        }
+        state.checkLoadFromSavedFile();
     }
 
     public static void main(String[] args) { //Main method HERE
@@ -255,5 +236,13 @@ public class Main extends Application implements GameEngine.OnAction { //Applica
     }
     public KeyboardControls getKeyboardControls() {
         return keyboardControls;
+    }
+
+    public GameEngine getEngine(){
+        return engine;
+    }
+
+    public ButtonControls getButtonControls(){
+        return buttonControls;
     }
 }
