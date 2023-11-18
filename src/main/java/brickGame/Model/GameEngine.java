@@ -1,6 +1,7 @@
 package brickGame.Model;
 
 
+import brickGame.Model.Interface.OnAction;
 import javafx.application.Platform;
 
 public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
@@ -115,15 +116,5 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             }
         });
         timeThread.start();
-    }
-
-    public interface OnAction {
-        void onUpdate();
-
-        void onInit();
-
-        void onPhysicsUpdate();
-
-        void onTime(long time);
     }
 }

@@ -3,6 +3,7 @@ package brickGame;
 import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
+import brickGame.Model.Interface.OnAction;
 import brickGame.Model.Serializables.BlockSerializable;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
@@ -21,7 +22,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Main extends Application implements GameEngine.OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
+public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
