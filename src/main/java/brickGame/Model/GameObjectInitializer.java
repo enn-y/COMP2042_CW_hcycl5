@@ -42,7 +42,7 @@ public class GameObjectInitializer {
 
     public void initializeBlocks() { //Initialize the blocks
         for (int row = 0; row < 4; row++) { //For each row
-            for (int column = 0; column < main.currentLevel; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
+            for (int column = 0; column < main.currentLevel+1; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
                 int r = new Random().nextInt(500); //Random number generator
                 if (r % 5 == 0) { //If the remainder is 0
                     continue; //Block will not be created
@@ -59,6 +59,12 @@ public class GameObjectInitializer {
                     }
                 } else if (r % 10 == 3) { //BUT IF the remainder is 3
                     type = Block.BLOCK_STAR; //Create a star block
+                } else if (r % 10 == 4) { //BUT IF the remainder is 4
+                    type = Block.BLOCK_SLIME;
+                } else if (r % 10 == 5) { //BUT IF the remainder is 5
+                    type = Block.BLOCK_QUESTION;
+                } else if (r % 10 == 6) { //BUT IF the remainder is 6
+                    type = Block.BLOCK_EXPLOSION;
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = Block.BLOCK_NORMAL; //Create a normal block
                 }

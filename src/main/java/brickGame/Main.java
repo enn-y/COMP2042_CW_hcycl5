@@ -203,7 +203,25 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         numberOfHearts++;
                     }
 
-                    //Add new if statements for blocks here
+                    if(block.type == Block.BLOCK_SLIME){
+                        numberOfHearts++;
+                    }
+
+                    if(block.type == Block.BLOCK_QUESTION){
+                        Random random = new Random();
+                        int r = random.nextInt(100);
+                        if(r % 2 == 0){
+                            System.out.println("You got a heart!");
+                            numberOfHearts++;
+                        }else{
+                            numberOfHearts--;
+                            System.out.println("You lost a heart!");
+                        }
+                    }
+
+                    if(block.type == Block.BLOCK_EXPLOSION){
+                        numberOfHearts--;
+                    }
 
                     if (hitCode == Block.HIT_RIGHT) {
                         ball.collideToRightBlock = true;

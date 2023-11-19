@@ -83,7 +83,7 @@ public class Block implements Serializable { //Methods include: Block, draw, che
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == BLOCK_QUESTION) {
-            Image image = new Image("question.jpg");
+            Image image = new Image("images.png");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         }
