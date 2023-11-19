@@ -39,6 +39,9 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int BLOCK_CHOCOLATE = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
+    public static int BLOCK_SLIME = 103; //slime block
+    public static int BLOCK_EXPLOSION = 104; //explosion block
+    public static int BLOCK_QUESTION = 105; //question block
 
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -71,10 +74,22 @@ public class Block implements Serializable { //Methods include: Block, draw, che
             Image image = new Image("star.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
-        } else {
+        }  else if (type == BLOCK_SLIME) {
+            Image image = new Image("slime.jpg");
+            ImagePattern pattern = new ImagePattern(image);
+            rect.setFill(pattern);
+        } else if (type == BLOCK_EXPLOSION) {
+            Image image = new Image("explosion.jpg");
+            ImagePattern pattern = new ImagePattern(image);
+            rect.setFill(pattern);
+        } else if (type == BLOCK_QUESTION) {
+            Image image = new Image("question.jpg");
+            ImagePattern pattern = new ImagePattern(image);
+            rect.setFill(pattern);
+        }
+        else {
             rect.setFill(color);
         }
-
     }
 
     /*public int checkHitToBlock(double xBall, double yBall) {

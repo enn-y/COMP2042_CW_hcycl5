@@ -20,7 +20,7 @@ public class Bonus implements Serializable { //Methods include: Bonus and draw, 
         x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15; //set x coordinate of bonus item
         y = (row * (Block.getHeight())) + Block.getPaddingTop() + (Block.getHeight() / 2) - 15; //set y coordinate of bonus item
 
-        create(); //draw bonus item
+        create();
     }
 
     private void create() {

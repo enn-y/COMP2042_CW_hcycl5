@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-    Ball ball; //Ball object
+    public Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
     public ButtonControls buttonControls; //ButtonControls object
@@ -162,7 +162,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 for (Bonus choco : bonusItems) { //Bonus Items
                     choco.chocolateBlock.setY(choco.y); //Set the y-coordinate of the bonus item
                 }
-
             }
         });
 
@@ -204,6 +203,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         numberOfHearts++;
                     }
 
+                    //Add new if statements for blocks here
+
                     if (hitCode == Block.HIT_RIGHT) {
                         ball.collideToRightBlock = true;
                     } else if (hitCode == Block.HIT_BOTTOM) {
@@ -226,22 +227,33 @@ public class Main extends Application implements OnAction { //Application: JavaF
         this.currentTime = time;
     }
 
+    //Get Methods
+
     public Ball getBall() {
         return ball;
     }
-
     public Paddle getPaddle() {
         return paddle;
     }
     public KeyboardControls getKeyboardControls() {
         return keyboardControls;
     }
-
-    public GameEngine getEngine(){
-        return engine;
-    }
-
     public ButtonControls getButtonControls(){
         return buttonControls;
+    }
+    public GameObjectInitializer getGameObjectInitializer(){
+        return gameObjectInitializer;
+    }
+    public LevelManager getLevelManager(){
+        return levelManager;
+    }
+    public GameScreen getGameScreen(){
+        return gameScreen;
+    }
+    public State getState(){
+        return state;
+    }
+    public GameEngine getEngine(){
+        return engine;
     }
 }
