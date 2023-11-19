@@ -205,7 +205,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
-                        numberOfHearts++;
+                        numberOfHearts--;
                     }
 
                     if(block.type == Block.BLOCK_QUESTION){
@@ -213,8 +213,10 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         int r = random.nextInt(100);
                         if(r % 2 == 0){
                             System.out.println("You got a heart!");
+                            new Score().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
                             numberOfHearts++;
                         }else{
+                            new Score().show(block.blockXCoordinate, block.blockYCoordinate, -1, this);
                             numberOfHearts--;
                             System.out.println("You lost a heart!");
                         }
