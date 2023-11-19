@@ -86,6 +86,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
             if (currentLevel >1){
+                displayGameOverScreen();
                 new Score().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
             }
             if (currentLevel == 18) {
@@ -243,6 +244,31 @@ public class Main extends Application implements OnAction { //Application: JavaF
     @Override
     public void onTime(long time) { //Update the time
         this.currentTime = time;
+    }
+
+    public void displayGameOverScreen(){
+        Platform.runLater(() -> {
+            Pane gameOverLayout = new Pane();
+            Label gameOverLabel = new Label("Game Over");
+            Label scoreLabel = new Label("Score: " + currentScore);
+            Label levelLabel = new Label("Level: " + currentLevel);
+            Label heartsLabel = new Label("Hearts: " + numberOfHearts);
+
+            gameOverLabel.setLayoutX(50);
+            gameOverLabel.setLayoutY(50);
+            scoreLabel.setLayoutX(50);
+            scoreLabel.setLayoutY(80);
+            levelLabel.setLayoutX(50);
+            levelLabel.setLayoutY(110);
+            heartsLabel.setLayoutX(50);
+            heartsLabel.setLayoutY(140);
+
+            gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel);
+            Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
+
+            primaryStage.setScene(gameOverScene);
+            primaryStage.show();
+        });
     }
 
     //Get Methods
