@@ -205,6 +205,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
 
                     if (block.type == Block.BLOCK_HEART) {
                         numberOfHearts++;
+                        getScore().showMessage("You got a heart!", this);
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
@@ -226,10 +227,10 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         int r = random.nextInt(100);
                         if (r % 2 == 0){
                             numberOfHearts++;
-                            System.out.println("You got a heart!");
+                            getScore().showMessage("You got a heart!", this);
                         } else {
                             numberOfHearts--;
-                            System.out.println("You lost a heart!");
+                            getScore().showMessage("You lost a heart!", this);
                         }
                         ball.checkGameOver();
                     }
