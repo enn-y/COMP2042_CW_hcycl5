@@ -33,6 +33,7 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
             case SPACE:
                 // If the spacebar is pressed, pause or resume the game
                 main.getEngine().pause();
+                main.getScore().showMessage("Game Paused", main);
                 break;
             case S: //If the S key is pressed
                 state = new State(main, ball, paddle);

@@ -153,19 +153,4 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             }
         });
     }
-
-    public void showPauseGame(final Main main){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Label label = new Label("Game Paused");
-                label.setTranslateX(200);
-                label.setTranslateY(250);
-                label.setScaleX(2);
-                label.setScaleY(2);
-
-                main.root.getChildren().addAll(label);
-            }
-        });
-    }
 }
