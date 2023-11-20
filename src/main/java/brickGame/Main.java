@@ -235,8 +235,17 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_EXPLOSION){
-                        numberOfHearts--;
-                        ball.checkGameOver();
+                        ball.setVisible(false);
+
+                        // Set up a timer to make the ball visible again after 3 seconds
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                // Make the ball visible again after 3 seconds
+                                ball.setVisible(true);
+                            }
+                        }, 3000);
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
