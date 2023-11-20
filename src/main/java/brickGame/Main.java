@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     public Ball ball; //Ball object
@@ -206,9 +208,17 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
-                        numberOfHearts--;
-                        //ball.ballHorizontalSpeed *= 0.5;
-                        //ball.ballVerticalSpeed *= 0.5;
+                        ball.ballHorizontalSpeed *= 0.5;
+                        ball.ballVerticalSpeed *= 0.5;
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                // Restore the original speed after 3 seconds
+                                ball.ballHorizontalSpeed = 1.000;
+                                ball.ballVerticalSpeed = 1.000;
+                            }
+                        }, 3000);
                     }
 
                     if(block.type == Block.BLOCK_QUESTION){

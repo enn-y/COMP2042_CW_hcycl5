@@ -61,9 +61,9 @@ public class GameObjectInitializer {
                     type = Block.BLOCK_STAR; //Create a star block
                 } else if (r % 10 == 4) { //BUT IF the remainder is 4
                     type = Block.BLOCK_SLIME;
-                } else if (r % 10 == 5) { //BUT IF the remainder is 5
+                } else if (r % 10 == 6) { //BUT IF the remainder is 5
                     type = Block.BLOCK_QUESTION;
-                } else if (r % 10 == 6) { //BUT IF the remainder is 6
+                } else if (r % 10 == 5) { //BUT IF the remainder is 6
                     type = Block.BLOCK_EXPLOSION;
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = Block.BLOCK_NORMAL; //Create a normal block
