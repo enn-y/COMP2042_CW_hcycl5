@@ -9,6 +9,8 @@ import brickGame.View.GameScreen;
 import brickGame.View.State;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -86,7 +88,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
             if (currentLevel >1){
-                displayGameOverScreen();
                 new Score().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
             }
             if (currentLevel == 18) {
@@ -205,25 +206,27 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
-                        numberOfHearts--;
+                        //numberOfHearts--;
+                        ball.ballHorizontalSpeed *= 0.5;
+                        ball.ballVerticalSpeed *= 0.5;
                     }
 
                     if(block.type == Block.BLOCK_QUESTION){
                         Random random = new Random();
                         int r = random.nextInt(100);
-                        if(r % 2 == 0){
-                            System.out.println("You got a heart!");
-                            new Score().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
+                        if (r % 2 == 0){
                             numberOfHearts++;
-                        }else{
-                            new Score().show(block.blockXCoordinate, block.blockYCoordinate, -1, this);
+                            System.out.println("You got a heart!");
+                        } else {
                             numberOfHearts--;
                             System.out.println("You lost a heart!");
                         }
+                        ball.checkGameOver();
                     }
 
                     if(block.type == Block.BLOCK_EXPLOSION){
                         numberOfHearts--;
+                        ball.checkGameOver();
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
@@ -246,31 +249,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
     @Override
     public void onTime(long time) { //Update the time
         this.currentTime = time;
-    }
-
-    public void displayGameOverScreen(){
-        Platform.runLater(() -> {
-            Pane gameOverLayout = new Pane();
-            Label gameOverLabel = new Label("Game Over");
-            Label scoreLabel = new Label("Score: " + currentScore);
-            Label levelLabel = new Label("Level: " + currentLevel);
-            Label heartsLabel = new Label("Hearts: " + numberOfHearts);
-
-            gameOverLabel.setLayoutX(50);
-            gameOverLabel.setLayoutY(50);
-            scoreLabel.setLayoutX(50);
-            scoreLabel.setLayoutY(80);
-            levelLabel.setLayoutX(50);
-            levelLabel.setLayoutY(110);
-            heartsLabel.setLayoutX(50);
-            heartsLabel.setLayoutY(140);
-
-            gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel);
-            Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
-
-            primaryStage.setScene(gameOverScene);
-            primaryStage.show();
-        });
     }
 
     //Get Methods
@@ -301,5 +279,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
     }
     public GameEngine getEngine(){
         return engine;
+    }
+    public Score getScore(){
+        return new Score();
     }
 }

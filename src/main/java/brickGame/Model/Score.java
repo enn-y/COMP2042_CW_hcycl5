@@ -5,8 +5,10 @@ import brickGame.View.State;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 //import sun.plugin2.message.Message;
 
 public class Score { //Methods include: show, showMessage, showGameOver, and showWin
@@ -96,11 +98,20 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Label label = new Label("Game Over :(");
-                label.setTranslateX(200);
-                label.setTranslateY(250);
-                label.setScaleX(2);
-                label.setScaleY(2);
+                Pane gameOverLayout = new Pane();
+                Label gameOverLabel = new Label("Game Over");
+                Label scoreLabel = new Label("Score: " + main.currentScore);
+                Label levelLabel = new Label("Level: " + main.currentLevel);
+                Label heartsLabel = new Label("Hearts: " + main.numberOfHearts);
+
+                gameOverLabel.setLayoutX(50);
+                gameOverLabel.setLayoutY(50);
+                scoreLabel.setLayoutX(50);
+                scoreLabel.setLayoutY(80);
+                levelLabel.setLayoutX(50);
+                levelLabel.setLayoutY(110);
+                heartsLabel.setLayoutX(50);
+                heartsLabel.setLayoutY(140);
 
                 Button restart = new Button("Restart");
                 restart.setTranslateX(220);
@@ -113,7 +124,11 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                     }
                 });
 
-                main.root.getChildren().addAll(label, restart);
+                gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart);
+                Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
+
+                main.primaryStage.setScene(gameOverScene);
+                main.primaryStage.show();
             }
         });
     }
