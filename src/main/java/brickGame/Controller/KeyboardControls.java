@@ -30,6 +30,10 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
             case DOWN:
                 //setPhysicsToBall();
                 break;
+            case SPACE:
+                // If the spacebar is pressed, pause or resume the game
+                main.getEngine().pause();
+                break;
             case S: //If the S key is pressed
                 state = new State(main, ball, paddle);
                 state.saveGame(); //Save the game

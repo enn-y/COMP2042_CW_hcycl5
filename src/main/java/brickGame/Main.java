@@ -206,9 +206,9 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
-                        //numberOfHearts--;
-                        ball.ballHorizontalSpeed *= 0.5;
-                        ball.ballVerticalSpeed *= 0.5;
+                        numberOfHearts--;
+                        //ball.ballHorizontalSpeed *= 0.5;
+                        //ball.ballVerticalSpeed *= 0.5;
                     }
 
                     if(block.type == Block.BLOCK_QUESTION){

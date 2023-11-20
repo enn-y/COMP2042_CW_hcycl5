@@ -117,4 +117,20 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
         });
         timeThread.start();
     }
+
+    public void pause(){
+        Platform.runLater(() -> {
+            if (!isStopped) {
+                isStopped = true;
+                updateThread.suspend();
+                physicsThread.suspend();
+                timeThread.suspend();
+            } else {
+                isStopped = false;
+                updateThread.resume();
+                physicsThread.resume();
+                timeThread.resume();
+            }
+        });
+    }
 }
