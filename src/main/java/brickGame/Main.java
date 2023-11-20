@@ -208,8 +208,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_SLIME){
-                        ball.ballHorizontalSpeed *= 0.5;
-                        ball.ballVerticalSpeed *= 0.5;
+                        ball.ballHorizontalSpeed *= 0.3;
+                        ball.ballVerticalSpeed *= 0.3;
                         Timer timer = new Timer();
                         timer.schedule(new TimerTask() {
                             @Override
@@ -257,7 +257,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     } else if (hitCode == Block.HIT_TOP) {
                         ball.collideToTopBlock = true;
                     }
-                    System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }
                 //TODO hit to break and some work here....
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");

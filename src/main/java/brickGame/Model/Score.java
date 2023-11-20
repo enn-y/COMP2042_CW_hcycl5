@@ -130,7 +130,18 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                     }
                 });
 
-                gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart);
+                Button exit = new Button("Exit");
+                exit.setTranslateX(300);
+                exit.setTranslateY(300);
+                exit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Exit the game (close the application)
+                        main.primaryStage.close();
+                    }
+                });
+
+                gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart, exit);
                 Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
 
                 main.primaryStage.setScene(gameOverScene);
