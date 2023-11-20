@@ -17,7 +17,7 @@ public class GameScreen {
     public void AddButtons(){
         main.loadButton = new Button("Load Game"); //Initialize the load button
         main.loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
-        main.loadButton.setTranslateY(300); //Set the size of the load button, y-coordinate (300)
+        main.loadButton.setTranslateY(310); //Set the size of the load button, y-coordinate (300)
 
         main.newGameButton = new Button("Start New Game"); //Initialize the new game button
         main.newGameButton.setTranslateX(220); //Set the size of the new game button, x-coordinate (220)
@@ -35,7 +35,7 @@ public class GameScreen {
 
     public void AddElements(){
         if (!main.loadFromSavedFile) { //If NOT loading from saved file
-            main.root.getChildren().addAll(main.getPaddle(), main.getBall(), main.scoreLabel, main.heartLabel, main.levelLabel, main.newGameButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
+            main.root.getChildren().addAll(main.getPaddle(), main.getBall(), main.scoreLabel, main.heartLabel, main.levelLabel, main.newGameButton, main.loadButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
         } else { //But if IT IS loading from saved file
             main.root.getChildren().addAll(main.getPaddle(), main.getBall(), main.scoreLabel, main.heartLabel, main.levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
         }
