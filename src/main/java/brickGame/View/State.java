@@ -103,6 +103,7 @@ public class State { //Methods include: read
                 ObjectOutputStream outputStream = null;
                 try { //Try to save the game, save all the variables
                     ball = new Ball(main);
+                    paddle = new Paddle(main);
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
 
                     outputStream.writeInt(main.currentLevel);
@@ -164,10 +165,17 @@ public class State { //Methods include: read
 
     public void loadGame() { //Load the game
         //State loadSave = new State();
+        ball = new Ball(main);
+        paddle = new Paddle(main);
         read(); //Read the saved file, assign the variables to the saved variables
 
         main.existHeartBlock = isExistHeartBlock;
         main.goldBall = isGoldStatus;
+        main.currentLevel = level;
+        main.currentScore = score;
+        main.numberOfHearts = heart;
+        destroyedBlockCount = destroyedBlockCount;
+
         ball.goDownBall = goDownBall;
         ball.goRightBall = goRightBall;
         ball.collideToPaddle = collideToPaddle;
@@ -178,18 +186,15 @@ public class State { //Methods include: read
         ball.collideToBottomBlock = collideToBottomBlock;
         ball.collideToLeftBlock = collideToLeftBlock;
         ball.collideToTopBlock = collideToTopBlock;
-        main.currentLevel = level;
-        main.currentScore = score;
-        main.numberOfHearts = heart;
-        destroyedBlockCount = destroyedBlockCount;
         ball.ballXCoordinate = xBall;
         ball.ballYCoordinate = yBall;
+        ball.ballHorizontalSpeed = vX;
+
         paddle.paddleXPosition = xBreak;
         paddle.paddleYPosition = yBreak;
         paddle.paddleCenter = centerBreakX;
         main.currentTime = time;
         goldTime = goldTime;
-        ball.ballHorizontalSpeed = vX;
 
         blocks.clear();
         main.bonusItems.clear();
