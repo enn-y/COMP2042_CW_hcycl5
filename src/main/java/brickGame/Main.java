@@ -32,7 +32,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
     public Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
-    public ButtonControls buttonControls; //ButtonControls object
+    ButtonControls buttonControls; //ButtonControls object
     GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
     LevelManager levelManager; //LevelManager object
     GameScreen gameScreen; //GameScreen object
@@ -88,6 +88,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
         gameObjectInitializer = new GameObjectInitializer(this); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
+        buttonControls = new ButtonControls(this); //Initialize the button controls
+        engine = new GameEngine(); //Initialize the game engine
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
@@ -234,7 +236,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_EXPLOSION){
-                        numberOfHearts--;
                         ball.setVisible(false);
 
                         // Set up a timer to make the ball visible again after 3 seconds
@@ -245,8 +246,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                                 // Make the ball visible again after 3 seconds
                                 ball.setVisible(true);
                             }
-                        }, 2000);
-                        ball.checkGameOver();
+                        }, 1000);
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {

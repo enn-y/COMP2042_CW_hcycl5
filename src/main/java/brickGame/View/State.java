@@ -234,19 +234,17 @@ public class State { //Methods include: read
             if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
                 main.loadButton.setVisible(false); //Hide the load button
                 main.newGameButton.setVisible(false); //Hide the new game button
-                main.engine = new GameEngine(); //Initialize the game engine, to start the game
+                //main.engine = new GameEngine(); //Initialize the game engine, to start the game
                 main.getEngine().setOnAction(main); //Listen for events
                 main.getEngine().setFps(120); //Set FPS
                 main.getEngine().start(); //Start the game engine
             }
 
-            main.buttonControls = new ButtonControls(main);
-
             main.loadButton.setOnAction(main.getButtonControls().createLoadButtonHandler());
             main.newGameButton.setOnAction(main.getButtonControls().createNewGameButtonHandler());
 
         } else { //But if IT IS loading from saved file
-            main.engine = new GameEngine(); //Initialize the game engine, to start the game
+            //main.engine = new GameEngine(); //Initialize the game engine, to start the game
             main.getEngine().setOnAction(main); //Listen for events
             main.getEngine().setFps(120); //Set FPS
             main.getEngine().start(); //Start the game engine
