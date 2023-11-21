@@ -84,7 +84,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
 
         ball = new Ball(this);
         paddle = new Paddle(this);
-        keyboardControls = new KeyboardControls(this, paddle);
+        keyboardControls = new KeyboardControls(this);
         gameObjectInitializer = new GameObjectInitializer(this); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
@@ -245,7 +245,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                                 // Make the ball visible again after 3 seconds
                                 ball.setVisible(true);
                             }
-                        }, 3000);
+                        }, 2000);
                         ball.checkGameOver();
                     }
 

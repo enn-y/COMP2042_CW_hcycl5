@@ -10,22 +10,18 @@ import javafx.scene.input.KeyEvent;
 public class KeyboardControls implements EventHandler<KeyEvent> {
 
     Main main;
-    Paddle paddle;
-    Ball ball;
-    State state;
 
-    public KeyboardControls(Main main, Paddle paddle) {
+    public KeyboardControls(Main main) {
         this.main = main;
-        this.paddle = paddle;
     }
 
     public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
         switch (event.getCode()) { //Switch statement for key presses
             case LEFT: //If the left arrow key is pressed
-                paddle.move(paddle.paddleLEFT); //Move the paddle to the left
+                main.getPaddle().move(main.getPaddle().paddleLEFT); //Move the paddle to the left
                 break;
             case RIGHT: //If the right arrow key is pressed
-                paddle.move(paddle.paddleRIGHT); //Move the paddle to the right
+                main.getPaddle().move(main.getPaddle().paddleRIGHT); //Move the paddle to the right
                 break;
             case DOWN:
                 //setPhysicsToBall();
@@ -42,8 +38,7 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
                 main.getState().restartGame();
                 break;
             case S: //If the S key is pressed
-                state = new State(main);
-                state.saveGame(); //Save the game
+                main.getState().saveGame(); //Save the game
                 break;
         }
     }
