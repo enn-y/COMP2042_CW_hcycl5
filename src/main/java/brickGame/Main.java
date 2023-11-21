@@ -91,7 +91,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
         state = new State(this); //Initialize the state
         buttonControls = new ButtonControls(this); //Initialize the button controls
         engine = new GameEngine(); //Initialize the game engine
-        score = new Score();
+        score = new Score(); //Initialize the score
+        levelManager = new LevelManager(this); //Initialize the level manager
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
@@ -125,7 +126,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        levelManager = new LevelManager(this);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -180,7 +180,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 if (hitCode != Block.NO_HIT) {
                     currentScore += 1;
 
-                    new Score().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
+                    getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -202,7 +202,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
 
                     if (block.type == Block.BLOCK_STAR && !goldBall) {
                         goldTime = currentTime;
-                        ball.setFill(new ImagePattern(new Image("goldball.png")));
+                        getBall().setFill(new ImagePattern(new Image("goldball.png")));
                         System.out.println("gold ball");
                         root.getStyleClass().add("goldRoot");
                         goldBall = true;
@@ -252,13 +252,13 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
-                        ball.collideToRightBlock = true;
+                        getBall().collideToRightBlock = true;
                     } else if (hitCode == Block.HIT_BOTTOM) {
-                        ball.collideToBottomBlock = true;
+                        getBall().collideToBottomBlock = true;
                     } else if (hitCode == Block.HIT_LEFT) {
-                        ball.collideToLeftBlock = true;
+                        getBall().collideToLeftBlock = true;
                     } else if (hitCode == Block.HIT_TOP) {
-                        ball.collideToTopBlock = true;
+                        getBall().collideToTopBlock = true;
                     }
                 }
                 //TODO hit to break and some work here....
