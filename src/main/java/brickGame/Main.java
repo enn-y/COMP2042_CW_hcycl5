@@ -121,7 +121,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
     }
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        levelManager = new LevelManager(this, ball);
+        levelManager = new LevelManager(this);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

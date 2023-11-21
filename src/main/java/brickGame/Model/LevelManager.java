@@ -6,11 +6,9 @@ import javafx.application.Platform;
 public class LevelManager {
 
     Main main;
-    Ball ball;
 
-    public LevelManager(Main main, Ball ball) {
+    public LevelManager(Main main) {
         this.main = main;
-        this.ball = ball;
     }
 
     public void nextLevel() { //Go to the next level
@@ -18,11 +16,11 @@ public class LevelManager {
             @Override
             public void run() {
                 try {
-                    ball.ballHorizontalSpeed = 1.000;
+                    main.getBall().ballHorizontalSpeed = 1.000;
 
                     //engine.stop();
-                    ball.resetCollideFlags();
-                    ball.goDownBall = true;
+                    main.getBall().resetCollideFlags();
+                    main.getBall().goDownBall = true;
 
                     main.goldBall = false;
                     main.existHeartBlock = false;
