@@ -59,16 +59,15 @@ public class Ball extends Circle {
             //return;
         }
 
-        Paddle paddle = main.getPaddle();
-        if (ballYCoordinate > paddle.paddleYPosition - main.getBall().ballRadius*1.5) {
+        if (ballYCoordinate > main.getPaddle().paddleYPosition - main.getBall().ballRadius*1.5) {
             //System.out.println("Collide1");
-            if (ballXCoordinate >= paddle.paddleXPosition && ballXCoordinate <= paddle.paddleXPosition + paddle.paddleWidth) {
+            if (ballXCoordinate >= main.getPaddle().paddleXPosition && ballXCoordinate <= main.getPaddle().paddleXPosition + main.getPaddle().paddleWidth) {
                 main.hitTime = main.currentTime;
                 resetCollideFlags();
                 collideToPaddle = true;
                 goDownBall = false;
 
-                double relation = (ballXCoordinate - paddle.paddleCenter) / (paddle.paddleWidth / 2);
+                double relation = (ballXCoordinate - main.getPaddle().paddleCenter) / (main.getPaddle().paddleWidth / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -81,7 +80,7 @@ public class Ball extends Circle {
                     //System.out.println("vX " + vX);
                 }
 
-                if (ballXCoordinate - paddle.paddleCenter > 0) {
+                if (ballXCoordinate - main.getPaddle().paddleCenter > 0) {
                     collideToPaddleAndMoveToRight = true;
                 } else {
                     collideToPaddleAndMoveToRight = false;
