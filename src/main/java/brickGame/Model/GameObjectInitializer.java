@@ -9,35 +9,25 @@ import java.util.Random;
 
 public class GameObjectInitializer {
     Main main;
-    Ball ball;
-    Paddle paddle;
-    KeyboardControls keyboardControls;
 
-    public GameObjectInitializer(Main main, Ball ball, Paddle paddle, KeyboardControls keyboardControls) {
+    public GameObjectInitializer(Main main) {
         this.main = main;
-        this.ball = ball;
-        this.paddle = paddle;
-        this.keyboardControls = keyboardControls;
     }
 
     public void initializeBall() { //Initialize the ball
         Random random = new Random(); //Random number generator
-        ball.setBallXCoordinate(random.nextInt(main.windowWidth) + 1); //Random x-coordinate of the ball
-        ball.setBallYCoordinate(random.nextInt(main.windowHeight - 200) + ((main.currentLevel + 1) * Block.getHeight()) + 15); //Random y-coordinate of the ball
-        ball.setCenterX(ball.getBallXCoordinate()); //Set the center x-coordinate of the ball
-        ball.setCenterY(ball.getBallYCoordinate());
-        ball.setRadius(ball.ballRadius); //Set the radius of the ball
-        ball.setFill(new ImagePattern(new Image("ball.png"))); //Using ball.png as the image of the ball
+        main.getBall().setBallXCoordinate(random.nextInt(main.windowWidth) + 1); //Random x-coordinate of the ball
+        main.getBall().setBallYCoordinate(random.nextInt(main.windowHeight - 200) + ((main.currentLevel + 1) * Block.getHeight()) + 15); //Random y-coordinate of the ball
+        main.getBall().setCenterX(main.getBall().getBallXCoordinate()); //Set the center x-coordinate of the ball
+        main.getBall().setCenterY(main.getBall().getBallYCoordinate());
+        main.getBall().setRadius(main.getBall().ballRadius); //Set the radius of the ball
+        main.getBall().setFill(new ImagePattern(new Image("ball.png"))); //Using ball.png as the image of the ball
     }
 
     public void initializePaddle() { //Initialize the paddle
-        paddle.setX(paddle.paddleXPosition); //Set the x-coordinate of the paddle
-        paddle.setY(paddle.paddleYPosition); //Set the y-coordinate of the paddle
-        paddle.setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
-    }
-
-    public void initializeKeyboardController() {
-        keyboardControls = new KeyboardControls(main, paddle);
+        main.getPaddle().setX(main.getPaddle().paddleXPosition); //Set the x-coordinate of the paddle
+        main.getPaddle().setY(main.getPaddle().paddleYPosition); //Set the y-coordinate of the paddle
+        main.getPaddle().setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
     }
 
     public void initializeBlocks() { //Initialize the blocks

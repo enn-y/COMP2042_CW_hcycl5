@@ -85,7 +85,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         ball = new Ball(this);
         paddle = new Paddle(this);
         keyboardControls = new KeyboardControls(this, paddle);
-        gameObjectInitializer = new GameObjectInitializer(this, ball, paddle, keyboardControls); //Initialize the initializer
+        gameObjectInitializer = new GameObjectInitializer(this); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
 
@@ -102,7 +102,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
             gameObjectInitializer.initializeBall(); //Initialize the ball
             gameObjectInitializer.initializePaddle(); //Initialize the paddle
             gameObjectInitializer.initializeBlocks(); //Initialize the blocks
-            gameObjectInitializer.initializeKeyboardController(); //Initialize the controller
             gameScreen.AddButtons();
         }
 
