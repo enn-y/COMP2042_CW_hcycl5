@@ -18,7 +18,7 @@ public class ButtonControls {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                state = new State(main, main.ball, main.getPaddle());
+                state = new State(main);
                 state.loadGame();
                 main.loadButton.setVisible(false);
                 main.newGameButton.setVisible(false);

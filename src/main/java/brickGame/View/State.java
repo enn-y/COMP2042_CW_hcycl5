@@ -19,8 +19,6 @@ import java.util.Random;
 public class State { //Methods include: read
 
     Main main;
-    Ball ball;
-    Paddle paddle;
     public boolean isExistHeartBlock;
     public boolean isGoldStatus;
     public boolean goDownBall;
@@ -46,10 +44,8 @@ public class State { //Methods include: read
     public long goldTime;
     public double vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
-    public State(Main main, Ball ball, Paddle paddle) {
+    public State(Main main) {
         this.main = main;
-        this.ball = ball;
-        this.paddle = paddle;
     }
 
     public void read() {
@@ -102,8 +98,6 @@ public class State { //Methods include: read
                 File file = new File(main.savePath);
                 ObjectOutputStream outputStream = null;
                 try { //Try to save the game, save all the variables
-                    ball = new Ball(main);
-                    paddle = new Paddle(main);
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
 
                     outputStream.writeInt(main.currentLevel);
@@ -111,27 +105,27 @@ public class State { //Methods include: read
                     outputStream.writeInt(main.numberOfHearts);
                     outputStream.writeInt(destroyedBlockCount);
 
-                    outputStream.writeDouble(ball.ballXCoordinate);
-                    outputStream.writeDouble(ball.ballYCoordinate);
-                    outputStream.writeDouble(paddle.paddleXPosition);
-                    outputStream.writeDouble(paddle.paddleYPosition);
-                    outputStream.writeDouble(paddle.paddleCenter);
+                    outputStream.writeDouble(main.getBall().ballXCoordinate);
+                    outputStream.writeDouble(main.getBall().ballYCoordinate);
+                    outputStream.writeDouble(main.getPaddle().paddleXPosition);
+                    outputStream.writeDouble(main.getPaddle().paddleYPosition);
+                    outputStream.writeDouble(main.getPaddle().paddleCenter);
                     outputStream.writeLong(main.currentTime);
                     outputStream.writeLong(goldTime);
-                    outputStream.writeDouble(ball.ballHorizontalSpeed);
+                    outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
 
                     outputStream.writeBoolean(main.existHeartBlock);
                     outputStream.writeBoolean(main.goldBall);
-                    outputStream.writeBoolean(ball.goDownBall);
-                    outputStream.writeBoolean(ball.goRightBall);
-                    outputStream.writeBoolean(ball.collideToPaddle);
-                    outputStream.writeBoolean(ball.collideToPaddleAndMoveToRight);
-                    outputStream.writeBoolean(ball.collideToRightWall);
-                    outputStream.writeBoolean(ball.collideToLeftWall);
-                    outputStream.writeBoolean(ball.collideToRightBlock);
-                    outputStream.writeBoolean(ball.collideToBottomBlock);
-                    outputStream.writeBoolean(ball.collideToLeftBlock);
-                    outputStream.writeBoolean(ball.collideToTopBlock);
+                    outputStream.writeBoolean(main.getBall().goDownBall);
+                    outputStream.writeBoolean(main.getBall().goRightBall);
+                    outputStream.writeBoolean(main.getBall().collideToPaddle);
+                    outputStream.writeBoolean(main.getBall().collideToPaddleAndMoveToRight);
+                    outputStream.writeBoolean(main.getBall().collideToRightWall);
+                    outputStream.writeBoolean(main.getBall().collideToLeftWall);
+                    outputStream.writeBoolean(main.getBall().collideToRightBlock);
+                    outputStream.writeBoolean(main.getBall().collideToBottomBlock);
+                    outputStream.writeBoolean(main.getBall().collideToLeftBlock);
+                    outputStream.writeBoolean(main.getBall().collideToTopBlock);
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
                     for (Block block : main.blocks) {
@@ -165,8 +159,6 @@ public class State { //Methods include: read
 
     public void loadGame() { //Load the game
         //State loadSave = new State();
-        ball = new Ball(main);
-        paddle = new Paddle(main);
         read(); //Read the saved file, assign the variables to the saved variables
 
         main.existHeartBlock = isExistHeartBlock;
@@ -176,23 +168,23 @@ public class State { //Methods include: read
         main.numberOfHearts = heart;
         destroyedBlockCount = destroyedBlockCount;
 
-        ball.goDownBall = goDownBall;
-        ball.goRightBall = goRightBall;
-        ball.collideToPaddle = collideToPaddle;
-        ball.collideToPaddleAndMoveToRight = collideToPaddleAndMoveToRight;
-        ball.collideToRightWall = collideToRightWall;
-        ball.collideToLeftWall = collideToLeftWall;
-        ball.collideToRightBlock = collideToRightBlock;
-        ball.collideToBottomBlock = collideToBottomBlock;
-        ball.collideToLeftBlock = collideToLeftBlock;
-        ball.collideToTopBlock = collideToTopBlock;
-        ball.ballXCoordinate = xBall;
-        ball.ballYCoordinate = yBall;
-        ball.ballHorizontalSpeed = vX;
+        main.getBall().goDownBall = goDownBall;
+        main.getBall().goRightBall = goRightBall;
+        main.getBall().collideToPaddle = collideToPaddle;
+        main.getBall().collideToPaddleAndMoveToRight = collideToPaddleAndMoveToRight;
+        main.getBall().collideToRightWall = collideToRightWall;
+        main.getBall().collideToLeftWall = collideToLeftWall;
+        main.getBall().collideToRightBlock = collideToRightBlock;
+        main.getBall().collideToBottomBlock = collideToBottomBlock;
+        main.getBall().collideToLeftBlock = collideToLeftBlock;
+        main.getBall().collideToTopBlock = collideToTopBlock;
+        main.getBall().ballXCoordinate = xBall;
+        main.getBall().ballYCoordinate = yBall;
+        main.getBall().ballHorizontalSpeed = vX;
 
-        paddle.paddleXPosition = xBreak;
-        paddle.paddleYPosition = yBreak;
-        paddle.paddleCenter = centerBreakX;
+        main.getPaddle().paddleXPosition = xBreak;
+        main.getPaddle().paddleYPosition = yBreak;
+        main.getPaddle().paddleCenter = centerBreakX;
         main.currentTime = time;
         goldTime = goldTime;
 
@@ -213,15 +205,14 @@ public class State { //Methods include: read
     }
 
     public void restartGame() { //Restart the game
-        ball = new Ball(main);
         try {
             main.currentLevel = 0;
             main.numberOfHearts = 3;
             main.currentScore = 0;
-            ball.ballHorizontalSpeed = 1.000;
+            main.getBall().ballHorizontalSpeed = 1.000;
             destroyedBlockCount = 0;
-            ball.resetCollideFlags();
-            ball.goDownBall = true;
+            main.getBall().resetCollideFlags();
+            main.getBall().goDownBall = true;
 
             main.goldBall = false;
             main.existHeartBlock = false;

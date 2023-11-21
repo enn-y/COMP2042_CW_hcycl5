@@ -42,7 +42,7 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
                 main.getState().restartGame();
                 break;
             case S: //If the S key is pressed
-                state = new State(main, ball, paddle);
+                state = new State(main);
                 state.saveGame(); //Save the game
                 break;
         }

@@ -125,7 +125,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        state = new State(main, ball, paddle);
+                        state = new State(main);
                         state.restartGame();
                     }
                 });

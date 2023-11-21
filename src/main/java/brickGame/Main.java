@@ -87,7 +87,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         keyboardControls = new KeyboardControls(this, paddle);
         gameObjectInitializer = new GameObjectInitializer(this, ball, paddle, keyboardControls); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
-        state = new State(this, ball, paddle); //Initialize the state
+        state = new State(this); //Initialize the state
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
