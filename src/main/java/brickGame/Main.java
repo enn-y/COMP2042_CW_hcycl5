@@ -29,7 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-    public Ball ball; //Ball object
+    Ball ball; //Ball object
     Paddle paddle; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
     ButtonControls buttonControls; //ButtonControls object
@@ -37,6 +37,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
     LevelManager levelManager; //LevelManager object
     GameScreen gameScreen; //GameScreen object
     State state; //State object
+    Score score; //Score object
     public int currentLevel = 0;
     public int windowWidth = 500; //Game window width
     public int windowHeight = 700; //Game window height
@@ -90,14 +91,15 @@ public class Main extends Application implements OnAction { //Application: JavaF
         state = new State(this); //Initialize the state
         buttonControls = new ButtonControls(this); //Initialize the button controls
         engine = new GameEngine(); //Initialize the game engine
+        score = new Score();
 
         if (!loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
             if (currentLevel >1){
-                new Score().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
+                getScore().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
             }
             if (currentLevel == 18) {
-                new Score().showWin(this); //If level is 18, then display "You Win :)", inherited from Score.java
+                getScore().showWin(this); //If level is 18, then display "You Win :)", inherited from Score.java
                 return;
             }
 
@@ -127,11 +129,11 @@ public class Main extends Application implements OnAction { //Application: JavaF
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                levelManager.blockDestroyedCount();
-                ball.setPhysicsToBall();
+                getLevelManager().blockDestroyedCount();
+                getBall().setPhysicsToBall();
 
                 if (currentTime - goldTime > 5000) { //Gold Ball
-                    ball.setFill(new ImagePattern(new Image("ball.png")));
+                    getBall().setFill(new ImagePattern(new Image("ball.png")));
                     root.getStyleClass().remove("goldRoot");
                     goldBall = false;
                 }
@@ -140,12 +142,12 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     if (choco.y > windowHeight || choco.taken) {
                         continue;
                     }
-                    if (choco.y >= paddle.paddleYPosition && choco.y <= paddle.paddleYPosition + paddle.paddleHeight && choco.x >= paddle.paddleXPosition && choco.x <= paddle.paddleXPosition + paddle.paddleWidth) {
+                    if (choco.y >= getPaddle().paddleYPosition && choco.y <= getPaddle().paddleYPosition + getPaddle().paddleHeight && choco.x >= getPaddle().paddleXPosition && choco.x <= getPaddle().paddleXPosition + getPaddle().paddleWidth) {
                         System.out.println("You Got it and +3 score for you");
                         choco.chocolateBlock.setVisible(false);
                         choco.taken = true;
                         currentScore += 3;
-                        new Score().show(choco.x, choco.y, 3, Main.this);
+                        getScore().show(choco.x, choco.y, 3, Main.this);
                     }
                     choco.y += ((currentTime - choco.timeCreated) / 1000.000) + 1.000;
                 }
@@ -161,10 +163,10 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 scoreLabel.setText("Score: " + currentScore);
                 heartLabel.setText("Heart : " + numberOfHearts);
 
-                paddle.setX(paddle.paddleXPosition);
-                paddle.setY(paddle.paddleYPosition);
-                ball.setCenterX(ball.ballXCoordinate);
-                ball.setCenterY(ball.ballYCoordinate);
+                getPaddle().setX(getPaddle().paddleXPosition);
+                getPaddle().setY(getPaddle().paddleYPosition);
+                getBall().setCenterX(getBall().ballXCoordinate);
+                getBall().setCenterY(getBall().ballYCoordinate);
 
                 for (Bonus choco : bonusItems) { //Bonus Items
                     choco.chocolateBlock.setY(choco.y); //Set the y-coordinate of the bonus item
@@ -172,9 +174,9 @@ public class Main extends Application implements OnAction { //Application: JavaF
             }
         });
 
-        if (ball.ballYCoordinate >= Block.getPaddingTop() && ball.ballYCoordinate <= (Block.getHeight() * (currentLevel + 1)) + Block.getPaddingTop()) {
+        if (getBall().ballYCoordinate >= Block.getPaddingTop() && getBall().ballYCoordinate <= (Block.getHeight() * (currentLevel + 1)) + Block.getPaddingTop()) {
             for (final Block block : blocks) {
-                int hitCode = block.checkHitToBlock(ball.ballXCoordinate, ball.ballYCoordinate);
+                int hitCode = block.checkHitToBlock(getBall().ballXCoordinate, getBall().ballYCoordinate);
                 if (hitCode != Block.NO_HIT) {
                     currentScore += 1;
 
@@ -184,7 +186,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     block.isDestroyed = true;
                     destroyedBlockCount++;
                     //System.out.println("size is " + blocks.size());
-                    ball.resetCollideFlags();
+                    getBall().resetCollideFlags();
 
                     if (block.type == Block.BLOCK_CHOCOLATE) {
                         final Bonus choco = new Bonus(block.row, block.column);
