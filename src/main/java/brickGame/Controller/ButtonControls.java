@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 
 public class ButtonControls {
     Main main;
-    State state;
 
     public ButtonControls(Main main) {
         this.main = main;
@@ -18,8 +17,7 @@ public class ButtonControls {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                state = new State(main);
-                state.loadGame();
+                main.getState().loadGame();
                 main.loadButton.setVisible(false);
                 main.newGameButton.setVisible(false);
             }
