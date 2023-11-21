@@ -235,6 +235,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                     }
 
                     if(block.type == Block.BLOCK_EXPLOSION){
+                        numberOfHearts--;
                         ball.setVisible(false);
 
                         // Set up a timer to make the ball visible again after 3 seconds
@@ -246,6 +247,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                                 ball.setVisible(true);
                             }
                         }, 3000);
+                        ball.checkGameOver();
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
