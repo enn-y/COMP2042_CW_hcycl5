@@ -7,6 +7,7 @@ import brickGame.Model.Interface.OnAction;
 import brickGame.Model.Serializables.BlockSerializable;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -208,18 +210,15 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         getScore().showMessage("You got a heart!", this);
                     }
 
-                    if(block.type == Block.BLOCK_SLIME){
+                    if (block.type == Block.BLOCK_SLIME) {
                         ball.ballHorizontalSpeed *= 0.3;
-                        ball.ballVerticalSpeed *= 0.3;
-                        Timer timer = new Timer();
-                        timer.schedule(new TimerTask() {
+                        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+                        pause.setOnFinished(new EventHandler<ActionEvent>() {
                             @Override
-                            public void run() {
-                                // Restore the original speed after 3 seconds
-                                ball.ballHorizontalSpeed = 1.000;
-                                ball.ballVerticalSpeed = 1.000;
+                            public void handle(ActionEvent event) {
+                                ball.ballHorizontalSpeed *= 2;
                             }
-                        }, 3000);
+                        });
                     }
 
                     if(block.type == Block.BLOCK_QUESTION){

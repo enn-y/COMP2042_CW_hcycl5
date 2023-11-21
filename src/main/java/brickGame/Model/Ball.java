@@ -9,7 +9,7 @@ public class Ball extends Circle {
 
     public double ballXCoordinate; //x-coordinate of ball
     public double ballYCoordinate; //y-coordinate of ball
-    public double ballHorizontalSpeed = 1.000; //Horizontal velocity of ball
+    public double ballHorizontalSpeed = 1.500; //Horizontal velocity of ball
     public double ballVerticalSpeed = 1.000; //Vertical velocity of ball
     public int ballRadius = 10; //Radius of ball/Size of ball
     public boolean goDownBall; //Status for ball moving downwards
