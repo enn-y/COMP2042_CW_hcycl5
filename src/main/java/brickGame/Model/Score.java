@@ -102,23 +102,31 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             @Override
             public void run() {
                 Pane gameOverLayout = new Pane();
+
+                // Large font title "Game Over"
                 Label gameOverLabel = new Label("Game Over");
+                gameOverLabel.setStyle("-fx-font-size: 36;"); // Customize font size
+                gameOverLabel.setLayoutX(160);
+                gameOverLabel.setLayoutY(140);
+
+                // Score, level, and hearts information
                 Label scoreLabel = new Label("Score: " + main.currentScore);
                 Label levelLabel = new Label("Level: " + main.currentLevel);
                 Label heartsLabel = new Label("Hearts: " + main.numberOfHearts);
-
-                gameOverLabel.setLayoutX(50);
-                gameOverLabel.setLayoutY(50);
-                scoreLabel.setLayoutX(50);
-                scoreLabel.setLayoutY(80);
-                levelLabel.setLayoutX(50);
-                levelLabel.setLayoutY(110);
-                heartsLabel.setLayoutX(50);
-                heartsLabel.setLayoutY(140);
+                scoreLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                scoreLabel.setLayoutX(200); // Center horizontally
+                scoreLabel.setLayoutY(240);
+                levelLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                levelLabel.setLayoutX(200); // Center horizontally
+                levelLabel.setLayoutY(270);
+                heartsLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                heartsLabel.setLayoutX(200); // Center horizontally
+                heartsLabel.setLayoutY(300);
 
                 Button restart = new Button("Restart");
-                restart.setTranslateX(220);
-                restart.setTranslateY(300);
+                restart.setTranslateX(150);
+                restart.setTranslateY(400);
+                restart.setPrefWidth(200); // Set a larger width
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -127,8 +135,9 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 });
 
                 Button exit = new Button("Exit");
-                exit.setTranslateX(300);
-                exit.setTranslateY(300);
+                exit.setTranslateX(150);
+                exit.setTranslateY(450);
+                exit.setPrefWidth(200); // Set a larger width
                 exit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
