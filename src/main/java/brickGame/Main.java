@@ -3,8 +3,8 @@ package brickGame;
 import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
+import brickGame.Model.Blocks.Block;
 import brickGame.Model.Interface.OnAction;
-import brickGame.Model.Serializables.BlockSerializable;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
 import javafx.animation.PauseTransition;
@@ -12,7 +12,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,7 +21,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -39,8 +37,6 @@ public class Main extends Application implements OnAction { //Application: JavaF
     State state; //State object
     Score score; //Score object
     public int currentLevel = 0;
-    public int windowWidth = 500; //Game window width
-    public int windowHeight = 700; //Game window height
     public boolean goldBall = false; //Status of gold ball
     public boolean existHeartBlock = false; //Status of heart block
     public int destroyedBlockCount = 0; //Number of destroyed blocks
@@ -139,7 +135,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 }
 
                 for (Bonus choco : bonusItems) { //Bonus Items
-                    if (choco.y > windowHeight || choco.taken) {
+                    if (choco.y > getGameScreen().windowHeight || choco.taken) {
                         continue;
                     }
                     if (choco.y >= getPaddle().paddleYPosition && choco.y <= getPaddle().paddleYPosition + getPaddle().paddleHeight && choco.x >= getPaddle().paddleXPosition && choco.x <= getPaddle().paddleXPosition + getPaddle().paddleWidth) {
@@ -237,7 +233,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         ball.checkGameOver();
                     }
 
-                    if(block.type == Block.BLOCK_EXPLOSION){
+                    if(block.type == Block.BLOCK_BOMB){
                         ball.setVisible(false);
 
                         // Set up a timer to make the ball visible again after 3 seconds

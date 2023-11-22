@@ -1,7 +1,7 @@
 package brickGame.View;
 
 import brickGame.Main;
-import brickGame.Model.Block;
+import brickGame.Model.Blocks.Block;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +9,9 @@ import javafx.scene.layout.Pane;
 
 public class GameScreen {
     Main main;
+
+    public int windowWidth = 500; //Game window width
+    public int windowHeight = 700; //Game window height
 
     public GameScreen(Main main) {
         this.main = main;
@@ -30,7 +33,7 @@ public class GameScreen {
         main.levelLabel = new Label("Level: " + main.currentLevel); //Initialize the level label
         main.levelLabel.setTranslateY(20); //Set the size of the level label, y-coordinate (20)
         main.heartLabel = new Label("Heart : " + main.numberOfHearts); //Initialize the heart label
-        main.heartLabel.setTranslateX(main.windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
+        main.heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
     }
 
     public void AddElements(){
@@ -45,7 +48,7 @@ public class GameScreen {
     }
 
     public void CreateScene(){
-        Scene scene = new Scene(main.root, main.windowWidth, main.windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph
+        Scene scene = new Scene(main.root, windowWidth, windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph
         scene.getStylesheets().add("style.css"); //Add the style.css file to the scene
         scene.setOnKeyPressed(main.getKeyboardControls()); //Listen for key presses
         main.primaryStage.setTitle("Game"); //Set the title of the game window

@@ -1,7 +1,7 @@
 package brickGame.Model;
 
-import brickGame.Controller.KeyboardControls;
 import brickGame.Main;
+import brickGame.Model.Blocks.Block;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -16,8 +16,8 @@ public class GameObjectInitializer {
 
     public void initializeBall() { //Initialize the ball
         Random random = new Random(); //Random number generator
-        main.getBall().setBallXCoordinate(random.nextInt(main.windowWidth) + 1); //Random x-coordinate of the ball
-        main.getBall().setBallYCoordinate(random.nextInt(main.windowHeight - 200) + ((main.currentLevel + 1) * Block.getHeight()) + 15); //Random y-coordinate of the ball
+        main.getBall().setBallXCoordinate(random.nextInt(main.getGameScreen().windowWidth) + 1); //Random x-coordinate of the ball
+        main.getBall().setBallYCoordinate(random.nextInt(main.getGameScreen().windowHeight - 200) + ((main.currentLevel + 1) * Block.getHeight()) + 15); //Random y-coordinate of the ball
         main.getBall().setCenterX(main.getBall().getBallXCoordinate()); //Set the center x-coordinate of the ball
         main.getBall().setCenterY(main.getBall().getBallYCoordinate());
         main.getBall().setRadius(main.getBall().ballRadius); //Set the radius of the ball
@@ -54,7 +54,7 @@ public class GameObjectInitializer {
                 } else if (r % 10 == 5 || r % 3 == 0) { //BUT IF the remainder is 5
                     type = Block.BLOCK_QUESTION;
                 } else if (r % 10 == 6) { //BUT IF the remainder is 6
-                    type = Block.BLOCK_EXPLOSION;
+                    type = Block.BLOCK_BOMB;
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = Block.BLOCK_NORMAL; //Create a normal block
                 }

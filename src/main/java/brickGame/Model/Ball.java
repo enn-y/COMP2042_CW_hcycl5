@@ -48,12 +48,12 @@ public class Ball extends Circle {
             goDownBall = true; //Ball moves downwards
             return;
         }
-        if (ballYCoordinate > main.windowHeight - ballRadius*1.5) { //If the ball collides with bottom wall
+        if (ballYCoordinate > main.getGameScreen().windowHeight - ballRadius*1.5) { //If the ball collides with bottom wall
             goDownBall = false; //Ball moves upwards
             if (!main.goldBall) { //If the ball is NOT gold
                 //TODO gameover
                 main.numberOfHearts--; //Decrement the heart
-                new Score().show(main.windowWidth / 2, main.windowHeight / 2, -1, main);
+                new Score().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
                 checkGameOver();
             }
             //return;
@@ -89,7 +89,7 @@ public class Ball extends Circle {
             }
         }
 
-        if (ballXCoordinate > main.windowWidth - ballRadius*1.5) {
+        if (ballXCoordinate > main.getGameScreen().windowWidth - ballRadius*1.5) {
             resetCollideFlags();
             //vX = 1.000;
             collideToRightWall = true;
@@ -134,7 +134,7 @@ public class Ball extends Circle {
 
     public void checkGameOver() {
         if (!main.goldBall && main.numberOfHearts == 0) {
-            new Score().showGameOver(main);
+            main.getScore().showGameOver(main);
 
             try {
                 Thread.sleep(100);

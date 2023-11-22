@@ -25,7 +25,7 @@ public class Paddle extends Rectangle {
             public void run() {
                 int sleepTime = 4; //Delays the movement of the paddle because if not, the paddle will move too fast
                 for (int i = 0; i < 30; i++) { //For loop to move the paddle, condition is 30 because the paddle will move 30 pixels
-                    if (paddleXPosition == (main.windowWidth - paddleWidth) && direction == paddleRIGHT) { //If the paddle is at the right wall and the direction is right, prevents paddle from moving out of bounds
+                    if (paddleXPosition == (main.getGameScreen().windowWidth - paddleWidth) && direction == paddleRIGHT) { //If the paddle is at the right wall and the direction is right, prevents paddle from moving out of bounds
                         return; //Stop Moving
                     }
                     if (paddleXPosition == 0 && direction == paddleLEFT) { //If the paddle is at the left wall and the direction is left, prevents paddle from moving out of bounds

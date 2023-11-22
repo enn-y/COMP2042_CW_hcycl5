@@ -1,4 +1,4 @@
-package brickGame.Model;
+package brickGame.Model.Blocks;
 
 
 import javafx.scene.image.Image;
@@ -40,7 +40,7 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
     public static int BLOCK_SLIME = 103; //slime block
-    public static int BLOCK_EXPLOSION = 104; //explosion block
+    public static int BLOCK_BOMB = 104; //explosion block
     public static int BLOCK_QUESTION = 105; //question block
 
     public Block(int row, int column, Color color, int type) {
@@ -63,29 +63,17 @@ public class Block implements Serializable { //Methods include: Block, draw, che
         rect.setY(blockYCoordinate);
 
         if (type == BLOCK_CHOCOLATE) {
-            Image image = new Image("choco.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
+            setImage("choco.jpg");
         } else if (type == BLOCK_HEART) {
-            Image image = new Image("heart.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
+            setImage("heart.jpg");
         } else if (type == BLOCK_STAR) {
-            Image image = new Image("star.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
+            setImage("star.jpg");
         }  else if (type == BLOCK_SLIME) {
-            Image image = new Image("slime.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
-        } else if (type == BLOCK_EXPLOSION) {
-            Image image = new Image("explosion.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
+            setImage("slime.jpg");
+        } else if (type == BLOCK_BOMB) {
+            setImage("bomb.jpg");
         } else if (type == BLOCK_QUESTION) {
-            Image image = new Image("images.png");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
+            setImage("question.png");
         }
         else {
             rect.setFill(color);
@@ -98,23 +86,29 @@ public class Block implements Serializable { //Methods include: Block, draw, che
         }
 
         // Increase the sensitivity by adjusting the conditions
-        if (xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15 && yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15) {
+        if (xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10 && yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10) {
             return HIT_BOTTOM;
         }
 
-        if (xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15 && yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15) {
+        if (xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10 && yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10) {
             return HIT_TOP;
         }
 
-        if (yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15 && xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15) {
+        if (yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10 && xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10) {
             return HIT_RIGHT;
         }
 
-        if (yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15 && xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15) {
+        if (yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10 && xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10) {
             return HIT_LEFT;
         }
 
         return NO_HIT;
+    }
+
+    public void setImage(String imagePath) {
+        Image image = new Image(imagePath);
+        ImagePattern pattern = new ImagePattern(image);
+        rect.setFill(pattern);
     }
 
     public static int getPaddingTop() {

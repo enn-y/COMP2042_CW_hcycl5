@@ -1,16 +1,10 @@
 package brickGame.View;
 
-import brickGame.Controller.ButtonControls;
 import brickGame.Main;
 import brickGame.Model.*;
+import brickGame.Model.Blocks.Block;
 import brickGame.Model.Serializables.BlockSerializable;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 import java.io.*;
 import java.util.ArrayList;
