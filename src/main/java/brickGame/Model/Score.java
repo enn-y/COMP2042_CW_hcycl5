@@ -27,7 +27,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                main.getGameScreen().root.getChildren().add(label);
             }
         });
 
@@ -51,7 +51,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 Platform.runLater(new Runnable() { //To prevent the label from remaining on the screen
                     @Override
                     public void run() {
-                        main.root.getChildren().remove(label);
+                        main.getGameScreen().root.getChildren().remove(label);
                     }
                 });
             }
@@ -66,7 +66,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                main.getGameScreen().root.getChildren().add(label);
             }
         });
 
@@ -90,7 +90,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 Platform.runLater(new Runnable() { //To prevent the label from remaining on the screen
                     @Override
                     public void run() {
-                        main.root.getChildren().remove(label);
+                        main.getGameScreen().root.getChildren().remove(label);
                     }
                 });
             }
@@ -142,15 +142,15 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                     @Override
                     public void handle(ActionEvent event) {
                         // Exit the game (close the application)
-                        main.primaryStage.close();
+                        main.getGameScreen().primaryStage.close();
                     }
                 });
 
                 gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart, exit);
                 Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
 
-                main.primaryStage.setScene(gameOverScene);
-                main.primaryStage.show();
+                main.getGameScreen().primaryStage.setScene(gameOverScene);
+                main.getGameScreen().primaryStage.show();
             }
         });
     }
@@ -165,7 +165,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-                main.root.getChildren().addAll(label);
+                main.getGameScreen().root.getChildren().addAll(label);
             }
         });
     }

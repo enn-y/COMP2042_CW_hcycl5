@@ -22,6 +22,8 @@ public class Ball extends Circle {
     public boolean collideToBottomBlock = false; //Status for ball colliding to the bottom side of the block, set to FALSE
     public boolean collideToLeftBlock = false; //Status for ball colliding to the left side of the block, set to FALSE
     public boolean collideToTopBlock = false; //Status for ball colliding to the top side of the block, set to FALSE
+    public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
+    public boolean goldBall = false; //Status of gold ball
 
     public Ball(Main main){
         this.main = main;
@@ -50,7 +52,7 @@ public class Ball extends Circle {
         }
         if (ballYCoordinate > main.getGameScreen().windowHeight - ballRadius*1.5) { //If the ball collides with bottom wall
             goDownBall = false; //Ball moves upwards
-            if (!main.goldBall) { //If the ball is NOT gold
+            if (!goldBall) { //If the ball is NOT gold
                 //TODO gameover
                 main.numberOfHearts--; //Decrement the heart
                 new Score().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
@@ -133,7 +135,7 @@ public class Ball extends Circle {
     }
 
     public void checkGameOver() {
-        if (!main.goldBall && main.numberOfHearts == 0) {
+        if (!goldBall && main.numberOfHearts == 0) {
             main.getScore().showGameOver(main);
 
             try {
@@ -142,7 +144,7 @@ public class Ball extends Circle {
                 e.printStackTrace();
             }
 
-            main.engine.stop();
+            main.getEngine().stop();
         }
     }
 

@@ -36,19 +36,14 @@ public class Main extends Application implements OnAction { //Application: JavaF
     GameScreen gameScreen; //GameScreen object
     State state; //State object
     Score score; //Score object
+    GameEngine engine; //GameEngine object
     public int currentLevel = 0;
-    public boolean goldBall = false; //Status of gold ball
     public boolean existHeartBlock = false; //Status of heart block
     public int destroyedBlockCount = 0; //Number of destroyed blocks
-    private double ballVelocity = 1.000; //Velocity of ball
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     public int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
     public long currentTime = 0; //Time, initialized at 0
     public long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
-    public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
-    public GameEngine engine; //GameEngine object
-    public static String savePath    = "D:/save/save.mdds"; //Path to save file
-    public static String savePathDir = "D:/save/"; //Path to save directory
     public ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
     public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     public Color[] blockColors = new Color[]{ //Array of colors for the blocks
@@ -66,19 +61,9 @@ public class Main extends Application implements OnAction { //Application: JavaF
             Color.TOMATO,
             Color.TAN,
     };
-    public  Pane root;
-    public Label scoreLabel; //Label to display score
-    public Label heartLabel; //Label to display heart
-    public Label levelLabel; //Label to display level
-    public boolean loadFromSavedFile = false; //Status of loading from saved file
-    public Stage primaryStage; //Stage is the top level JavaFX container, the window
-    public Button loadButton = null; //Button to load game
-    public Button newGameButton = null; //Button to start new game
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
-        this.primaryStage = primaryStage; //Set primaryStage which is the game window
-
         ball = new Ball(this);
         paddle = new Paddle(this);
         keyboardControls = new KeyboardControls(this);
@@ -90,7 +75,9 @@ public class Main extends Application implements OnAction { //Application: JavaF
         score = new Score(); //Initialize the score
         levelManager = new LevelManager(this); //Initialize the level manager
 
-        if (!loadFromSavedFile) { //If NOT loading from saved file
+        getGameScreen().primaryStage = primaryStage; //Set primaryStage which is the game window
+
+        if (!getState().loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
             if (currentLevel >1){
                 getScore().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
@@ -128,10 +115,10 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 getLevelManager().blockDestroyedCount();
                 getBall().setPhysicsToBall();
 
-                if (currentTime - goldTime > 5000) { //Gold Ball
+                if (currentTime - getBall().goldTime > 5000) { //Gold Ball
                     getBall().setFill(new ImagePattern(new Image("ball.png")));
-                    root.getStyleClass().remove("goldRoot");
-                    goldBall = false;
+                    getGameScreen().root.getStyleClass().remove("goldRoot");
+                    getBall().goldBall = false;
                 }
 
                 for (Bonus choco : bonusItems) { //Bonus Items
@@ -156,8 +143,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                scoreLabel.setText("Score: " + currentScore);
-                heartLabel.setText("Heart : " + numberOfHearts);
+                getGameScreen().scoreLabel.setText("Score: " + currentScore);
+                getGameScreen().heartLabel.setText("Heart : " + numberOfHearts);
 
                 getPaddle().setX(getPaddle().paddleXPosition);
                 getPaddle().setY(getPaddle().paddleYPosition);
@@ -190,18 +177,18 @@ public class Main extends Application implements OnAction { //Application: JavaF
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                root.getChildren().add(choco.chocolateBlock);
+                                getGameScreen().root.getChildren().add(choco.chocolateBlock);
                             }
                         });
                         bonusItems.add(choco);
                     }
 
-                    if (block.type == Block.BLOCK_STAR && !goldBall) {
-                        goldTime = currentTime;
+                    if (block.type == Block.BLOCK_STAR && !getBall().goldBall) {
+                        getBall().goldTime = currentTime;
                         getBall().setFill(new ImagePattern(new Image("goldball.png")));
                         System.out.println("gold ball");
-                        root.getStyleClass().add("goldRoot");
-                        goldBall = true;
+                        getGameScreen().root.getStyleClass().add("goldRoot");
+                        getBall().goldBall = true;
                     }
 
                     if (block.type == Block.BLOCK_HEART) {

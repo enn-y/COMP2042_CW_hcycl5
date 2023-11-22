@@ -38,13 +38,16 @@ public class State { //Methods include: read
     public long goldTime;
     public double vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+    public boolean loadFromSavedFile = false; //Status of loading from saved file
+    public static String savePath    = "D:/save/save.mdds"; //Path to save file
+    public static String savePathDir = "D:/save/"; //Path to save directory
     public State(Main main) {
         this.main = main;
     }
 
     public void read() {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(savePath)));
 
             level = inputStream.readInt();
             score = inputStream.readInt();
@@ -88,8 +91,8 @@ public class State { //Methods include: read
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new File(main.savePathDir).mkdirs();
-                File file = new File(main.savePath);
+                new File(savePathDir).mkdirs();
+                File file = new File(savePath);
                 ObjectOutputStream outputStream = null;
                 try { //Try to save the game, save all the variables
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
@@ -109,7 +112,7 @@ public class State { //Methods include: read
                     outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
 
                     outputStream.writeBoolean(main.existHeartBlock);
-                    outputStream.writeBoolean(main.goldBall);
+                    outputStream.writeBoolean(main.getBall().goldBall);
                     outputStream.writeBoolean(main.getBall().goDownBall);
                     outputStream.writeBoolean(main.getBall().goRightBall);
                     outputStream.writeBoolean(main.getBall().collideToPaddle);
@@ -156,7 +159,7 @@ public class State { //Methods include: read
         read(); //Read the saved file, assign the variables to the saved variables
 
         main.existHeartBlock = isExistHeartBlock;
-        main.goldBall = isGoldStatus;
+        main.getBall().goldBall = isGoldStatus;
         main.currentLevel = level;
         main.currentScore = score;
         main.numberOfHearts = heart;
@@ -191,8 +194,8 @@ public class State { //Methods include: read
         }
 
         try {
-            main.loadFromSavedFile = true;
-            main.start(main.primaryStage);
+            loadFromSavedFile = true;
+            main.start(main.getGameScreen().primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -208,7 +211,7 @@ public class State { //Methods include: read
             main.getBall().resetCollideFlags();
             main.getBall().goDownBall = true;
 
-            main.goldBall = false;
+            main.getBall().goldBall = false;
             main.existHeartBlock = false;
             main.hitTime = 0;
             main.currentTime = 0;
@@ -217,32 +220,32 @@ public class State { //Methods include: read
             blocks.clear();
             main.bonusItems.clear();
 
-            main.start(main.primaryStage);
+            main.start(main.getGameScreen().primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void checkLoadFromSavedFile(){
-        if (!main.loadFromSavedFile) { //If NOT loading from saved file
+        if (!loadFromSavedFile) { //If NOT loading from saved file
             if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
-                main.loadButton.setVisible(false); //Hide the load button
-                main.newGameButton.setVisible(false); //Hide the new game button
+                main.getButtonControls().loadButton.setVisible(false); //Hide the load button
+                main.getButtonControls().newGameButton.setVisible(false); //Hide the new game button
                 //main.engine = new GameEngine(); //Initialize the game engine, to start the game
                 main.getEngine().setOnAction(main); //Listen for events
                 main.getEngine().setFps(120); //Set FPS
                 main.getEngine().start(); //Start the game engine
             }
 
-            main.loadButton.setOnAction(main.getButtonControls().createLoadButtonHandler());
-            main.newGameButton.setOnAction(main.getButtonControls().createNewGameButtonHandler());
+            main.getButtonControls().loadButton.setOnAction(main.getButtonControls().createLoadButtonHandler());
+            main.getButtonControls().newGameButton.setOnAction(main.getButtonControls().createNewGameButtonHandler());
 
         } else { //But if IT IS loading from saved file
             //main.engine = new GameEngine(); //Initialize the game engine, to start the game
             main.getEngine().setOnAction(main); //Listen for events
             main.getEngine().setFps(120); //Set FPS
             main.getEngine().start(); //Start the game engine
-            main.loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game
+            loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game
         }
     }
 }

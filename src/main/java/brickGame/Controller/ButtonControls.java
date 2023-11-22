@@ -5,9 +5,13 @@ import brickGame.Main;
 import brickGame.View.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 public class ButtonControls {
     Main main;
+
+    public Button loadButton = null; //Button to load game
+    public Button newGameButton = null; //Button to start new game
 
     public ButtonControls(Main main) {
         this.main = main;
@@ -18,8 +22,8 @@ public class ButtonControls {
             @Override
             public void handle(ActionEvent event) {
                 main.getState().loadGame();
-                main.loadButton.setVisible(false);
-                main.newGameButton.setVisible(false);
+                loadButton.setVisible(false);
+                newGameButton.setVisible(false);
             }
         };
     }
@@ -28,12 +32,11 @@ public class ButtonControls {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.engine = new GameEngine();
-                main.engine.setOnAction(main);
-                main.engine.setFps(120);
-                main.engine.start();
-                main.loadButton.setVisible(false);
-                main.newGameButton.setVisible(false);
+                main.getEngine().setOnAction(main);
+                main.getEngine().setFps(120);
+                main.getEngine().start();
+                loadButton.setVisible(false);
+                newGameButton.setVisible(false);
             }
         };
     }

@@ -22,18 +22,18 @@ public class LevelManager {
                     main.getBall().resetCollideFlags();
                     main.getBall().goDownBall = true;
 
-                    main.goldBall = false;
+                    main.getBall().goldBall = false;
                     main.existHeartBlock = false;
 
                     main.hitTime = 0;
                     main.currentTime = 0;
-                    main.goldTime = 0;
+                    main.getBall().goldTime = 0;
 
-                    main.engine.stop();
+                    main.getEngine().stop();
                     main.blocks.clear();
                     main.bonusItems.clear();
                     main.destroyedBlockCount = 0;
-                    main.start(main.primaryStage);
+                    main.start(main.getGameScreen().primaryStage);
 
                 } catch (Exception e) {
                     e.printStackTrace();
