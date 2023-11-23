@@ -24,13 +24,25 @@ public class GameScreen {
     }
 
     public void AddButtons(){
-        main.getButtonControls().loadButton = new Button("Load Game"); //Initialize the load button
-        main.getButtonControls().loadButton.setTranslateX(220); //Set the size of load button, x-coordinate (220)
-        main.getButtonControls().loadButton.setTranslateY(310); //Set the size of the load button, y-coordinate (300)
-
         main.getButtonControls().newGameButton = new Button("Start New Game"); //Initialize the new game button
-        main.getButtonControls().newGameButton.setTranslateX(220); //Set the size of the new game button, x-coordinate (220)
-        main.getButtonControls().newGameButton.setTranslateY(340); //Set the size of the new game button, y-coordinate (340)
+        main.getButtonControls().newGameButton.setTranslateX(160); //Set the size of the new game button, x-coordinate (220)
+        main.getButtonControls().newGameButton.setTranslateY(310); //Set the size of the new game button, y-coordinate (340)
+        main.getButtonControls().newGameButton.setPrefWidth(180); //Set a larger width
+
+        main.getButtonControls().loadButton = new Button("Load Game"); //Initialize the load button
+        main.getButtonControls().loadButton.setTranslateX(160); //Set the size of load button, x-coordinate (220)
+        main.getButtonControls().loadButton.setTranslateY(340); //Set the size of the load button, y-coordinate (300)
+        main.getButtonControls().loadButton.setPrefWidth(180); //Set a larger width
+
+        main.getButtonControls().exitButton = new Button("Exit"); //Initialize the exit button
+        main.getButtonControls().exitButton.setTranslateX(160); //Set the size of the exit button, x-coordinate (220)
+        main.getButtonControls().exitButton.setTranslateY(370); //Set the size of the exit button, y-coordinate (370)
+        main.getButtonControls().exitButton.setPrefWidth(180); //Set a larger width
+
+        main.getButtonControls().instructionsButton = new Button("Instructions"); //Initialize the instructions button
+        main.getButtonControls().instructionsButton.setTranslateX(160); //Set the size of the instructions button, x-coordinate (220)
+        main.getButtonControls().instructionsButton.setTranslateY(400); //Set the size of the instructions button, y-coordinate (400)
+        main.getButtonControls().instructionsButton.setPrefWidth(180); //Set a larger width
     }
 
     public void AddLabels(){
@@ -44,7 +56,7 @@ public class GameScreen {
 
     public void AddElements(){
         if (!main.getState().loadFromSavedFile) { //If NOT loading from saved file
-            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
+            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton,  main.getButtonControls().exitButton, main.getButtonControls().instructionsButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
         } else { //But if IT IS loading from saved file
             root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
         }

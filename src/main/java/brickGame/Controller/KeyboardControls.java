@@ -34,6 +34,12 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
                 main.getEngine().stop();
                 main.getState().restartGame();
                 break;
+            case Q:
+                // If the Q key is pressed, quit the game
+                main.getScore().showMessage("Game Quit", main);
+                main.getEngine().stop();
+                main.getGameScreen().primaryStage.close();
+                break;
             case S: //If the S key is pressed
                 main.getState().saveGame(); //Save the game
                 break;

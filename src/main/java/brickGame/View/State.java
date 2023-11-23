@@ -207,7 +207,7 @@ public class State { //Methods include: read
             main.getPlayer().numberOfHearts = 3;
             main.currentScore = 0;
             main.getBall().ballHorizontalSpeed = 1.000;
-            destroyedBlockCount = 0;
+            main.getPlayer().destroyedBlockCount = 0; //Changes made here
             main.getBall().resetCollideFlags();
             main.getBall().goDownBall = true;
 
@@ -215,7 +215,7 @@ public class State { //Methods include: read
             main.getPlayer().existHeartBlock = false;
             main.getPlayer().hitTime = 0;
             main.getPlayer().currentTime = 0;
-            goldTime = 0;
+            main.getBall().goldTime = 0; //Changes made here
 
             blocks.clear();
             main.getEngine().bonusItems.clear();
@@ -229,8 +229,7 @@ public class State { //Methods include: read
     public void checkLoadFromSavedFile(){
         if (!loadFromSavedFile) { //If NOT loading from saved file
             if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
-                main.getButtonControls().loadButton.setVisible(false); //Hide the load button
-                main.getButtonControls().newGameButton.setVisible(false); //Hide the new game button
+                main.getButtonControls().hideButtons(); //Hide the buttons
                 //main.engine = new GameEngine(); //Initialize the game engine, to start the game
                 main.getEngine().setOnAction(main); //Listen for events
                 main.getEngine().setFps(120); //Set FPS
@@ -239,6 +238,8 @@ public class State { //Methods include: read
 
             main.getButtonControls().loadButton.setOnAction(main.getButtonControls().createLoadButtonHandler());
             main.getButtonControls().newGameButton.setOnAction(main.getButtonControls().createNewGameButtonHandler());
+            main.getButtonControls().exitButton.setOnAction(main.getButtonControls().createExitButtonHandler());
+            main.getButtonControls().instructionsButton.setOnAction(main.getButtonControls().createInstructionsButtonHandler());
 
         } else { //But if IT IS loading from saved file
             //main.engine = new GameEngine(); //Initialize the game engine, to start the game

@@ -7,19 +7,11 @@ import brickGame.Model.Blocks.*;
 import brickGame.Model.Interface.OnAction;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     Ball ball; //Ball object
@@ -37,8 +29,8 @@ public class Main extends Application implements OnAction { //Application: JavaF
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
-        ball = new Ball(this);
-        player = new Player(this);
+        ball = new Ball(this); //Initialize the ball
+        player = new Player(this); //Initialize the paddle
         keyboardControls = new KeyboardControls(this);
         gameObjectInitializer = new GameObjectInitializer(this); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
@@ -60,17 +52,17 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 return;
             }
 
-            gameObjectInitializer.initializeBall(); //Initialize the ball
-            gameObjectInitializer.initializePaddle(); //Initialize the paddle
-            gameObjectInitializer.initializeBlocks(); //Initialize the blocks
-            gameScreen.AddButtons();
+            getGameObjectInitializer().initializeBall(); //Initialize the ball
+            getGameObjectInitializer().initializePaddle(); //Initialize the paddle
+            getGameObjectInitializer().initializeBlocks(); //Initialize the blocks
+            getGameScreen().AddButtons();
         }
 
-        gameScreen.AddLabels(); //Add the labels
-        gameScreen.AddElements(); //Add the elements
-        gameScreen.CreateScene(); //Create the scene
+        getGameScreen().AddLabels(); //Add the labels
+        getGameScreen().AddElements(); //Add the elements
+        getGameScreen().CreateScene(); //Create the scene
 
-        state.checkLoadFromSavedFile();
+        getState().checkLoadFromSavedFile();
     }
 
     public static void main(String[] args) { //Main method HERE
@@ -195,36 +187,34 @@ public class Main extends Application implements OnAction { //Application: JavaF
         this.getPlayer().currentTime = time;
     }
 
-    //Get Methods
-
-    public Ball getBall() {
+    public Ball getBall() { //Getter method for ball
         return ball;
     }
-    public Player getPlayer() {
+    public Player getPlayer() { //Getter method for paddle
         return player;
     }
-    public KeyboardControls getKeyboardControls() {
+    public KeyboardControls getKeyboardControls() { //Getter method for keyboard controls
         return keyboardControls;
     }
-    public ButtonControls getButtonControls(){
+    public ButtonControls getButtonControls(){ //Getter method for button controls
         return buttonControls;
     }
-    public GameObjectInitializer getGameObjectInitializer(){
+    public GameObjectInitializer getGameObjectInitializer(){ //Getter method for game object initializer
         return gameObjectInitializer;
     }
-    public LevelManager getLevelManager(){
+    public LevelManager getLevelManager(){ //Getter method for level manager
         return levelManager;
     }
-    public GameScreen getGameScreen(){
+    public GameScreen getGameScreen(){ //Getter method for game screen
         return gameScreen;
     }
-    public State getState(){
+    public State getState(){ //Getter method for state
         return state;
     }
-    public GameEngine getEngine(){
+    public GameEngine getEngine(){ //Getter method for game engine
         return engine;
     }
-    public Score getScore(){
+    public Score getScore(){ //Getter method for score
         return new Score();
     }
 }
