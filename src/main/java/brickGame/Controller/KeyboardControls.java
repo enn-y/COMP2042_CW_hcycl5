@@ -1,9 +1,6 @@
 package brickGame.Controller;
 
 import brickGame.Main;
-import brickGame.Model.Ball;
-import brickGame.Model.Paddle;
-import brickGame.View.State;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -18,10 +15,10 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
     public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
         switch (event.getCode()) { //Switch statement for key presses
             case LEFT: //If the left arrow key is pressed
-                main.getPaddle().move(main.getPaddle().paddleLEFT); //Move the paddle to the left
+                main.getPlayer().move(main.getPlayer().paddleLEFT); //Move the paddle to the left
                 break;
             case RIGHT: //If the right arrow key is pressed
-                main.getPaddle().move(main.getPaddle().paddleRIGHT); //Move the paddle to the right
+                main.getPlayer().move(main.getPlayer().paddleRIGHT); //Move the paddle to the right
                 break;
             case DOWN:
                 //setPhysicsToBall();

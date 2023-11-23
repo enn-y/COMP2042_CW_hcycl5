@@ -25,9 +25,9 @@ public class GameObjectInitializer {
     }
 
     public void initializePaddle() { //Initialize the paddle
-        main.getPaddle().setX(main.getPaddle().paddleXPosition); //Set the x-coordinate of the paddle
-        main.getPaddle().setY(main.getPaddle().paddleYPosition); //Set the y-coordinate of the paddle
-        main.getPaddle().setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
+        main.getPlayer().setX(main.getPlayer().paddleXPosition); //Set the x-coordinate of the paddle
+        main.getPlayer().setY(main.getPlayer().paddleYPosition); //Set the y-coordinate of the paddle
+        main.getPlayer().setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
     }
 
     public void initializeBlocks() { //Initialize the blocks
@@ -41,9 +41,9 @@ public class GameObjectInitializer {
                 if (r % 10 == 1) { //If the remainder is 1
                     type = Block.BLOCK_CHOCOLATE; //Create a choco block
                 } else if (r % 10 == 2) { //BUT IF the remainder is 2
-                    if (!main.existHeartBlock) { //AND IF there is NO heart block
+                    if (!main.getPlayer().existHeartBlock) { //AND IF there is NO heart block
                         type = Block.BLOCK_HEART; //Create a heart block
-                        main.existHeartBlock = true; //Set isExistHeartBlock to true, INDICATES that there is a heart block
+                        main.getPlayer().existHeartBlock = true; //Set isExistHeartBlock to true, INDICATES that there is a heart block
                     } else { //BUT IF there IS a heart block
                         type = Block.BLOCK_NORMAL; //Create a normal block
                     }
@@ -58,7 +58,7 @@ public class GameObjectInitializer {
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = Block.BLOCK_NORMAL; //Create a normal block
                 }
-                main.blocks.add(new Block(column, row, main.blockColors[r % (main.blockColors.length)], type)); //Add the block to the ArrayList
+                main.getEngine().blocks.add(new Block(column, row, main.getEngine().blockColors[r % (main.getEngine().blockColors.length)], type)); //Add the block to the ArrayList
                 //System.out.println("colors " + r % (colors.length));
             }
         }

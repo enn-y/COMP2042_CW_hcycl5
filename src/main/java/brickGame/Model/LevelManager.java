@@ -23,16 +23,16 @@ public class LevelManager {
                     main.getBall().goDownBall = true;
 
                     main.getBall().goldBall = false;
-                    main.existHeartBlock = false;
+                    main.getPlayer().existHeartBlock = false;
 
-                    main.hitTime = 0;
-                    main.currentTime = 0;
+                    main.getPlayer().hitTime = 0;
+                    main.getPlayer().currentTime = 0;
                     main.getBall().goldTime = 0;
 
                     main.getEngine().stop();
-                    main.blocks.clear();
-                    main.bonusItems.clear();
-                    main.destroyedBlockCount = 0;
+                    main.getEngine().blocks.clear();
+                    main.getEngine().bonusItems.clear();
+                    main.getPlayer().destroyedBlockCount = 0;
                     main.start(main.getGameScreen().primaryStage);
 
                 } catch (Exception e) {
@@ -43,7 +43,7 @@ public class LevelManager {
     }
 
     public void blockDestroyedCount() { //Check the number of destroyed blocks
-        if (main.destroyedBlockCount == main.blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
+        if (main.getPlayer().destroyedBlockCount == main.getEngine().blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
             //TODO win level todo...
             //System.out.println("You Win");
             nextLevel();

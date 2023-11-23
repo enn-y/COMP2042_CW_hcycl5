@@ -99,19 +99,19 @@ public class State { //Methods include: read
 
                     outputStream.writeInt(main.currentLevel);
                     outputStream.writeInt(main.currentScore);
-                    outputStream.writeInt(main.numberOfHearts);
+                    outputStream.writeInt(main.getPlayer().numberOfHearts);
                     outputStream.writeInt(destroyedBlockCount);
 
                     outputStream.writeDouble(main.getBall().ballXCoordinate);
                     outputStream.writeDouble(main.getBall().ballYCoordinate);
-                    outputStream.writeDouble(main.getPaddle().paddleXPosition);
-                    outputStream.writeDouble(main.getPaddle().paddleYPosition);
-                    outputStream.writeDouble(main.getPaddle().paddleCenter);
-                    outputStream.writeLong(main.currentTime);
+                    outputStream.writeDouble(main.getPlayer().paddleXPosition);
+                    outputStream.writeDouble(main.getPlayer().paddleYPosition);
+                    outputStream.writeDouble(main.getPlayer().paddleCenter);
+                    outputStream.writeLong(main.getPlayer().currentTime);
                     outputStream.writeLong(goldTime);
                     outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
 
-                    outputStream.writeBoolean(main.existHeartBlock);
+                    outputStream.writeBoolean(main.getPlayer().existHeartBlock);
                     outputStream.writeBoolean(main.getBall().goldBall);
                     outputStream.writeBoolean(main.getBall().goDownBall);
                     outputStream.writeBoolean(main.getBall().goRightBall);
@@ -125,7 +125,7 @@ public class State { //Methods include: read
                     outputStream.writeBoolean(main.getBall().collideToTopBlock);
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (Block block : main.blocks) {
+                    for (Block block : main.getEngine().blocks) {
                         if (block.isDestroyed) {
                             continue;
                         }
@@ -158,12 +158,12 @@ public class State { //Methods include: read
         //State loadSave = new State();
         read(); //Read the saved file, assign the variables to the saved variables
 
-        main.existHeartBlock = isExistHeartBlock;
+        main.getPlayer().existHeartBlock = isExistHeartBlock;
         main.getBall().goldBall = isGoldStatus;
         main.currentLevel = level;
         main.currentScore = score;
-        main.numberOfHearts = heart;
-        destroyedBlockCount = destroyedBlockCount;
+        main.getPlayer().numberOfHearts = heart;
+        main.getPlayer().destroyedBlockCount = destroyedBlockCount;
 
         main.getBall().goDownBall = goDownBall;
         main.getBall().goRightBall = goRightBall;
@@ -179,18 +179,18 @@ public class State { //Methods include: read
         main.getBall().ballYCoordinate = yBall;
         main.getBall().ballHorizontalSpeed = vX;
 
-        main.getPaddle().paddleXPosition = xBreak;
-        main.getPaddle().paddleYPosition = yBreak;
-        main.getPaddle().paddleCenter = centerBreakX;
-        main.currentTime = time;
-        goldTime = goldTime;
+        main.getPlayer().paddleXPosition = xBreak;
+        main.getPlayer().paddleYPosition = yBreak;
+        main.getPlayer().paddleCenter = centerBreakX;
+        main.getPlayer().currentTime = time;
+        main.getBall().goldTime = goldTime;
 
         blocks.clear();
-        main.bonusItems.clear();
+        main.getEngine().bonusItems.clear();
 
         for (BlockSerializable ser : blocks) {
             int r = new Random().nextInt(200);
-            main.blocks.add(new Block(ser.row, ser.column, main.blockColors[r % main.blockColors.length], ser.type));
+            main.getEngine().blocks.add(new Block(ser.row, ser.column, main.getEngine().blockColors[r % main.getEngine().blockColors.length], ser.type));
         }
 
         try {
@@ -204,7 +204,7 @@ public class State { //Methods include: read
     public void restartGame() { //Restart the game
         try {
             main.currentLevel = 0;
-            main.numberOfHearts = 3;
+            main.getPlayer().numberOfHearts = 3;
             main.currentScore = 0;
             main.getBall().ballHorizontalSpeed = 1.000;
             destroyedBlockCount = 0;
@@ -212,13 +212,13 @@ public class State { //Methods include: read
             main.getBall().goDownBall = true;
 
             main.getBall().goldBall = false;
-            main.existHeartBlock = false;
-            main.hitTime = 0;
-            main.currentTime = 0;
+            main.getPlayer().existHeartBlock = false;
+            main.getPlayer().hitTime = 0;
+            main.getPlayer().currentTime = 0;
             goldTime = 0;
 
             blocks.clear();
-            main.bonusItems.clear();
+            main.getEngine().bonusItems.clear();
 
             main.start(main.getGameScreen().primaryStage);
         } catch (Exception e) {

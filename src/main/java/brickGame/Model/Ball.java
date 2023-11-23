@@ -1,7 +1,6 @@
 package brickGame.Model;
 
 import brickGame.Main;
-import brickGame.View.State;
 import javafx.scene.shape.Circle;
 
 public class Ball extends Circle {
@@ -54,22 +53,22 @@ public class Ball extends Circle {
             goDownBall = false; //Ball moves upwards
             if (!goldBall) { //If the ball is NOT gold
                 //TODO gameover
-                main.numberOfHearts--; //Decrement the heart
+                main.getPlayer().numberOfHearts--; //Decrement the heart
                 new Score().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
                 checkGameOver();
             }
             //return;
         }
 
-        if (ballYCoordinate > main.getPaddle().paddleYPosition - main.getBall().ballRadius*1.5) {
+        if (ballYCoordinate > main.getPlayer().paddleYPosition - main.getBall().ballRadius*1.5) {
             //System.out.println("Collide1");
-            if (ballXCoordinate >= main.getPaddle().paddleXPosition && ballXCoordinate <= main.getPaddle().paddleXPosition + main.getPaddle().paddleWidth) {
-                main.hitTime = main.currentTime;
+            if (ballXCoordinate >= main.getPlayer().paddleXPosition && ballXCoordinate <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
+                main.getPlayer().hitTime = main.getPlayer().currentTime;
                 resetCollideFlags();
                 collideToPaddle = true;
                 goDownBall = false;
 
-                double relation = (ballXCoordinate - main.getPaddle().paddleCenter) / (main.getPaddle().paddleWidth / 2);
+                double relation = (ballXCoordinate - main.getPlayer().paddleCenter) / (main.getPlayer().paddleWidth / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -82,7 +81,7 @@ public class Ball extends Circle {
                     //System.out.println("vX " + vX);
                 }
 
-                if (ballXCoordinate - main.getPaddle().paddleCenter > 0) {
+                if (ballXCoordinate - main.getPlayer().paddleCenter > 0) {
                     collideToPaddleAndMoveToRight = true;
                 } else {
                     collideToPaddleAndMoveToRight = false;
@@ -135,7 +134,7 @@ public class Ball extends Circle {
     }
 
     public void checkGameOver() {
-        if (!goldBall && main.numberOfHearts == 0) {
+        if (!goldBall && main.getPlayer().numberOfHearts == 0) {
             main.getScore().showGameOver(main);
 
             try {

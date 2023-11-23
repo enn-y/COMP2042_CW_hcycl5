@@ -112,7 +112,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 // Score, level, and hearts information
                 Label scoreLabel = new Label("Score: " + main.currentScore);
                 Label levelLabel = new Label("Level: " + main.currentLevel);
-                Label heartsLabel = new Label("Hearts: " + main.numberOfHearts);
+                Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
                 scoreLabel.setStyle("-fx-font-size: 24;"); // Customize font size
                 scoreLabel.setLayoutX(200); // Center horizontally
                 scoreLabel.setLayoutY(240);

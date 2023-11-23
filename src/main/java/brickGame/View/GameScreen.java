@@ -38,17 +38,17 @@ public class GameScreen {
         scoreLabel = new Label("Score: " + main.currentScore); //Initialize the score label
         levelLabel = new Label("Level: " + main.currentLevel); //Initialize the level label
         levelLabel.setTranslateY(20); //Set the size of the level label, y-coordinate (20)
-        heartLabel = new Label("Heart : " + main.numberOfHearts); //Initialize the heart label
+        heartLabel = new Label("Heart : " + main.getPlayer().numberOfHearts); //Initialize the heart label
         heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
     }
 
     public void AddElements(){
         if (!main.getState().loadFromSavedFile) { //If NOT loading from saved file
-            root.getChildren().addAll(main.getPaddle(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
+            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
         } else { //But if IT IS loading from saved file
-            root.getChildren().addAll(main.getPaddle(), main.getBall(), scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
+            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
         }
-        for (Block block : main.blocks) { //For each block in the blocks ArrayList
+        for (Block block : main.getEngine().blocks) { //For each block in the blocks ArrayList
             root.getChildren().add(block.rect); //Add the block to the root pane
         }
     }

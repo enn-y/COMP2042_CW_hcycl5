@@ -3,7 +3,7 @@ package brickGame.Model;
 import brickGame.Main;
 import javafx.scene.shape.Rectangle;
 
-public class Paddle extends Rectangle {
+public class Player extends Rectangle {
     Main main;
     public int paddleWidth = 130; //Width of paddle
     public int paddleHeight = 30; //Height of paddle
@@ -13,8 +13,13 @@ public class Paddle extends Rectangle {
     public int paddleWidthHalf = paddleWidth / 2; //Half of the width of paddle
     public static int paddleLEFT = 1; //Direction of paddle
     public static int paddleRIGHT = 2; //Direction of paddle
+    public long hitTime  = 0; //Time of hit, initialized at 0, used to check if ball is still on paddle
+    public boolean existHeartBlock = false; //Status of heart block
+    public int destroyedBlockCount = 0; //Number of destroyed blocks
+    public int numberOfHearts = 3; //Number of hearts, initialized at 3
+    public long currentTime = 0; //Time, initialized at 0, increases by 1 every second
 
-    public Paddle(Main main){
+    public Player(Main main){
         super(0, 0, 130, 30);
         this.main = main;
     }

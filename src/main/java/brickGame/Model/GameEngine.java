@@ -1,8 +1,12 @@
 package brickGame.Model;
 
 
+import brickGame.Model.Blocks.Block;
 import brickGame.Model.Interface.OnAction;
 import javafx.application.Platform;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
 
@@ -11,6 +15,23 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
     private Thread updateThread;
     private Thread physicsThread;
     public boolean isStopped = true;
+    public ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
+    public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
+    public Color[] blockColors = new Color[]{ //Array of colors for the blocks
+            Color.MAGENTA,
+            Color.RED,
+            Color.GOLD,
+            Color.CORAL,
+            Color.AQUA,
+            Color.VIOLET,
+            Color.GREENYELLOW,
+            Color.ORANGE,
+            Color.PINK,
+            Color.SLATEGREY,
+            Color.YELLOW,
+            Color.TOMATO,
+            Color.TAN,
+    };
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
