@@ -205,6 +205,16 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
                     bombBlock.blockType();
                 }
 
+                if(block.type == Block.BLOCK_TELEPORT){
+                    TeleportBlock teleportBlock = new TeleportBlock(block.row, block.column, main);
+                    teleportBlock.blockType();
+                }
+
+                if(block.type == Block.BLOCK_SPEED){
+                    SpeedBlock speedBlock = new SpeedBlock(block.row, block.column, main);
+                    speedBlock.blockType();
+                }
+
                 if (hitCode == Block.HIT_RIGHT) {
                     main.getBall().collideToRightBlock = true;
                 } else if (hitCode == Block.HIT_BOTTOM) {

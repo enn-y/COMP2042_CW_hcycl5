@@ -42,6 +42,8 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int BLOCK_SLIME = 103; //slime block
     public static int BLOCK_BOMB = 104; //explosion block
     public static int BLOCK_QUESTION = 105; //question block
+    public static int BLOCK_TELEPORT = 106; //teleport block
+    public static int BLOCK_SPEED = 107; //mirror block
 
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -74,8 +76,11 @@ public class Block implements Serializable { //Methods include: Block, draw, che
             setImage("bomb.jpg");
         } else if (type == BLOCK_QUESTION) {
             setImage("question.png");
-        }
-        else {
+        } else if (type == BLOCK_TELEPORT){
+            setImage("teleport.jpg");
+        } else if (type == BLOCK_SPEED){
+            setImage("speed.jpg");
+        } else {
             rect.setFill(color);
         }
     }
