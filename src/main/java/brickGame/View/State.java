@@ -161,6 +161,7 @@ public class State { //Methods include: read
         main.getPlayer().existHeartBlock = isExistHeartBlock;
         main.getBall().goldBall = isGoldStatus;
         main.currentLevel = level;
+        main.currentLevel--;
         main.currentScore = score;
         main.getPlayer().numberOfHearts = heart;
         main.getPlayer().destroyedBlockCount = destroyedBlockCount;
