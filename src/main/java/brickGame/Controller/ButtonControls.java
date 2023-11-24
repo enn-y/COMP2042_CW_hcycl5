@@ -7,6 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class ButtonControls {
     Main main;
@@ -46,8 +49,10 @@ public class ButtonControls {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.getGameScreen().primaryStage.close();
-                hideButtons();
+                if (showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                    main.getGameScreen().primaryStage.close();
+                    hideButtons();
+                }
             }
         };
     }
@@ -61,7 +66,7 @@ public class ButtonControls {
         };
     }
 
-    public void showInstructionsDialog() {
+    private void showInstructionsDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Instructions");
         alert.setHeaderText(null);
@@ -73,6 +78,16 @@ public class ButtonControls {
                 "5. Press the 'Q' key to quit the game.\n" +
                 "\nGOOD LUCK!");
         alert.showAndWait();
+    }
+
+    public boolean showConfirmationDialog(String title, String content) {
+        Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmExit.setTitle(title);
+        confirmExit.setHeaderText(null);
+        confirmExit.setContentText(content);
+
+        Optional<ButtonType> result = confirmExit.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     public void hideButtons(){

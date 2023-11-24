@@ -36,7 +36,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
         buttonControls = new ButtonControls(this); //Initialize the button controls
-        engine = new GameEngine(); //Initialize the game engine
+        engine = new GameEngine(this); //Initialize the game engine
         score = new Score(); //Initialize the score
         levelManager = new LevelManager(this); //Initialize the level manager
 
@@ -123,62 +123,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         });
 
         if (getBall().ballYCoordinate >= Block.getPaddingTop() && getBall().ballYCoordinate <= (Block.getHeight() * (currentLevel + 1)) + Block.getPaddingTop()) {
-            for (final Block block : getEngine().blocks) {
-                int hitCode = block.checkHitToBlock(getBall().ballXCoordinate, getBall().ballYCoordinate);
-                if (hitCode != Block.NO_HIT) {
-                    currentScore += 1;
-
-                    getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, this);
-
-                    block.rect.setVisible(false);
-                    block.isDestroyed = true;
-                    getPlayer().destroyedBlockCount++;
-                    //System.out.println("size is " + blocks.size());
-                    getBall().resetCollideFlags();
-
-                    if (block.type == Block.BLOCK_CHOCOLATE) {
-                        ChocolateBlock chocolateBlock = new ChocolateBlock(block.row, block.column, this);
-                        chocolateBlock.blockType();
-                    }
-
-                    if (block.type == Block.BLOCK_STAR && !getBall().goldBall) {
-                        StarBlock starBlock = new StarBlock(block.row, block.column, this);
-                        starBlock.blockType();
-                    }
-
-                    if (block.type == Block.BLOCK_HEART) {
-                        HeartBlock heartBlock = new HeartBlock(block.row, block.column, this);
-                        heartBlock.blockType();
-                    }
-
-                    if (block.type == Block.BLOCK_SLIME) {
-                        SlimeBlock slimeBlock = new SlimeBlock(block.row, block.column, this);
-                        slimeBlock.blockType();
-                    }
-
-                    if(block.type == Block.BLOCK_QUESTION){
-                        QuestionBlock questionBlock = new QuestionBlock(block.row, block.column, this);
-                        questionBlock.blockType();
-                    }
-
-                    if(block.type == Block.BLOCK_BOMB){
-                        BombBlock bombBlock = new BombBlock(block.row, block.column, this);
-                        bombBlock.blockType();
-                    }
-
-                    if (hitCode == Block.HIT_RIGHT) {
-                        getBall().collideToRightBlock = true;
-                    } else if (hitCode == Block.HIT_BOTTOM) {
-                        getBall().collideToBottomBlock = true;
-                    } else if (hitCode == Block.HIT_LEFT) {
-                        getBall().collideToLeftBlock = true;
-                    } else if (hitCode == Block.HIT_TOP) {
-                        getBall().collideToTopBlock = true;
-                    }
-                }
-                //TODO hit to break and some work here....
-                //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
-            }
+            getEngine().createBlock(); //Create the blocks
         }
     }
 

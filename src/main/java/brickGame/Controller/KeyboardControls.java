@@ -20,9 +20,6 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
             case RIGHT: //If the right arrow key is pressed
                 main.getPlayer().move(main.getPlayer().paddleRIGHT); //Move the paddle to the right
                 break;
-            case DOWN:
-                //setPhysicsToBall();
-                break;
             case SPACE:
                 // If the spacebar is pressed, pause or resume the game
                 main.getScore().showMessage("Game Paused", main);
@@ -36,9 +33,14 @@ public class KeyboardControls implements EventHandler<KeyEvent> {
                 break;
             case Q:
                 // If the Q key is pressed, quit the game
-                main.getScore().showMessage("Game Quit", main);
-                main.getEngine().stop();
-                main.getGameScreen().primaryStage.close();
+                main.getScore().showMessage("Game Quit?", main);
+                main.getEngine().pause();
+                if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                    main.getGameScreen().primaryStage.close();
+                } else{
+                    main.getScore().showMessage("Game Resumed", main);
+                    main.getEngine().pause();
+                }
                 break;
             case S: //If the S key is pressed
                 main.getState().saveGame(); //Save the game

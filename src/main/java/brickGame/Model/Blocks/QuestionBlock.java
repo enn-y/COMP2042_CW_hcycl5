@@ -1,11 +1,12 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
+import brickGame.Model.Interface.BlockType;
 import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-public class QuestionBlock extends Block{
+public class QuestionBlock extends Block implements BlockType {
     Main main;
     public QuestionBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_QUESTION);

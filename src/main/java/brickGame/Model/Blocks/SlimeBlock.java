@@ -1,13 +1,14 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
+import brickGame.Model.Interface.BlockType;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class SlimeBlock extends Block{
+public class SlimeBlock extends Block implements BlockType {
     Main main;
     public SlimeBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_SLIME);

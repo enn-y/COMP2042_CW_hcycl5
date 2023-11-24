@@ -1,12 +1,13 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
+import brickGame.Model.Interface.BlockType;
 import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BombBlock extends Block{
+public class BombBlock extends Block implements BlockType {
     Main main;
 
     public BombBlock(int row, int column, Main main) {

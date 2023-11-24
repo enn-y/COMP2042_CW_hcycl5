@@ -1,7 +1,8 @@
 package brickGame.Model;
 
 
-import brickGame.Model.Blocks.Block;
+import brickGame.Main;
+import brickGame.Model.Blocks.*;
 import brickGame.Model.Interface.OnAction;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
+    Main main;
 
     private OnAction onAction;
     private int fps = 15;
@@ -32,6 +34,10 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             Color.TOMATO,
             Color.TAN,
     };
+
+    public GameEngine(Main main){
+        this.main = main;
+    }
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
@@ -153,5 +159,64 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
                 timeThread.resume();
             }
         });
+    }
+
+    public void createBlock() {
+        for (final Block block : main.getEngine().blocks) {
+            int hitCode = block.checkHitToBlock(main.getBall().ballXCoordinate, main.getBall().ballYCoordinate);
+            if (hitCode != Block.NO_HIT) {
+                main.currentScore += 1;
+
+                main.getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, main);
+
+                block.rect.setVisible(false);
+                block.isDestroyed = true;
+                main.getPlayer().destroyedBlockCount++;
+                //System.out.println("size is " + blocks.size());
+                main.getBall().resetCollideFlags();
+
+                if (block.type == Block.BLOCK_CHOCOLATE) {
+                    ChocolateBlock chocolateBlock = new ChocolateBlock(block.row, block.column, main);
+                    chocolateBlock.blockType();
+                }
+
+                if (block.type == Block.BLOCK_STAR && !main.getBall().goldBall) {
+                    StarBlock starBlock = new StarBlock(block.row, block.column, main);
+                    starBlock.blockType();
+                }
+
+                if (block.type == Block.BLOCK_HEART) {
+                    HeartBlock heartBlock = new HeartBlock(block.row, block.column, main);
+                    heartBlock.blockType();
+                }
+
+                if (block.type == Block.BLOCK_SLIME) {
+                    SlimeBlock slimeBlock = new SlimeBlock(block.row, block.column, main);
+                    slimeBlock.blockType();
+                }
+
+                if(block.type == Block.BLOCK_QUESTION){
+                    QuestionBlock questionBlock = new QuestionBlock(block.row, block.column, main);
+                    questionBlock.blockType();
+                }
+
+                if(block.type == Block.BLOCK_BOMB){
+                    BombBlock bombBlock = new BombBlock(block.row, block.column, main);
+                    bombBlock.blockType();
+                }
+
+                if (hitCode == Block.HIT_RIGHT) {
+                    main.getBall().collideToRightBlock = true;
+                } else if (hitCode == Block.HIT_BOTTOM) {
+                    main.getBall().collideToBottomBlock = true;
+                } else if (hitCode == Block.HIT_LEFT) {
+                    main.getBall().collideToLeftBlock = true;
+                } else if (hitCode == Block.HIT_TOP) {
+                    main.getBall().collideToTopBlock = true;
+                }
+            }
+            //TODO hit to break and some work here....
+            //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
+        }
     }
 }

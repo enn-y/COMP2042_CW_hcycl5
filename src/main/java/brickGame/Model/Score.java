@@ -141,8 +141,10 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 exit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        // Exit the game (close the application)
-                        main.getGameScreen().primaryStage.close();
+                        if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                            main.getGameScreen().primaryStage.close();
+                            main.getButtonControls().hideButtons();
+                        }
                     }
                 });
 

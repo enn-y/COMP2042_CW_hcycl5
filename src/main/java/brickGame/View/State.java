@@ -100,7 +100,7 @@ public class State { //Methods include: read
                     outputStream.writeInt(main.currentLevel);
                     outputStream.writeInt(main.currentScore);
                     outputStream.writeInt(main.getPlayer().numberOfHearts);
-                    outputStream.writeInt(destroyedBlockCount);
+                    outputStream.writeInt(main.getPlayer().destroyedBlockCount);
 
                     outputStream.writeDouble(main.getBall().ballXCoordinate);
                     outputStream.writeDouble(main.getBall().ballYCoordinate);
@@ -108,7 +108,7 @@ public class State { //Methods include: read
                     outputStream.writeDouble(main.getPlayer().paddleYPosition);
                     outputStream.writeDouble(main.getPlayer().paddleCenter);
                     outputStream.writeLong(main.getPlayer().currentTime);
-                    outputStream.writeLong(goldTime);
+                    outputStream.writeLong(main.getBall().goldTime);
                     outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
 
                     outputStream.writeBoolean(main.getPlayer().existHeartBlock);
@@ -230,7 +230,6 @@ public class State { //Methods include: read
         if (!loadFromSavedFile) { //If NOT loading from saved file
             if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
                 main.getButtonControls().hideButtons(); //Hide the buttons
-                //main.engine = new GameEngine(); //Initialize the game engine, to start the game
                 main.getEngine().setOnAction(main); //Listen for events
                 main.getEngine().setFps(120); //Set FPS
                 main.getEngine().start(); //Start the game engine
@@ -242,7 +241,6 @@ public class State { //Methods include: read
             main.getButtonControls().instructionsButton.setOnAction(main.getButtonControls().createInstructionsButtonHandler());
 
         } else { //But if IT IS loading from saved file
-            //main.engine = new GameEngine(); //Initialize the game engine, to start the game
             main.getEngine().setOnAction(main); //Listen for events
             main.getEngine().setFps(120); //Set FPS
             main.getEngine().start(); //Start the game engine

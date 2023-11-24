@@ -28,21 +28,29 @@ public class GameScreen {
         main.getButtonControls().newGameButton.setTranslateX(160); //Set the size of the new game button, x-coordinate (220)
         main.getButtonControls().newGameButton.setTranslateY(310); //Set the size of the new game button, y-coordinate (340)
         main.getButtonControls().newGameButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().newGameButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        main.getButtonControls().newGameButton.setTooltip(new javafx.scene.control.Tooltip("Start a new game")); //Set a tooltip for the new game button
 
         main.getButtonControls().loadButton = new Button("Load Game"); //Initialize the load button
         main.getButtonControls().loadButton.setTranslateX(160); //Set the size of load button, x-coordinate (220)
         main.getButtonControls().loadButton.setTranslateY(340); //Set the size of the load button, y-coordinate (300)
         main.getButtonControls().loadButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().loadButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        main.getButtonControls().loadButton.setTooltip(new javafx.scene.control.Tooltip("Load a saved game")); //Set a tooltip for the load button
 
         main.getButtonControls().exitButton = new Button("Exit"); //Initialize the exit button
         main.getButtonControls().exitButton.setTranslateX(160); //Set the size of the exit button, x-coordinate (220)
         main.getButtonControls().exitButton.setTranslateY(370); //Set the size of the exit button, y-coordinate (370)
         main.getButtonControls().exitButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().exitButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        main.getButtonControls().exitButton.setTooltip(new javafx.scene.control.Tooltip("Exit the game")); //Set a tooltip for the exit button
 
         main.getButtonControls().instructionsButton = new Button("Instructions"); //Initialize the instructions button
         main.getButtonControls().instructionsButton.setTranslateX(160); //Set the size of the instructions button, x-coordinate (220)
         main.getButtonControls().instructionsButton.setTranslateY(400); //Set the size of the instructions button, y-coordinate (400)
         main.getButtonControls().instructionsButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().instructionsButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        main.getButtonControls().instructionsButton.setTooltip(new javafx.scene.control.Tooltip("Display instructions")); //Set a tooltip for the instructions button
     }
 
     public void AddLabels(){
