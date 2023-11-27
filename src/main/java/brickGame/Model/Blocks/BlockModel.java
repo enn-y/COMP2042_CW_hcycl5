@@ -8,8 +8,8 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
-public class Block implements Serializable { //Methods include: Block, draw, checkHitToBlock, getPaddingTop, getPaddingH, getHeight, and getWidth
-    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
+public class BlockModel implements Serializable { //Methods include: Block, draw, checkHitToBlock, getPaddingTop, getPaddingH, getHeight, and getWidth
+    private static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);
 
     public int row;
     public int column;
@@ -45,7 +45,7 @@ public class Block implements Serializable { //Methods include: Block, draw, che
     public static int BLOCK_TELEPORT = 106; //teleport block
     public static int BLOCK_SPEED = 107; //mirror block
 
-    public Block(int row, int column, Color color, int type) {
+    public BlockModel(int row, int column, Color color, int type) {
         this.row = row;
         this.column = column;
         this.color = color;

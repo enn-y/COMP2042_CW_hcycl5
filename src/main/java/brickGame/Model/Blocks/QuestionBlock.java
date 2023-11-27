@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-public class QuestionBlock extends Block implements BlockType {
+public class QuestionBlock extends BlockModel implements BlockType {
     Main main;
     public QuestionBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_QUESTION);

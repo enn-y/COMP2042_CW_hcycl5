@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BombBlock extends Block implements BlockType {
+public class BombBlock extends BlockModel implements BlockType {
     Main main;
 
     public BombBlock(int row, int column, Main main) {

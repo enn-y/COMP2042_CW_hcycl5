@@ -1,9 +1,10 @@
-package brickGame.Model;
+package brickGame.Model.Player;
 
 import brickGame.Main;
+import brickGame.Model.Interface.Playable;
 import javafx.scene.shape.Rectangle;
 
-public class Player extends Rectangle {
+public class PlayerModel extends Rectangle implements Playable {
     Main main;
     public int paddleWidth = 130; //Width of paddle
     public int paddleHeight = 30; //Height of paddle
@@ -19,7 +20,7 @@ public class Player extends Rectangle {
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     public long currentTime = 0; //Time, initialized at 0, increases by 1 every second
 
-    public Player(Main main){
+    public PlayerModel(Main main){
         super(0, 0, 130, 30);
         this.main = main;
     }

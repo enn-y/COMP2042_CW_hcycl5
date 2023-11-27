@@ -17,7 +17,7 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
     private Thread updateThread;
     private Thread physicsThread;
     public boolean isStopped = true;
-    public ArrayList<Block> blocks = new ArrayList<Block>(); //ArrayList to store the blocks
+    public ArrayList<BlockModel> blocks = new ArrayList<BlockModel>(); //ArrayList to store the blocks
     public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     public Color[] blockColors = new Color[]{ //Array of colors for the blocks
             Color.MAGENTA,
@@ -162,9 +162,9 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
     }
 
     public void createBlock() {
-        for (final Block block : main.getEngine().blocks) {
+        for (final BlockModel block : main.getEngine().blocks) {
             int hitCode = block.checkHitToBlock(main.getBall().ballXCoordinate, main.getBall().ballYCoordinate);
-            if (hitCode != Block.NO_HIT) {
+            if (hitCode != BlockModel.NO_HIT) {
                 main.currentScore += 1;
 
                 main.getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, main);
@@ -175,53 +175,53 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
                 //System.out.println("size is " + blocks.size());
                 main.getBall().resetCollideFlags();
 
-                if (block.type == Block.BLOCK_CHOCOLATE) {
+                if (block.type == BlockModel.BLOCK_CHOCOLATE) {
                     ChocolateBlock chocolateBlock = new ChocolateBlock(block.row, block.column, main);
                     chocolateBlock.blockType();
                 }
 
-                if (block.type == Block.BLOCK_STAR && !main.getBall().goldBall) {
+                if (block.type == BlockModel.BLOCK_STAR && !main.getBall().goldBall) {
                     StarBlock starBlock = new StarBlock(block.row, block.column, main);
                     starBlock.blockType();
                 }
 
-                if (block.type == Block.BLOCK_HEART) {
+                if (block.type == BlockModel.BLOCK_HEART) {
                     HeartBlock heartBlock = new HeartBlock(block.row, block.column, main);
                     heartBlock.blockType();
                 }
 
-                if (block.type == Block.BLOCK_SLIME) {
+                if (block.type == BlockModel.BLOCK_SLIME) {
                     SlimeBlock slimeBlock = new SlimeBlock(block.row, block.column, main);
                     slimeBlock.blockType();
                 }
 
-                if(block.type == Block.BLOCK_QUESTION){
+                if(block.type == BlockModel.BLOCK_QUESTION){
                     QuestionBlock questionBlock = new QuestionBlock(block.row, block.column, main);
                     questionBlock.blockType();
                 }
 
-                if(block.type == Block.BLOCK_BOMB){
+                if(block.type == BlockModel.BLOCK_BOMB){
                     BombBlock bombBlock = new BombBlock(block.row, block.column, main);
                     bombBlock.blockType();
                 }
 
-                if(block.type == Block.BLOCK_TELEPORT){
+                if(block.type == BlockModel.BLOCK_TELEPORT){
                     TeleportBlock teleportBlock = new TeleportBlock(block.row, block.column, main);
                     teleportBlock.blockType();
                 }
 
-                if(block.type == Block.BLOCK_SPEED){
+                if(block.type == BlockModel.BLOCK_SPEED){
                     SpeedBlock speedBlock = new SpeedBlock(block.row, block.column, main);
                     speedBlock.blockType();
                 }
 
-                if (hitCode == Block.HIT_RIGHT) {
+                if (hitCode == BlockModel.HIT_RIGHT) {
                     main.getBall().collideToRightBlock = true;
-                } else if (hitCode == Block.HIT_BOTTOM) {
+                } else if (hitCode == BlockModel.HIT_BOTTOM) {
                     main.getBall().collideToBottomBlock = true;
-                } else if (hitCode == Block.HIT_LEFT) {
+                } else if (hitCode == BlockModel.HIT_LEFT) {
                     main.getBall().collideToLeftBlock = true;
-                } else if (hitCode == Block.HIT_TOP) {
+                } else if (hitCode == BlockModel.HIT_TOP) {
                     main.getBall().collideToTopBlock = true;
                 }
             }

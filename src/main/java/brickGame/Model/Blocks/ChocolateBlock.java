@@ -1,12 +1,11 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Bonus;
 import brickGame.Model.Interface.BlockType;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
-public class ChocolateBlock extends Block implements BlockType {
+public class ChocolateBlock extends BlockModel implements BlockType {
     Main main;
     public ChocolateBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_CHOCOLATE);

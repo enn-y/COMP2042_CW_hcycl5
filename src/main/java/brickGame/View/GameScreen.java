@@ -1,7 +1,7 @@
 package brickGame.View;
 
 import brickGame.Main;
-import brickGame.Model.Blocks.Block;
+import brickGame.Model.Blocks.BlockModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -68,7 +68,7 @@ public class GameScreen {
         } else { //But if IT IS loading from saved file
             root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
         }
-        for (Block block : main.getEngine().blocks) { //For each block in the blocks ArrayList
+        for (BlockModel block : main.getEngine().blocks) { //For each block in the blocks ArrayList
             root.getChildren().add(block.rect); //Add the block to the root pane
         }
     }

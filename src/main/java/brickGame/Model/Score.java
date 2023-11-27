@@ -104,7 +104,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 Pane gameOverLayout = new Pane();
 
                 // Large font title "Game Over"
-                Label gameOverLabel = new Label("Game Over");
+                Label gameOverLabel = new Label("Game Over!");
                 gameOverLabel.setStyle("-fx-font-size: 36;"); // Customize font size
                 gameOverLabel.setLayoutX(160);
                 gameOverLabel.setLayoutY(140);

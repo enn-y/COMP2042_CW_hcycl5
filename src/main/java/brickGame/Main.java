@@ -3,8 +3,12 @@ package brickGame;
 import brickGame.Controller.ButtonControls;
 import brickGame.Controller.KeyboardControls;
 import brickGame.Model.*;
+import brickGame.Model.Ball.BallFactory;
+import brickGame.Model.Ball.BallModel;
 import brickGame.Model.Blocks.*;
 import brickGame.Model.Interface.OnAction;
+import brickGame.Model.Player.PlayerInitializer;
+import brickGame.Model.Player.PlayerModel;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
 import javafx.application.Application;
@@ -14,31 +18,35 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-    Ball ball; //Ball object
-    Player player; //Paddle object
+    BallModel ballModel; //Ball object
+    PlayerModel playerModel; //Paddle object
     KeyboardControls keyboardControls; //KeyboardControls object
     ButtonControls buttonControls; //ButtonControls object
-    GameObjectInitializer gameObjectInitializer; //GameObjectInitializer object
     LevelManager levelManager; //LevelManager object
     GameScreen gameScreen; //GameScreen object
     State state; //State object
     Score score; //Score object
     GameEngine engine; //GameEngine object
+    BallFactory ballFactory; //BallFactory object
+    PlayerInitializer playerInitializer; //PlayerFactory object
+    BlockFactory blockFactory; //BlockFactory object
     public int currentLevel = 0; //Level, initialized at 0, increases by 1 when a level is completed
     public int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
 
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
-        ball = new Ball(this); //Initialize the ball
-        player = new Player(this); //Initialize the paddle
+        ballModel = new BallModel(this); //Initialize the ball
+        playerModel = new PlayerModel(this); //Initialize the paddle
         keyboardControls = new KeyboardControls(this);
-        gameObjectInitializer = new GameObjectInitializer(this); //Initialize the initializer
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
         buttonControls = new ButtonControls(this); //Initialize the button controls
         engine = new GameEngine(this); //Initialize the game engine
         score = new Score(); //Initialize the score
         levelManager = new LevelManager(this); //Initialize the level manager
+        ballFactory = new BallFactory(this); //Initialize the ball factory
+        playerInitializer = new PlayerInitializer(this); //Initialize the player factory
+        blockFactory = new BlockFactory(this); //Initialize the block factory
 
         getGameScreen().primaryStage = primaryStage; //Set primaryStage which is the game window
 
@@ -52,9 +60,9 @@ public class Main extends Application implements OnAction { //Application: JavaF
                 return;
             }
 
-            getGameObjectInitializer().initializeBall(); //Initialize the ball
-            getGameObjectInitializer().initializePaddle(); //Initialize the paddle
-            getGameObjectInitializer().initializeBlocks(); //Initialize the blocks
+            ballFactory.initializeBall();
+            playerInitializer.initializePaddle();
+            blockFactory.initializeBlocks();
             getGameScreen().AddButtons();
         }
 
@@ -122,7 +130,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
             }
         });
 
-        if (getBall().ballYCoordinate >= Block.getPaddingTop() && getBall().ballYCoordinate <= (Block.getHeight() * (currentLevel + 1)) + Block.getPaddingTop()) {
+        if (getBall().ballYCoordinate >= BlockModel.getPaddingTop() && getBall().ballYCoordinate <= (BlockModel.getHeight() * (currentLevel + 1)) + BlockModel.getPaddingTop()) {
             getEngine().createBlock(); //Create the blocks
         }
     }
@@ -132,20 +140,17 @@ public class Main extends Application implements OnAction { //Application: JavaF
         this.getPlayer().currentTime = time;
     }
 
-    public Ball getBall() { //Getter method for ball
-        return ball;
+    public BallModel getBall() { //Getter method for ball
+        return ballModel;
     }
-    public Player getPlayer() { //Getter method for paddle
-        return player;
+    public PlayerModel getPlayer() { //Getter method for paddle
+        return playerModel;
     }
     public KeyboardControls getKeyboardControls() { //Getter method for keyboard controls
         return keyboardControls;
     }
     public ButtonControls getButtonControls(){ //Getter method for button controls
         return buttonControls;
-    }
-    public GameObjectInitializer getGameObjectInitializer(){ //Getter method for game object initializer
-        return gameObjectInitializer;
     }
     public LevelManager getLevelManager(){ //Getter method for level manager
         return levelManager;

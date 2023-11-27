@@ -1,9 +1,10 @@
-package brickGame.Model;
+package brickGame.Model.Ball;
 
 import brickGame.Main;
+import brickGame.Model.Score;
 import javafx.scene.shape.Circle;
 
-public class Ball extends Circle {
+public class BallModel extends Circle {
     Main main;
 
     public double ballXCoordinate; //x-coordinate of ball
@@ -24,7 +25,7 @@ public class Ball extends Circle {
     public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
     public boolean goldBall = false; //Status of gold ball
 
-    public Ball(Main main){
+    public BallModel(Main main){
         this.main = main;
     }
 

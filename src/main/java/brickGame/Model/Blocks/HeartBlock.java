@@ -4,7 +4,7 @@ import brickGame.Main;
 import brickGame.Model.Interface.BlockType;
 import javafx.scene.paint.Color;
 
-public class HeartBlock extends Block implements BlockType {
+public class HeartBlock extends BlockModel implements BlockType {
     Main main;
     public HeartBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_HEART);

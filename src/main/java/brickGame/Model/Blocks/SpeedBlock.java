@@ -4,7 +4,7 @@ import brickGame.Main;
 import brickGame.Model.Interface.BlockType;
 import javafx.scene.paint.Color;
 
-public class SpeedBlock extends Block implements BlockType {
+public class SpeedBlock extends BlockModel implements BlockType {
         Main main;
 
         public SpeedBlock(int row, int column, Main main) {

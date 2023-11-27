@@ -1,6 +1,6 @@
-package brickGame.Model;
+package brickGame.Model.Blocks;
 
-import brickGame.Model.Blocks.Block;
+import brickGame.Model.Blocks.BlockModel;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -17,8 +17,8 @@ public class Bonus implements Serializable { //Methods include: Bonus and draw, 
     public boolean taken = false; //bonus item is taken by the paddle or not
 
     public Bonus(int row, int column) { //constructor
-        x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15; //set x coordinate of bonus item
-        y = (row * (Block.getHeight())) + Block.getPaddingTop() + (Block.getHeight() / 2) - 15; //set y coordinate of bonus item
+        x = (column * (BlockModel.getWidth())) + BlockModel.getPaddingH() + (BlockModel.getWidth() / 2) - 15; //set x coordinate of bonus item
+        y = (row * (BlockModel.getHeight())) + BlockModel.getPaddingTop() + (BlockModel.getHeight() / 2) - 15; //set y coordinate of bonus item
 
         create();
     }

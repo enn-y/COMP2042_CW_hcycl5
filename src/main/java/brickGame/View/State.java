@@ -2,7 +2,7 @@ package brickGame.View;
 
 import brickGame.Main;
 import brickGame.Model.*;
-import brickGame.Model.Blocks.Block;
+import brickGame.Model.Blocks.BlockModel;
 import brickGame.Model.Serializables.BlockSerializable;
 import javafx.application.Platform;
 
@@ -125,7 +125,7 @@ public class State { //Methods include: read
                     outputStream.writeBoolean(main.getBall().collideToTopBlock);
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (Block block : main.getEngine().blocks) {
+                    for (BlockModel block : main.getEngine().blocks) {
                         if (block.isDestroyed) {
                             continue;
                         }
@@ -191,7 +191,7 @@ public class State { //Methods include: read
 
         for (BlockSerializable ser : blocks) {
             int r = new Random().nextInt(200);
-            main.getEngine().blocks.add(new Block(ser.row, ser.column, main.getEngine().blockColors[r % main.getEngine().blockColors.length], ser.type));
+            main.getEngine().blocks.add(new BlockModel(ser.row, ser.column, main.getEngine().blockColors[r % main.getEngine().blockColors.length], ser.type));
         }
 
         try {

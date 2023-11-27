@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-public class TeleportBlock extends Block implements BlockType {
+public class TeleportBlock extends BlockModel implements BlockType {
         Main main;
 
         public TeleportBlock(int row, int column, Main main) {

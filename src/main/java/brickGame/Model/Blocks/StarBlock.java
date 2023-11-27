@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
-public class StarBlock extends Block implements BlockType {
+public class StarBlock extends BlockModel implements BlockType {
     Main main;
     public StarBlock(int row, int column, Main main) {
         super(row, column, Color.TRANSPARENT, BLOCK_STAR);
