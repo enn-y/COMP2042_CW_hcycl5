@@ -36,7 +36,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
     @Override
     public void start(Stage primaryStage) throws Exception { //Start method
         ballModel = new BallModel(this); //Initialize the ball
-        playerModel = new PlayerModel(this); //Initialize the paddle
+        playerModel = PlayerModel.getInstance(this); //Initialize the paddle
         keyboardControls = new KeyboardControls(this);
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state

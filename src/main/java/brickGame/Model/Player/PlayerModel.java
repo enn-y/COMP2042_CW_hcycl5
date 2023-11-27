@@ -20,9 +20,18 @@ public class PlayerModel extends Rectangle implements Playable {
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     public long currentTime = 0; //Time, initialized at 0, increases by 1 every second
 
-    public PlayerModel(Main main){
+    private static PlayerModel instance;
+
+    private PlayerModel(Main main) {
         super(0, 0, 130, 30);
         this.main = main;
+    }
+
+    public static synchronized PlayerModel getInstance(Main main) { //Using thread safe singleton
+        if (instance == null) {
+            instance = new PlayerModel(main);
+        }
+        return instance;
     }
 
     public void move(final int direction) { //Move paddle method
