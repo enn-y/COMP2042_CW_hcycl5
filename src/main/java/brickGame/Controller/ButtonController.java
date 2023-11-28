@@ -1,8 +1,6 @@
 package brickGame.Controller;
 
-import brickGame.Model.GameEngine;
 import brickGame.Main;
-import brickGame.View.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -11,7 +9,16 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public class ButtonControls {
+/**
+ * The ButtonControls class is used to create the button handlers for the main menu buttons.
+ * It contains the methods to display the instructions and confirmation dialogs.
+ * It also contains the method to hide the buttons.
+ *
+ * @author Lua Chong En
+ *
+ */
+
+public class ButtonController {
     Main main;
 
     public Button loadButton = null; //Button to load game
@@ -19,9 +26,20 @@ public class ButtonControls {
     public Button exitButton = null; //Button to exit game
     public Button instructionsButton = null; //Button to display instructions
 
-    public ButtonControls(Main main) {
+    /**
+     * Constructor for the ButtonControls class.
+     * @param main The Main class instance to access components of the game.
+     */
+
+    public ButtonController(Main main) {
         this.main = main;
     }
+
+    /**
+     * The createLoadButtonHandler method creates the event handler for the load button.
+     * It calls the loadGame() method in the state class.
+     * @return The event handler for the load button.
+     */
 
     public EventHandler<ActionEvent> createLoadButtonHandler() {
         return new EventHandler<ActionEvent>() {
@@ -32,6 +50,12 @@ public class ButtonControls {
             }
         };
     }
+
+    /**
+     * The createNewGameButtonHandler creates the event handler for the new game button.
+     * It sets the game engine to the main class.
+     * @return The event handler for the new game button.
+     */
 
     public EventHandler<ActionEvent> createNewGameButtonHandler() {
         return new EventHandler<ActionEvent>() {
@@ -45,6 +69,14 @@ public class ButtonControls {
         };
     }
 
+    /**
+     * The createExitButtonHandler method creates the event handler for the exit button.
+     * Creates the event handler for the exit button.
+     * It displays the confirmation dialog with the title "Exit Game" and content "Are you sure you want to exit the game?".
+     * User can click the OK button to exit the game.
+     * @return The event handler for the exit button.
+     */
+
     public EventHandler<ActionEvent> createExitButtonHandler() {
         return new EventHandler<ActionEvent>() {
             @Override
@@ -57,6 +89,13 @@ public class ButtonControls {
         };
     }
 
+    /**
+     * The createInstructionsButtonHandler method creates the event handler for the instructions button.
+     * Creates the event handler for the instructions button.
+     * It calls the showInstructionsDialog() method.
+     * @return The event handler for the instructions button.
+     */
+
     public EventHandler<ActionEvent> createInstructionsButtonHandler() {
         return new EventHandler<ActionEvent>() {
             @Override
@@ -65,6 +104,12 @@ public class ButtonControls {
             }
         };
     }
+
+    /**
+     * The showInstructionsDialog method displays the instructions dialog with game instructions.
+     * Displays the instructions dialog with game instructions.
+     * It is an alert dialog with the title "Game Instructions".
+     */
 
     private void showInstructionsDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -80,6 +125,14 @@ public class ButtonControls {
         alert.showAndWait();
     }
 
+    /**
+     * The showConfirmationDialog method displays the confirmation dialog with the title and content.
+     * It is an alert dialog with the title and content.
+     * @param title The title of the confirmation dialog.
+     * @param content The message of the confirmation dialog.
+     * @return True if the user clicks the OK button, false otherwise.
+     */
+
     public boolean showConfirmationDialog(String title, String content) {
         Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION);
         confirmExit.setTitle(title);
@@ -89,6 +142,11 @@ public class ButtonControls {
         Optional<ButtonType> result = confirmExit.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+
+    /**
+     * The hideButtons method hides the main menu buttons.
+     * The buttons are loadButton, newGameButton, exitButton, and instructionsButton.
+     */
 
     public void hideButtons(){
         loadButton.setVisible(false);

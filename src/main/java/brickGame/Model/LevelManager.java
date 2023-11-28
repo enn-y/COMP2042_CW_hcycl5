@@ -3,13 +3,34 @@ package brickGame.Model;
 import brickGame.Main;
 import javafx.application.Platform;
 
+/**
+ * The LevelManager class represents the level manager.
+ * It is used to manage the levels.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class LevelManager {
 
     Main main;
 
+    /**
+     * Constructor initializes the level manager.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public LevelManager(Main main) {
         this.main = main;
     }
+
+    /**
+     * The nextLevel method is used to go to the next level.
+     * It resets the horizontal speed of the ball, and the collide flags of the ball.
+     * Also sets the goDownBall, goldBall, and existHeartBlock flags to true, false, and false respectively.
+     * And resets the hitTime, currentTime, and goldTime to 0.
+     * It also clears the blocks and bonus items.
+     */
 
     public void nextLevel() { //Go to the next level
         Platform.runLater(new Runnable() {
@@ -40,13 +61,5 @@ public class LevelManager {
                 }
             }
         });
-    }
-
-    public void blockDestroyedCount() { //Check the number of destroyed blocks
-        if (main.getPlayer().destroyedBlockCount == main.getEngine().blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
-            //TODO win level todo...
-            //System.out.println("You Win");
-            nextLevel();
-        }
     }
 }

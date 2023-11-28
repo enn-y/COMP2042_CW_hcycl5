@@ -4,6 +4,16 @@ import brickGame.Main;
 import brickGame.Model.Interface.Playable;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * The PlayerModel class represents the player model.
+ * It is used to create the paddle.
+ * It also contains the methods to move the paddle.
+ * The class includes a thread-safe singleton to ensure a single instance.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class PlayerModel extends Rectangle implements Playable {
     Main main;
     public int paddleWidth = 130; //Width of paddle
@@ -22,10 +32,21 @@ public class PlayerModel extends Rectangle implements Playable {
 
     private static PlayerModel instance;
 
+    /**
+     * Constructor used to create the paddle.
+     * @param main The Main instance to access the components of the game.
+     */
+
     private PlayerModel(Main main) {
         super(0, 0, 130, 30);
         this.main = main;
     }
+
+    /**
+     * This method is used to create a thread-safe singleton.
+     * @param main The Main instance to access the components of the game.
+     * @return The instance of the player model.
+     */
 
     public static synchronized PlayerModel getInstance(Main main) { //Using thread safe singleton
         if (instance == null) {
@@ -33,6 +54,11 @@ public class PlayerModel extends Rectangle implements Playable {
         }
         return instance;
     }
+
+    /**
+     * The move method is used to move the paddle.
+     * @param direction The direction of the paddle. Either left or right.
+     */
 
     public void move(final int direction) { //Move paddle method
         new Thread(new Runnable() { //Thread runs in parallel with main thread, using the runnable interface
@@ -63,5 +89,18 @@ public class PlayerModel extends Rectangle implements Playable {
                 }
             }
         }).start();
+    }
+
+    /**
+     * The blockDestroyedCount method is used to check the number of destroyed blocks.
+     * If the number of destroyed blocks is equal to the number of blocks, the player wins the level, and moves to the next level.
+     */
+
+    public void blockDestroyedCount() { //Check the number of destroyed blocks
+        if (main.getPlayer().destroyedBlockCount == main.getEngine().blocks.size()) { //If the number of destroyed blocks is equal to the number of blocks
+            //TODO win level todo...
+            //System.out.println("You Win");
+            main.getLevelManager().nextLevel();
+        }
     }
 }

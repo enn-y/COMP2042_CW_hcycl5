@@ -9,6 +9,15 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
+/**
+ * The GameEngine class represents the game engine.
+ * It is used to manage the game. It includes the methods to set the fps, update, initialize, and calculate physics.
+ * It also includes the methods to start, stop, and pause the game.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
     Main main;
 
@@ -35,20 +44,36 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             Color.TAN,
     };
 
+    /**
+     * Constructor initializes the game engine.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public GameEngine(Main main){
         this.main = main;
     }
+
+    /**
+     * The setOnAction method is used to set the action.
+     * @param onAction The action to be set.
+     */
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
 
     /**
+     * The setFps method is used to set the fps.
      * @param fps set fps and we convert it to millisecond
      */
     public void setFps(int fps) {
         this.fps = (int) 1000 / fps;
     }
+
+    /**
+     * The Update method is used to update the game.
+     * It is synchronized to prevent multiple threads from accessing the same object at the same time.
+     */
 
     private synchronized void Update() {
         updateThread = new Thread(new Runnable() {
@@ -72,9 +97,19 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
         updateThread.start();
     }
 
+    /**
+     * The Initialize method is used to initialize the game.
+     * It calls the onInit method when the game is initialized.
+     */
+
     private void Initialize() {
         onAction.onInit();
     }
+
+    /**
+     * The PhysicsCalculation method is used to calculate the physics.
+     * It is synchronized to prevent multiple threads from accessing the same object at the same time.
+     */
 
     private synchronized void PhysicsCalculation() {
         physicsThread = new Thread(new Runnable() {
@@ -100,6 +135,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
 
     }
 
+    /**
+     * The start method is used to start the game.
+     * It calls the Initialize, Update, and PhysicsCalculation methods.
+     * And sets the time to 0 and isStopped parameter to false.
+     */
+
     public void start() {
         time = 0;
         Initialize();
@@ -108,6 +149,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
         TimeStart();
         isStopped = false;
     }
+
+    /**
+     * The stop method is used to stop the game.
+     * It stops the updateThread, physicsThread, and timeThread.
+     * And sets the isStopped parameter to true.
+     */
 
     public void stop() {
         if (!isStopped) {
@@ -121,6 +168,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
     private long time = 0;
 
     private Thread timeThread;
+
+    /**
+     * The TimeStart method is used to start the time.
+     * It is synchronized to prevent multiple threads from accessing the same object at the same time.
+     * It calls the onTime method when the time is updated.
+     */
 
     private void TimeStart() {
         timeThread = new Thread(new Runnable() {
@@ -145,6 +198,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
         timeThread.start();
     }
 
+    /**
+     * The pause method is used to pause the game.
+     * It is synchronized to prevent multiple threads from accessing the same object at the same time.
+     * It calls the onTime method when the time is updated.
+     */
+
     public void pause(){
         Platform.runLater(() -> {
             if (!isStopped) {
@@ -160,6 +219,12 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             }
         });
     }
+
+    /**
+     * The createBlock method is used to create the blocks.
+     * It is synchronized to prevent multiple threads from accessing the same object at the same time.
+     * It sets the visibility of the blocks to false and isDestroyed parameter to true.
+     */
 
     public void createBlock() {
         for (final BlockModel block : main.getEngine().blocks) {

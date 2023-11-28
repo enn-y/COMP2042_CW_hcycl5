@@ -1,12 +1,20 @@
 package brickGame.Model.Blocks;
 
-import brickGame.Model.Blocks.BlockModel;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 import java.util.Random;
+
+/**
+ * The Bonus class is responsible for creating the bonus item.
+ * The bonus item is created when a block is destroyed.
+ * The class also implements Serializable.
+ *
+ * @author Lua Chong En
+ *
+ */
 
 public class Bonus implements Serializable { //Methods include: Bonus and draw, indicates that instances of this class can be serialized, making them suitable for saving or sending data between Java applications.
     public Rectangle chocolateBlock; //chocolate block, only chocolate block can create the bonus item
@@ -16,12 +24,25 @@ public class Bonus implements Serializable { //Methods include: Bonus and draw, 
     public long timeCreated; //time created which means time when bonus item is created
     public boolean taken = false; //bonus item is taken by the paddle or not
 
+    /**
+     * Constructor initializes the bonus item.
+     *
+     * @param row The row of the block
+     * @param column The column of the block
+     */
+
     public Bonus(int row, int column) { //constructor
         x = (column * (BlockModel.getWidth())) + BlockModel.getPaddingH() + (BlockModel.getWidth() / 2) - 15; //set x coordinate of bonus item
         y = (row * (BlockModel.getHeight())) + BlockModel.getPaddingTop() + (BlockModel.getHeight() / 2) - 15; //set y coordinate of bonus item
 
         create();
     }
+
+    /**
+     * The create method is responsible for creating the bonus item.
+     * The bonus item is created when a block is destroyed.
+     * Sets the properties and image of the bonus item.
+     */
 
     private void create() {
         chocolateBlock = new Rectangle(); //create chocolate block

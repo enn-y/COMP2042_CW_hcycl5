@@ -4,12 +4,30 @@ import brickGame.Main;
 
 import java.util.Random;
 
+/**
+ * The BlockFactory class is responsible for initializing the blocks.
+ * It also determines the type and properties of each block.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class BlockFactory {
     Main main;
+
+    /**
+     * Constructor for BlockFactory class.
+     * @param main The Main class instance to access the components of the game.
+     */
 
     public BlockFactory(Main main){
         this.main = main;
     }
+
+    /**
+     * The initializeBlocks method initializes the blocks.
+     * It also determines the type and properties of each block based on random conditions.
+     */
 
     public void initializeBlocks() { //Initialize the blocks
         for (int row = 0; row < 4; row++) { //For each row
@@ -38,7 +56,7 @@ public class BlockFactory {
                     type = BlockModel.BLOCK_BOMB;
                 } else if (r % 10 == 8) { //BUT IF the remainder is 7
                     type = BlockModel.BLOCK_TELEPORT;
-                } else if (r % 3 == 0) { //BUT IF the remainder is 8
+                } else if (r % 3 == 0) { //BUT IF the remainder is 0
                     type = BlockModel.BLOCK_SPEED;
                 } else { //BUT IF the remainder is NOT 1, 2, or 3 THEN create a normal block
                     type = BlockModel.BLOCK_NORMAL; //Create a normal block

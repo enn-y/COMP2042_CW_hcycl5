@@ -11,7 +11,25 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 //import sun.plugin2.message.Message;
 
+/**
+ * The Score class represents the score.
+ * It is used to display the score, game over, and win.
+ * It also animates the score.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class Score { //Methods include: show, showMessage, showGameOver, and showWin
+
+    /**
+     * The show method is used to display the score.
+     * @param x The x-coordinate of the score.
+     * @param y The y-coordinate of the score.
+     * @param score The score.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public void show(final double x, final double y, int score, final Main main) {
 
         String sign;
@@ -58,6 +76,12 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
         }).start();
     }
 
+    /**
+     * The showMessage method is used to display the message.
+     * @param message The message to be displayed.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public void showMessage(String message, final Main main) {
         final Label label = new Label(message);
         label.setTranslateX(220);
@@ -96,6 +120,11 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             }
         }).start();
     }
+
+    /**
+     * The showGameOver method is used to display the game over screen.
+     * @param main The Main instance to access the components of the game.
+     */
 
     public void showGameOver(final Main main) {
         Platform.runLater(new Runnable() {
@@ -156,6 +185,11 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
             }
         });
     }
+
+    /**
+     * The showWin method is used to display the win screen.
+     * @param main The Main instance to access the components of the game.
+     */
 
     public void showWin(final Main main) {
         Platform.runLater(new Runnable() {

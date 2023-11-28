@@ -4,6 +4,15 @@ import brickGame.Main;
 import brickGame.Model.Score;
 import javafx.scene.shape.Circle;
 
+/**
+ * The BallModel class is responsible or the representation of the model for the ball.
+ * It contains the ball's position, velocity, radius, and the status of the ball.
+ * It extends the circle class because it inherits the properties of a circle.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class BallModel extends Circle {
     Main main;
 
@@ -25,9 +34,19 @@ public class BallModel extends Circle {
     public long goldTime = 0; //Time of gold ball, initialized at 0, used to check if gold ball is still active
     public boolean goldBall = false; //Status of gold ball
 
+    /**
+     * Constructor for BallModel class.
+     * @param main The Main class instance to access the components of the game
+     */
+
     public BallModel(Main main){
         this.main = main;
     }
+
+    /**
+     * The setPhysicsToBall method sets the behavior of the ball.
+     * It is inclusive of movement and collision detection.
+     */
 
     public void setPhysicsToBall() { //The behavior of the ball
         //v = ((time - hitTime) / 1000.000) + 1.000;
@@ -134,6 +153,11 @@ public class BallModel extends Circle {
         }
     }
 
+    /**
+     * The checkGameOver method checks if the game is over.
+     * If the game is over, the game over screen is displayed and game is stopped.
+     */
+
     public void checkGameOver() {
         if (!goldBall && main.getPlayer().numberOfHearts == 0) {
             main.getScore().showGameOver(main);
@@ -148,6 +172,11 @@ public class BallModel extends Circle {
         }
     }
 
+    /**
+     * The resetCollideFlags method resets all collision flags to FALSE.
+     * This is so the game can identify new collision events in the next game loop.
+     */
+
     public void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
         collideToPaddle = false;
         collideToPaddleAndMoveToRight = false;
@@ -160,27 +189,39 @@ public class BallModel extends Circle {
         collideToTopBlock = false;
     }
 
+    /**
+     * The setBallXCoordinate method sets the x-coordinate of the ball.
+     * @param ballXCoordinate The x-coordinate of the ball
+     */
+
     public void setBallXCoordinate(double ballXCoordinate) {
         this.ballXCoordinate = ballXCoordinate;
     }
+
+    /**
+     * The getBallXCoordinate method returns the x-coordinate of the ball.
+     * @return The x-coordinate of the ball
+     */
 
     public double getBallXCoordinate() {
         return ballXCoordinate;
     }
 
+    /**
+     * The setBallYCoordinate method sets the y-coordinate of the ball.
+     * @param ballYCoordinate The y-coordinate of the ball
+     */
+
     public void setBallYCoordinate(double ballYCoordinate) {
         this.ballYCoordinate = ballYCoordinate;
     }
 
+    /**
+     * The getBallYCoordinate method returns the y-coordinate of the ball.
+     * @return The y-coordinate of the ball
+     */
+
     public double getBallYCoordinate() {
         return ballYCoordinate;
-    }
-
-    public void setBallRadius(int ballRadius) {
-        this.ballRadius = ballRadius;
-    }
-
-    public int getBallRadius() {
-        return ballRadius;
     }
 }

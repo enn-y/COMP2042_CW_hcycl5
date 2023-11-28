@@ -1,7 +1,7 @@
 package brickGame;
 
-import brickGame.Controller.ButtonControls;
-import brickGame.Controller.KeyboardControls;
+import brickGame.Controller.ButtonController;
+import brickGame.Controller.KeyboardController;
 import brickGame.Model.*;
 import brickGame.Model.Ball.BallFactory;
 import brickGame.Model.Ball.BallModel;
@@ -20,8 +20,8 @@ import javafx.stage.Stage;
 public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     BallModel ballModel; //Ball object
     PlayerModel playerModel; //Paddle object
-    KeyboardControls keyboardControls; //KeyboardControls object
-    ButtonControls buttonControls; //ButtonControls object
+    KeyboardController keyboardController; //KeyboardControls object
+    ButtonController buttonController; //ButtonControls object
     LevelManager levelManager; //LevelManager object
     GameScreen gameScreen; //GameScreen object
     State state; //State object
@@ -37,10 +37,10 @@ public class Main extends Application implements OnAction { //Application: JavaF
     public void start(Stage primaryStage) throws Exception { //Start method
         ballModel = new BallModel(this); //Initialize the ball
         playerModel = PlayerModel.getInstance(this); //Initialize the paddle
-        keyboardControls = new KeyboardControls(this);
+        keyboardController = new KeyboardController(this);
         gameScreen = new GameScreen(this); //Initialize the game screen
         state = new State(this); //Initialize the state
-        buttonControls = new ButtonControls(this); //Initialize the button controls
+        buttonController = new ButtonController(this); //Initialize the button controls
         engine = new GameEngine(this); //Initialize the game engine
         score = new Score(); //Initialize the score
         levelManager = new LevelManager(this); //Initialize the level manager
@@ -85,7 +85,7 @@ public class Main extends Application implements OnAction { //Application: JavaF
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getLevelManager().blockDestroyedCount();
+                getPlayer().blockDestroyedCount();
                 getBall().setPhysicsToBall();
 
                 if (getPlayer().currentTime - getBall().goldTime > 5000) { //Gold Ball
@@ -146,11 +146,11 @@ public class Main extends Application implements OnAction { //Application: JavaF
     public PlayerModel getPlayer() { //Getter method for paddle
         return playerModel;
     }
-    public KeyboardControls getKeyboardControls() { //Getter method for keyboard controls
-        return keyboardControls;
+    public KeyboardController getKeyboardControls() { //Getter method for keyboard controls
+        return keyboardController;
     }
-    public ButtonControls getButtonControls(){ //Getter method for button controls
-        return buttonControls;
+    public ButtonController getButtonControls(){ //Getter method for button controls
+        return buttonController;
     }
     public LevelManager getLevelManager(){ //Getter method for level manager
         return levelManager;

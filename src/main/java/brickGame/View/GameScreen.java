@@ -8,6 +8,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * The GameScreen class represents the game screen.
+ * It is used to display the game screen, buttons, and labels.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class GameScreen {
     Main main;
 
@@ -19,9 +27,19 @@ public class GameScreen {
     public Label levelLabel; //Label to display level
     public Stage primaryStage; //Stage is the top level JavaFX container, the window
 
+    /**
+     * Constructor initializes the game screen.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public GameScreen(Main main) {
         this.main = main;
     }
+
+    /**
+     * The AddButtons method is used to display the game screen.
+     * It also displays the buttons and labels.
+     */
 
     public void AddButtons(){
         main.getButtonControls().newGameButton = new Button("Start New Game"); //Initialize the new game button
@@ -53,6 +71,11 @@ public class GameScreen {
         main.getButtonControls().instructionsButton.setTooltip(new javafx.scene.control.Tooltip("Display instructions")); //Set a tooltip for the instructions button
     }
 
+    /**
+     * The AddLabels method is used to display the labels.
+     * It is used to initialize the score label, heart label, and level label.
+     */
+
     public void AddLabels(){
         root = new Pane(); //Initialize the root pane, root is the instance of the JavaFX Pane class where Pane is a container to hold JavaFX elements
         scoreLabel = new Label("Score: " + main.currentScore); //Initialize the score label
@@ -61,6 +84,11 @@ public class GameScreen {
         heartLabel = new Label("Heart : " + main.getPlayer().numberOfHearts); //Initialize the heart label
         heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
     }
+
+    /**
+     * The AddElements method is used to display the elements.
+     * It is used to add the paddle, ball, score label, heart label, level label, and new game button to the root pane.
+     */
 
     public void AddElements(){
         if (!main.getState().loadFromSavedFile) { //If NOT loading from saved file
@@ -72,6 +100,11 @@ public class GameScreen {
             root.getChildren().add(block.rect); //Add the block to the root pane
         }
     }
+
+    /**
+     * The CreateScene method is used to create the scene.
+     * It is used to initialize the scene, add the style.css file to the scene, listen for key presses, set the title of the game window, set the scene of the game window, and show the game window.
+     */
 
     public void CreateScene(){
         Scene scene = new Scene(root, windowWidth, windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph

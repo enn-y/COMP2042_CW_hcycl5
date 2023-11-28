@@ -10,6 +10,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The State class is used to save and load the game.
+ *
+ * @author Lua Chong En
+ *
+ */
+
 public class State { //Methods include: read
 
     Main main;
@@ -41,9 +48,19 @@ public class State { //Methods include: read
     public boolean loadFromSavedFile = false; //Status of loading from saved file
     public static String savePath    = "D:/save/save.mdds"; //Path to save file
     public static String savePathDir = "D:/save/"; //Path to save directory
+
+    /**
+     * Constructor used to save and load the game.
+     * @param main The Main instance to access the components of the game.
+     */
+
     public State(Main main) {
         this.main = main;
     }
+
+    /**
+     * The read method is used to read the saved file.
+     */
 
     public void read() {
         try {
@@ -86,6 +103,10 @@ public class State { //Methods include: read
             e.printStackTrace();
         }
     }
+
+    /**
+     * The saveGame method is used to save the game.
+     */
 
     public void saveGame() { //Save the game
         new Thread(new Runnable() {
@@ -154,6 +175,10 @@ public class State { //Methods include: read
         }).start();
     }
 
+    /**
+     * The loadGame method is used to load the game.
+     */
+
     public void loadGame() { //Load the game
         //State loadSave = new State();
         read(); //Read the saved file, assign the variables to the saved variables
@@ -202,6 +227,10 @@ public class State { //Methods include: read
         }
     }
 
+    /**
+     * The restartGame method is used to restart the game.
+     */
+
     public void restartGame() { //Restart the game
         try {
             main.currentLevel = 0;
@@ -226,6 +255,10 @@ public class State { //Methods include: read
             e.printStackTrace();
         }
     }
+
+    /**
+     * The checkLoadFromSavedFile method is used to check if the game is loading from saved file.
+     */
 
     public void checkLoadFromSavedFile(){
         if (!loadFromSavedFile) { //If NOT loading from saved file
