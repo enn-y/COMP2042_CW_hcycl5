@@ -16,7 +16,7 @@ import java.util.Random;
  */
 
 public class BallFactory {
-    Main main;
+    Main main; //Main class instance
 
     /**
      * Constructor for BallFactory class.

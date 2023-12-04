@@ -19,31 +19,23 @@ import java.io.Serializable;
 
 public class BlockModel implements Serializable { //Methods include: Block, draw, checkHitToBlock, getPaddingTop, getPaddingH, getHeight, and getWidth
     private static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);   //block is a static variable of type BlockModel
-
     public int row; //row of block
     public int column; //column of block
-
     public boolean isDestroyed = false; //isDestroyed is a boolean variable that is initialized to false
-
     private Color color; //color of block
     public int type; //type of block
-
     public int blockXCoordinate; //x coordinate of block
     public int blockYCoordinate; //y coordinate of block
-
     private int width = 100; //width of block
     private int height = 30; //height of block
     private int paddingTop = height*2; //padding top of block
     private int paddingH = 50; //padding horizontal of block
     public Rectangle rect; //rectangle object
-
-
     public static int NO_HIT = -1; //NO_HIT is a static variable of type int that is initialized to -1
     public static int HIT_RIGHT = 0; //HIT_RIGHT is a static variable of type int that is initialized to 0
     public static int HIT_BOTTOM = 1; //HIT_BOTTOM is a static variable of type int that is initialized to 1
     public static int HIT_LEFT = 2; //HIT_LEFT is a static variable of type int that is initialized to 2
     public static int HIT_TOP = 3; //HIT_TOP is a static variable of type int that is initialized to 3
-
     public static int BLOCK_NORMAL = 99; //BLOCK_NORMAL is a static variable of type int that is initialized to 99
     public static int BLOCK_CHOCOLATE = 100; //BLOCK_CHOCOLATE is a static variable of type int that is initialized to 100
     public static int BLOCK_STAR = 101; //BLOCK_STAR is a static variable of type int that is initialized to 101
@@ -76,9 +68,10 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
      * It sets the position of the blocks, color, and type.
      */
 
-    private void create() {
-        blockXCoordinate = (column * width) + paddingH;
-        blockYCoordinate = (row * height) + paddingTop;
+    private void create() { //Create the blocks
+        int padding = 2;
+        blockXCoordinate = (column * (width+padding)) + paddingH;
+        blockYCoordinate = (row * (height+padding)) + paddingTop;
 
         rect = new Rectangle();
         rect.setWidth(width);
@@ -114,25 +107,25 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
      * @return The hit direction and NO_HIT if the block is not hit
      */
 
-    public int checkHitToBlock(double xBall, double yBall) {
+    public int checkHitToBlock(double xBall, double yBall) { //Check if the ball hits the block
         if (isDestroyed) {
             return NO_HIT;
         }
 
         // Increase the sensitivity by adjusting the conditions
-        if (xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10 && yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10) {
+        if (xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15 && yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15) {
             return HIT_BOTTOM;
         }
 
-        if (xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10 && yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10) {
+        if (xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15 && yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15) {
             return HIT_TOP;
         }
 
-        if (yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10 && xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10) {
+        if (yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15 && xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15) {
             return HIT_RIGHT;
         }
 
-        if (yBall >= blockYCoordinate - 10 && yBall <= blockYCoordinate + height + 10 && xBall >= blockXCoordinate - 10 && xBall <= blockXCoordinate + width + 10) {
+        if (yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15 && xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15) {
             return HIT_LEFT;
         }
 

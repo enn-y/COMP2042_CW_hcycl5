@@ -33,13 +33,19 @@ public class SlimeBlock extends BlockModel implements BlockType {
      */
 
     public void blockType(){
+        double originalHorizontalSpeed = main.getBall().ballHorizontalSpeed;
+        double originalVerticalSpeed = main.getBall().ballVerticalSpeed;
         main.getBall().ballHorizontalSpeed *= 0.3;
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.getBall().ballHorizontalSpeed = 1;
+                main.getBall().ballHorizontalSpeed = originalHorizontalSpeed;
+                main.getBall().ballVerticalSpeed = originalVerticalSpeed;
+
             }
         });
+
+        pause.play();
     }
 }

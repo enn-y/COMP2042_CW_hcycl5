@@ -1,6 +1,7 @@
 package brickGame.Controller;
 
 import brickGame.Main;
+import brickGame.Model.GameEngine;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -19,7 +20,7 @@ import java.util.Optional;
  */
 
 public class ButtonController {
-    Main main;
+    Main main; //Main class instance
 
     public Button loadButton = null; //Button to load game
     public Button newGameButton = null; //Button to start new game
@@ -61,7 +62,7 @@ public class ButtonController {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.getEngine().setOnAction(main);
+                main.getEngine().setOnAction(new GameEngine(main));
                 main.getEngine().setFps(120);
                 main.getEngine().start();
                 hideButtons();

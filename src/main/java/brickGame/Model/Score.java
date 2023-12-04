@@ -191,17 +191,50 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
      * @param main The Main instance to access the components of the game.
      */
 
-    public void showWin(final Main main) {
+    public void showGameWin(final Main main) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Label label = new Label("You Win :)");
-                label.setTranslateX(200);
-                label.setTranslateY(250);
-                label.setScaleX(2);
-                label.setScaleY(2);
+                Pane gameWinLayout = new Pane();
 
-                main.getGameScreen().root.getChildren().addAll(label);
+                // Large font title "Game Over"
+                Label gameWinLabel = new Label("Game Win!");
+                gameWinLabel.setStyle("-fx-font-size: 36;"); // Customize font size
+                gameWinLabel.setLayoutX(160);
+                gameWinLabel.setLayoutY(140);
+
+                // Score, level, and hearts information
+                Label scoreLabel = new Label("Score: " + main.currentScore);
+                Label levelLabel = new Label("Level: " + main.currentLevel);
+                Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
+                scoreLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                scoreLabel.setLayoutX(200); // Center horizontally
+                scoreLabel.setLayoutY(240);
+                levelLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                levelLabel.setLayoutX(200); // Center horizontally
+                levelLabel.setLayoutY(270);
+                heartsLabel.setStyle("-fx-font-size: 24;"); // Customize font size
+                heartsLabel.setLayoutX(200); // Center horizontally
+                heartsLabel.setLayoutY(300);
+
+                Button exit = new Button("Exit");
+                exit.setTranslateX(150);
+                exit.setTranslateY(450);
+                exit.setPrefWidth(200); // Set a larger width
+                exit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                            main.getGameScreen().primaryStage.close();
+                        }
+                    }
+                });
+
+                gameWinLayout.getChildren().addAll(gameWinLabel, scoreLabel, levelLabel, heartsLabel, exit);
+                Scene gameWinScene = new Scene(gameWinLayout, 500, 700);
+
+                main.getGameScreen().primaryStage.setScene(gameWinScene);
+                main.getGameScreen().primaryStage.show();
             }
         });
     }

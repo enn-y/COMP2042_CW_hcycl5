@@ -5,7 +5,9 @@ import brickGame.Main;
 import brickGame.Model.Blocks.*;
 import brickGame.Model.Interface.OnAction;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
 
@@ -18,14 +20,14 @@ import java.util.ArrayList;
  *
  */
 
-public class GameEngine { //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
-    Main main;
+public class GameEngine implements OnAction{ //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
+    Main main; //Main class instance
 
-    private OnAction onAction;
-    private int fps = 15;
-    private Thread updateThread;
-    private Thread physicsThread;
-    public boolean isStopped = true;
+    private OnAction onAction; //Interface to handle the actions
+    private int fps = 15; //Frames per second
+    private Thread updateThread; //Thread to update the game
+    private Thread physicsThread; //Thread to update the physics
+    public boolean isStopped = true; //Boolean to check if the game is stopped
     public ArrayList<BlockModel> blocks = new ArrayList<BlockModel>(); //ArrayList to store the blocks
     public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
     public Color[] blockColors = new Color[]{ //Array of colors for the blocks
@@ -43,6 +45,9 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             Color.TOMATO,
             Color.TAN,
     };
+    private long time = 0; //Time
+
+    private Thread timeThread; //Thread to update the time
 
     /**
      * Constructor initializes the game engine.
@@ -130,9 +135,7 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
                 }
             }
         });
-
         physicsThread.start();
-
     }
 
     /**
@@ -164,10 +167,6 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             timeThread.stop();
         }
     }
-
-    private long time = 0;
-
-    private Thread timeThread;
 
     /**
      * The TimeStart method is used to start the time.
@@ -292,6 +291,102 @@ public class GameEngine { //Methods include: setOnAction, setFps, Update, Initia
             }
             //TODO hit to break and some work here....
             //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
+        }
+    }
+
+    @Override
+    public void onInit() {
+    }
+
+    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                main.getPlayer().blockDestroyedCount();
+                main.getBall().setPhysicsToBall();
+
+                if (main.getPlayer().currentTime - main.getBall().goldTime > 5000) { //Gold Ball
+                    main.getBall().setFill(new ImagePattern(new Image("ball.png")));
+                    main.getGameScreen().root.getStyleClass().remove("goldRoot");
+                    main.getBall().goldBall = false;
+                }
+
+                for (Bonus choco : main.getEngine().bonusItems) { //Bonus Items
+                    if (choco.y > main.getGameScreen().windowHeight || choco.taken) {
+                        continue;
+                    }
+                    if (choco.y >= main.getPlayer().paddleYPosition && choco.y <= main.getPlayer().paddleYPosition + main.getPlayer().paddleHeight && choco.x >= main.getPlayer().paddleXPosition && choco.x <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
+                        System.out.println("You Got it and +3 score for you");
+                        choco.chocolateBlock.setVisible(false);
+                        choco.taken = true;
+                        main.currentScore += 3;
+                        main.getScore().show(choco.x, choco.y, 3, main);
+                    }
+                    choco.y += ((main.getPlayer().currentTime - choco.timeCreated) / 1000.000) + 1.000;
+                }
+            }
+        });
+    }
+
+    public void onUpdate() { //Update the game
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                main.getGameScreen().scoreLabel.setText("Score: " + main.currentScore);
+                main.getGameScreen().heartLabel.setText("Heart : " + main.getPlayer().numberOfHearts);
+
+                main.getPlayer().setX(main.getPlayer().paddleXPosition);
+                main.getPlayer().setY(main.getPlayer().paddleYPosition);
+                main.getBall().setCenterX(main.getBall().ballXCoordinate);
+                main.getBall().setCenterY(main.getBall().ballYCoordinate);
+
+                for (Bonus choco : main.getEngine().bonusItems) { //Bonus Items
+                    choco.chocolateBlock.setY(choco.y); //Set the y-coordinate of the bonus item
+                }
+            }
+        });
+
+        if (main.getBall().ballYCoordinate >= BlockModel.getPaddingTop() && main.getBall().ballYCoordinate <= (BlockModel.getHeight() * (main.currentLevel + 1)) + BlockModel.getPaddingTop()) {
+            main.getEngine().createBlock(); //Create the blocks
+        }
+    }
+
+    @Override
+    public void onTime(long time) { //Update the time
+        main.getPlayer().currentTime = time;
+    }
+
+    public void checkWin(){
+        if(main.currentLevel > 1){
+            main.getScore().showMessage("Level Up :)", main); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
+        }
+        if (main.currentLevel == 10) {
+            main.getScore().showGameWin(main); //If level is 10, then display "You Win :)", inherited from Score.java
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            stop();
+        }
+    }
+
+    /**
+     * The checkGameOver method checks if the game is over.
+     * If the game is over, the game over screen is displayed and game is stopped.
+     */
+
+    public void checkGameOver() {
+        if (!main.getBall().goldBall && main.getPlayer().numberOfHearts == 0) {
+            main.getScore().showGameOver(main);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            main.getEngine().stop();
         }
     }
 }

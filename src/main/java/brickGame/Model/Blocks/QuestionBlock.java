@@ -36,7 +36,7 @@ public class QuestionBlock extends BlockModel implements BlockType {
      */
 
     public void blockType(){
-        Random random = new Random();
+        /*Random random = new Random();
         int r = random.nextInt(100);
         if (r % 2 == 0){
             main.getPlayer().numberOfHearts++;
@@ -46,5 +46,23 @@ public class QuestionBlock extends BlockModel implements BlockType {
             main.getScore().showMessage("You lost a heart!", main);
         }
         main.getBall().checkGameOver();
+         */
+
+        if (main.getPlayer().numberOfHearts == 1) {
+            // If the player has only one heart, always give a heart
+            main.getPlayer().numberOfHearts++;
+            main.getScore().showMessage("You got a heart!", main);
+        } else {
+            Random random = new Random();
+            int r = random.nextInt(100);
+            if (r % 2 == 0){
+                main.getPlayer().numberOfHearts++;
+                main.getScore().showMessage("You got a heart!", main);
+            } else {
+                main.getPlayer().numberOfHearts--;
+                main.getScore().showMessage("You lost a heart!", main);
+            }
+        }
+        main.getEngine().checkGameOver();
     }
 }

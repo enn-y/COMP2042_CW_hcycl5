@@ -6,18 +6,14 @@ import brickGame.Model.*;
 import brickGame.Model.Ball.BallFactory;
 import brickGame.Model.Ball.BallModel;
 import brickGame.Model.Blocks.*;
-import brickGame.Model.Interface.OnAction;
 import brickGame.Model.Player.PlayerInitializer;
 import brickGame.Model.Player.PlayerModel;
 import brickGame.View.GameScreen;
 import brickGame.View.State;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
-public class Main extends Application implements OnAction { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
+public class Main extends Application { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
     BallModel ballModel; //Ball object
     PlayerModel playerModel; //Paddle object
     KeyboardController keyboardController; //KeyboardControls object
@@ -52,92 +48,32 @@ public class Main extends Application implements OnAction { //Application: JavaF
 
         if (!getState().loadFromSavedFile) { //If NOT loading from saved file
             currentLevel++; //Increment the level
-            if (currentLevel >1){
+            /*if (currentLevel >1){
                 getScore().showMessage("Level Up :)", this); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
             }
-            if (currentLevel == 18) {
+            if (currentLevel == 10) {
                 getScore().showWin(this); //If level is 18, then display "You Win :)", inherited from Score.java
                 return;
             }
+             */
 
-            ballFactory.initializeBall();
-            playerInitializer.initializePaddle();
-            blockFactory.initializeBlocks();
-            getGameScreen().AddButtons();
+            getEngine().checkWin(); //Check if the player has won
+
+            ballFactory.initializeBall(); //Initialize the ball
+            playerInitializer.initializePaddle(); //Initialize the paddle
+            blockFactory.initializeBlocks(); //Initialize the blocks
+            getGameScreen().AddButtons(); //Add the buttons
         }
 
         getGameScreen().AddLabels(); //Add the labels
         getGameScreen().AddElements(); //Add the elements
         getGameScreen().CreateScene(); //Create the scene
 
-        getState().checkLoadFromSavedFile();
+        getState().checkLoadFromSavedFile(); //Check if loading from saved file
     }
 
     public static void main(String[] args) { //Main method HERE
         launch(args); //LAUNCH GAME
-    }
-
-    @Override
-    public void onInit() {
-    }
-
-    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getPlayer().blockDestroyedCount();
-                getBall().setPhysicsToBall();
-
-                if (getPlayer().currentTime - getBall().goldTime > 5000) { //Gold Ball
-                    getBall().setFill(new ImagePattern(new Image("ball.png")));
-                    getGameScreen().root.getStyleClass().remove("goldRoot");
-                    getBall().goldBall = false;
-                }
-
-                for (Bonus choco : getEngine().bonusItems) { //Bonus Items
-                    if (choco.y > getGameScreen().windowHeight || choco.taken) {
-                        continue;
-                    }
-                    if (choco.y >= getPlayer().paddleYPosition && choco.y <= getPlayer().paddleYPosition + getPlayer().paddleHeight && choco.x >= getPlayer().paddleXPosition && choco.x <= getPlayer().paddleXPosition + getPlayer().paddleWidth) {
-                        System.out.println("You Got it and +3 score for you");
-                        choco.chocolateBlock.setVisible(false);
-                        choco.taken = true;
-                        currentScore += 3;
-                        getScore().show(choco.x, choco.y, 3, Main.this);
-                    }
-                    choco.y += ((getPlayer().currentTime - choco.timeCreated) / 1000.000) + 1.000;
-                }
-                //System.out.println("time is:" + time + " goldTime is " + goldTime);
-            }
-        });
-    }
-
-    public void onUpdate() { //Update the game
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getGameScreen().scoreLabel.setText("Score: " + currentScore);
-                getGameScreen().heartLabel.setText("Heart : " + getPlayer().numberOfHearts);
-
-                getPlayer().setX(getPlayer().paddleXPosition);
-                getPlayer().setY(getPlayer().paddleYPosition);
-                getBall().setCenterX(getBall().ballXCoordinate);
-                getBall().setCenterY(getBall().ballYCoordinate);
-
-                for (Bonus choco : getEngine().bonusItems) { //Bonus Items
-                    choco.chocolateBlock.setY(choco.y); //Set the y-coordinate of the bonus item
-                }
-            }
-        });
-
-        if (getBall().ballYCoordinate >= BlockModel.getPaddingTop() && getBall().ballYCoordinate <= (BlockModel.getHeight() * (currentLevel + 1)) + BlockModel.getPaddingTop()) {
-            getEngine().createBlock(); //Create the blocks
-        }
-    }
-
-    @Override
-    public void onTime(long time) { //Update the time
-        this.getPlayer().currentTime = time;
     }
 
     public BallModel getBall() { //Getter method for ball

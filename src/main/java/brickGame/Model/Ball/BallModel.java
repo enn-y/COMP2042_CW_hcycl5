@@ -1,6 +1,7 @@
 package brickGame.Model.Ball;
 
 import brickGame.Main;
+import brickGame.Model.Interface.Ball;
 import brickGame.Model.Score;
 import javafx.scene.shape.Circle;
 
@@ -13,13 +14,13 @@ import javafx.scene.shape.Circle;
  *
  */
 
-public class BallModel extends Circle {
-    Main main;
+public class BallModel extends Circle implements Ball {
+    Main main; //Main class instance
 
     public double ballXCoordinate; //x-coordinate of ball
     public double ballYCoordinate; //y-coordinate of ball
-    public double ballHorizontalSpeed = 1.500; //Horizontal velocity of ball
-    public double ballVerticalSpeed = 1.000; //Vertical velocity of ball
+    public double ballHorizontalSpeed = 1.250; //Horizontal velocity of ball
+    public double ballVerticalSpeed = 1.250; //Vertical velocity of ball
     public int ballRadius = 10; //Radius of ball/Size of ball
     public boolean goDownBall; //Status for ball moving downwards
     public boolean goRightBall; //Status for ball moving to the right
@@ -49,8 +50,6 @@ public class BallModel extends Circle {
      */
 
     public void setPhysicsToBall() { //The behavior of the ball
-        //v = ((time - hitTime) / 1000.000) + 1.000;
-
         if (goDownBall) { //If the ball is moving downwards
             ballYCoordinate += ballVerticalSpeed; //Increment the vertical velocity of the ball
         } else {
@@ -64,70 +63,53 @@ public class BallModel extends Circle {
         }
 
         if (ballYCoordinate < 0 + ballRadius*1.5) { //If the ball collides with top wall
-            //vX = 1.000;
-            resetCollideFlags();
+            resetCollideFlags(); //Reset all collision flags to FALSE
             goDownBall = true; //Ball moves downwards
-            return;
+            return; //Exit the method
         }
+
         if (ballYCoordinate > main.getGameScreen().windowHeight - ballRadius*1.5) { //If the ball collides with bottom wall
             goDownBall = false; //Ball moves upwards
             if (!goldBall) { //If the ball is NOT gold
-                //TODO gameover
                 main.getPlayer().numberOfHearts--; //Decrement the heart
                 new Score().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
-                checkGameOver();
+                main.getEngine().checkGameOver();
             }
-            //return;
         }
 
-        if (ballYCoordinate > main.getPlayer().paddleYPosition - main.getBall().ballRadius*1.5) {
-            //System.out.println("Collide1");
+        if (ballYCoordinate > main.getPlayer().paddleYPosition - main.getBall().ballRadius*1.5) { //If the ball collides with the paddle
             if (ballXCoordinate >= main.getPlayer().paddleXPosition && ballXCoordinate <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
-                main.getPlayer().hitTime = main.getPlayer().currentTime;
-                resetCollideFlags();
-                collideToPaddle = true;
-                goDownBall = false;
+                main.getPlayer().hitTime = main.getPlayer().currentTime; //Set the hit time to the current time
+                resetCollideFlags(); //Reset all collision flags to FALSE
+                collideToPaddle = true; //Set the collideToPaddle flag to TRUE
+                goDownBall = false; //Ball moves upwards
 
-                double relation = (ballXCoordinate - main.getPlayer().paddleCenter) / (main.getPlayer().paddleWidth / 2);
+                double relation = (ballXCoordinate - main.getPlayer().paddleCenter) / (main.getPlayer().paddleWidth / 2); //Relation of the ball to the paddle
 
-                if (Math.abs(relation) <= 0.3) {
-                    //vX = 0;
-                    ballHorizontalSpeed = Math.abs(relation);
-                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    ballHorizontalSpeed = (Math.abs(relation) * 1.5) + (main.currentLevel / 3.500);
-                    //System.out.println("vX " + vX);
-                } else {
-                    ballHorizontalSpeed = (Math.abs(relation) * 2) + (main.currentLevel / 3.500);
-                    //System.out.println("vX " + vX);
+                if (Math.abs(relation) <= 0.3) { //If the relation is less than or equal to 0.3
+                    ballHorizontalSpeed = Math.abs(relation); //Set the horizontal velocity of the ball to the absolute value of the relation
+                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) { //If the relation is greater than 0.3 and less than or equal to 0.7
+                    ballHorizontalSpeed = (Math.abs(relation) * 1.5) + (main.currentLevel / 3.500); //Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 1.5 and added to the current level divided by 3.500
+                } else { //If the relation is greater than 0.7
+                    ballHorizontalSpeed = (Math.abs(relation) * 2) + (main.currentLevel / 3.500); // Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 2 and added to the current level divided by 3.500
                 }
 
-                if (ballXCoordinate - main.getPlayer().paddleCenter > 0) {
-                    collideToPaddleAndMoveToRight = true;
-                } else {
-                    collideToPaddleAndMoveToRight = false;
-                }
-                //System.out.println("Collide2");
+                collideToPaddleAndMoveToRight = ballXCoordinate - main.getPlayer().paddleCenter > 0; //Set the collideToPaddleAndMoveToRight flag to TRUE if the ball is moving to the right
             }
         }
 
         if (ballXCoordinate > main.getGameScreen().windowWidth - ballRadius*1.5) {
             resetCollideFlags();
-            //vX = 1.000;
             collideToRightWall = true;
         }
 
         if (ballXCoordinate < 0 + ballRadius*1.5) {
             resetCollideFlags();
-            //vX = 1.000;
             collideToLeftWall = true;
         }
 
         if (collideToPaddle) {
-            if (collideToPaddleAndMoveToRight) {
-                goRightBall = true;
-            } else {
-                goRightBall = false;
-            }
+            goRightBall = collideToPaddleAndMoveToRight;
         }
 
         //Wall Collide
@@ -154,31 +136,12 @@ public class BallModel extends Circle {
     }
 
     /**
-     * The checkGameOver method checks if the game is over.
-     * If the game is over, the game over screen is displayed and game is stopped.
-     */
-
-    public void checkGameOver() {
-        if (!goldBall && main.getPlayer().numberOfHearts == 0) {
-            main.getScore().showGameOver(main);
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            main.getEngine().stop();
-        }
-    }
-
-    /**
      * The resetCollideFlags method resets all collision flags to FALSE.
      * This is so the game can identify new collision events in the next game loop.
      */
 
     public void resetCollideFlags() { //Reset all collision flags to FALSE so game can identify new collision events in the next game loop
-        collideToPaddle = false;
+        collideToPaddle = false; //Set to FALSE
         collideToPaddleAndMoveToRight = false;
         collideToRightWall = false;
         collideToLeftWall = false;

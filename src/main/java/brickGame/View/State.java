@@ -233,6 +233,7 @@ public class State { //Methods include: read
 
     public void restartGame() { //Restart the game
         try {
+            main.getEngine().stop();
             main.currentLevel = 0;
             main.getPlayer().numberOfHearts = 3;
             main.currentScore = 0;
@@ -264,7 +265,7 @@ public class State { //Methods include: read
         if (!loadFromSavedFile) { //If NOT loading from saved file
             if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
                 main.getButtonControls().hideButtons(); //Hide the buttons
-                main.getEngine().setOnAction(main); //Listen for events
+                main.getEngine().setOnAction(new GameEngine(main)); //Listen for events
                 main.getEngine().setFps(120); //Set FPS
                 main.getEngine().start(); //Start the game engine
             }
@@ -275,7 +276,7 @@ public class State { //Methods include: read
             main.getButtonControls().instructionsButton.setOnAction(main.getButtonControls().createInstructionsButtonHandler());
 
         } else { //But if IT IS loading from saved file
-            main.getEngine().setOnAction(main); //Listen for events
+            main.getEngine().setOnAction(new GameEngine(main)); //Listen for events
             main.getEngine().setFps(120); //Set FPS
             main.getEngine().start(); //Start the game engine
             loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game

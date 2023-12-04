@@ -1,6 +1,7 @@
 package brickGame.Controller;
 
 import brickGame.Main;
+import brickGame.Model.Player.PlayerModel;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -14,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyboardController implements EventHandler<KeyEvent> {
 
-    Main main;
+    Main main; //Main class instance
 
     /**
      * Constructor for the KeyboardControls class.
@@ -27,16 +28,16 @@ public class KeyboardController implements EventHandler<KeyEvent> {
 
     /**
      * The handle method handles the key presses for the game.
-     * Uses a enhanced switch statement to handle the key presses.
+     * Uses an enhanced switch statement to handle the key presses.
      * @param event The KeyEvent object contains the key-press information.
      */
 
     public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
         switch (event.getCode()) { //Switch statement for key presses
             case LEFT -> //If the left arrow key is pressed
-                    main.getPlayer().move(main.getPlayer().paddleLEFT); //Move the paddle to the left
+                    main.getPlayer().move(PlayerModel.paddleLEFT); //Move the paddle to the left
             case RIGHT -> //If the right arrow key is pressed
-                    main.getPlayer().move(main.getPlayer().paddleRIGHT); //Move the paddle to the right
+                    main.getPlayer().move(PlayerModel.paddleRIGHT); //Move the paddle to the right
             case SPACE -> {
                 // If the space-bar is pressed, pause or resume the game
                 main.getScore().showMessage("Game Paused", main);
