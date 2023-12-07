@@ -1,7 +1,7 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Interface.BlockType;
+import brickGame.Model.Interface.Blocks;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
@@ -13,8 +13,8 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class ChocolateBlock extends BlockModel implements BlockType {
-    Main main;
+public class ChocolateBlock extends BlockModel implements Blocks {
+    Main main; //Main instance to access the components of the game
 
     /**
      * Constructor for the ChocolateBlock class.

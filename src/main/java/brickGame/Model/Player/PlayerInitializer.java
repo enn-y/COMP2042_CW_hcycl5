@@ -13,7 +13,7 @@ import javafx.scene.paint.ImagePattern;
  */
 
 public class PlayerInitializer {
-    Main main;
+    Main main; //Main instance to access the components of the game
 
     /**
      * Constructor initializes the player initializer.

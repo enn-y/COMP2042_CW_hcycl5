@@ -19,32 +19,32 @@ import java.util.Random;
 
 public class State { //Methods include: read
 
-    Main main;
-    public boolean isExistHeartBlock;
-    public boolean isGoldStatus;
-    public boolean goDownBall;
-    public boolean goRightBall;
-    public boolean collideToPaddle;
-    public boolean collideToPaddleAndMoveToRight;
-    public boolean collideToRightWall;
-    public boolean collideToLeftWall;
-    public boolean collideToRightBlock;
-    public boolean collideToBottomBlock;
-    public boolean collideToLeftBlock;
-    public boolean collideToTopBlock;
-    public int level;
-    public int score;
-    public int heart;
-    public int destroyedBlockCount;
-    public double xBall;
-    public double yBall;
-    public double xBreak;
-    public double yBreak;
-    public double centerBreakX;
-    public long time;
-    public long goldTime;
-    public double vX;
-    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+    Main main; //Main instance to access the components of the game
+    public boolean isExistHeartBlock; //Status of heart block
+    public boolean isGoldStatus; //Status of gold ball
+    public boolean goDownBall; //Status of ball going down
+    public boolean goRightBall; //Status of ball going right
+    public boolean collideToPaddle; //Status of ball colliding to paddle
+    public boolean collideToPaddleAndMoveToRight; //Status of ball colliding to paddle and moving to right
+    public boolean collideToRightWall; //Status of ball colliding to right wall
+    public boolean collideToLeftWall; //Status of ball colliding to left wall
+    public boolean collideToRightBlock; //Status of ball colliding to right block
+    public boolean collideToBottomBlock; //Status of ball colliding to bottom block
+    public boolean collideToLeftBlock; //Status of ball colliding to left block
+    public boolean collideToTopBlock; //Status of ball colliding to top block
+    public int level; //Level of the game
+    public int score; //Score of the game
+    public int heart; //Heart of the game
+    public int destroyedBlockCount; //Number of destroyed blocks
+    public double xBall; //x-coordinate of ball
+    public double yBall; //y-coordinate of ball
+    public double xBreak; //x-coordinate of paddle
+    public double yBreak; //y-coordinate of paddle
+    public double centerBreakX; //Center of paddle
+    public long time; //Time of the game
+    public long goldTime; //Time of gold ball
+    public double vX; //Horizontal speed of ball
+    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>(); //Array list of blocks
     public boolean loadFromSavedFile = false; //Status of loading from saved file
     public static String savePath    = "D:/save/save.mdds"; //Path to save file
     public static String savePathDir = "D:/save/"; //Path to save directory
@@ -60,6 +60,8 @@ public class State { //Methods include: read
 
     /**
      * The read method is used to read the saved file.
+     * It assigns the variables to the saved variables.
+     * It also reads the saved file and assigns the variables to the saved variables.
      */
 
     public void read() {
@@ -106,6 +108,8 @@ public class State { //Methods include: read
 
     /**
      * The saveGame method is used to save the game.
+     * It saves all the variables.
+     * It also saves the variables to the saved file.
      */
 
     public void saveGame() { //Save the game
@@ -156,7 +160,7 @@ public class State { //Methods include: read
                     outputStream.writeObject(blockSerializables);
 
                     Platform.runLater(() -> {
-                        new Score().showMessage("Game Saved", main); //Display "Game Saved" when the game is saved
+                        new ScoreManager().showMessage("Game Saved", main); //Display "Game Saved" when the game is saved
                     });
 
                 } catch (FileNotFoundException e) {
@@ -177,16 +181,19 @@ public class State { //Methods include: read
 
     /**
      * The loadGame method is used to load the game.
+     * It loads all the variables.
+     * It also loads the variables to the saved file.
+     * It also clears the blocks ArrayList.
+     * It also clears the bonusItems ArrayList.
+     * It also sets the loadFromSavedFile to true, INDICATES that it is loading from saved file.
      */
 
     public void loadGame() { //Load the game
-        //State loadSave = new State();
         read(); //Read the saved file, assign the variables to the saved variables
 
         main.getPlayer().existHeartBlock = isExistHeartBlock;
         main.getBall().goldBall = isGoldStatus;
-        main.currentLevel = level;
-        main.currentLevel--;
+        main.currentLevel = level-1;
         main.currentScore = score;
         main.getPlayer().numberOfHearts = heart;
         main.getPlayer().destroyedBlockCount = destroyedBlockCount;
@@ -229,12 +236,17 @@ public class State { //Methods include: read
 
     /**
      * The restartGame method is used to restart the game.
+     * It resets all the variables.
+     * It also clears the blocks ArrayList.
+     * It also clears the bonusItems ArrayList.
+     * It also sets the loadFromSavedFile to false, INDICATES that it is a new game.
      */
 
     public void restartGame() { //Restart the game
         try {
             main.getEngine().stop();
-            main.currentLevel = 0;
+            level = 0;
+            main.currentLevel = level;
             main.getPlayer().numberOfHearts = 3;
             main.currentScore = 0;
             main.getBall().ballHorizontalSpeed = 1.000;
@@ -259,11 +271,12 @@ public class State { //Methods include: read
 
     /**
      * The checkLoadFromSavedFile method is used to check if the game is loading from saved file.
+     * It also checks if the game is a new game.
      */
 
     public void checkLoadFromSavedFile(){
         if (!loadFromSavedFile) { //If NOT loading from saved file
-            if (main.currentLevel > 1 && main.currentLevel < 18) { //If the level is greater than 1 and less than 18
+            if (main.currentLevel > 1 && main.currentLevel < 10) { //If the level is greater than 1 and less than 18
                 main.getButtonControls().hideButtons(); //Hide the buttons
                 main.getEngine().setOnAction(new GameEngine(main)); //Listen for events
                 main.getEngine().setFps(120); //Set FPS

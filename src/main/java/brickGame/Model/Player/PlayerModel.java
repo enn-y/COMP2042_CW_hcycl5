@@ -15,12 +15,12 @@ import javafx.scene.shape.Rectangle;
  */
 
 public class PlayerModel extends Rectangle implements Playable {
-    Main main;
+    Main main; //Main instance to access the components of the game
     public int paddleWidth = 130; //Width of paddle
-    public int paddleHeight = 30; //Height of paddle
+    public int paddleHeight = 20; //Height of paddle
     public double paddleXPosition = 0.0f; //Variable for the paddle that the user controls
     public double paddleCenter; //Center of paddle
-    public double paddleYPosition = 640.0f; //y-coordinate of the top position of paddle
+    public double paddleYPosition = 670.0f; //y-coordinate of the top position of paddle
     public int paddleWidthHalf = paddleWidth / 2; //Half of the width of paddle
     public static int paddleLEFT = 1; //Direction of paddle
     public static int paddleRIGHT = 2; //Direction of paddle
@@ -30,7 +30,7 @@ public class PlayerModel extends Rectangle implements Playable {
     public int numberOfHearts = 3; //Number of hearts, initialized at 3
     public long currentTime = 0; //Time, initialized at 0, increases by 1 every second
 
-    private static PlayerModel instance;
+    private static PlayerModel instance; //Instance of the player model
 
     /**
      * Constructor used to create the paddle.
@@ -38,7 +38,7 @@ public class PlayerModel extends Rectangle implements Playable {
      */
 
     private PlayerModel(Main main) {
-        super(0, 0, 130, 30);
+        super(0, 0, 130, 20);
         this.main = main;
     }
 

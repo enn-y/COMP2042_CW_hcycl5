@@ -13,7 +13,8 @@ import java.util.Random;
  */
 
 public class BlockFactory {
-    Main main;
+    Main main; //Main class instance
+    private int level; //Level of the game
 
     /**
      * Constructor for BlockFactory class.
@@ -30,8 +31,9 @@ public class BlockFactory {
      */
 
     public void initializeBlocks() { //Initialize the blocks
+        level = main.currentLevel;
         for (int row = 0; row < 4; row++) { //For each row
-            for (int column = 0; column < main.currentLevel+1; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
+            for (int column = 0; column < level+1; column++) { //For each column where the condition is the level + 1 which means that the number of columns increases by 1 every level
                 int r = new Random().nextInt(500); //Random number generator
                 if (r % 5 == 0) { //If the remainder is 0
                     continue; //Block will not be created
@@ -62,7 +64,6 @@ public class BlockFactory {
                     type = BlockModel.BLOCK_NORMAL; //Create a normal block
                 }
                 main.getEngine().blocks.add(new BlockModel(column, row, main.getEngine().blockColors[r % (main.getEngine().blockColors.length)], type)); //Add the block to the ArrayList
-                //System.out.println("colors " + r % (colors.length));
             }
         }
     }

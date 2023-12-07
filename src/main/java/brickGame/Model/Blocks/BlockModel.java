@@ -18,7 +18,7 @@ import java.io.Serializable;
  */
 
 public class BlockModel implements Serializable { //Methods include: Block, draw, checkHitToBlock, getPaddingTop, getPaddingH, getHeight, and getWidth
-    private static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);   //block is a static variable of type BlockModel
+    public static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);   //block is a static variable of type BlockModel
     public int row; //row of block
     public int column; //column of block
     public boolean isDestroyed = false; //isDestroyed is a boolean variable that is initialized to false
@@ -26,10 +26,10 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
     public int type; //type of block
     public int blockXCoordinate; //x coordinate of block
     public int blockYCoordinate; //y coordinate of block
-    private int width = 100; //width of block
-    private int height = 30; //height of block
-    private int paddingTop = height*2; //padding top of block
-    private int paddingH = 50; //padding horizontal of block
+    public int width = 100; //width of block
+    public int height = 30; //height of block
+    public int paddingTop = height*2; //padding top of block
+    public int paddingH = 50; //padding horizontal of block
     public Rectangle rect; //rectangle object
     public static int NO_HIT = -1; //NO_HIT is a static variable of type int that is initialized to -1
     public static int HIT_RIGHT = 0; //HIT_RIGHT is a static variable of type int that is initialized to 0
@@ -66,6 +66,7 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
     /**
      * The create() method is responsible for creating the blocks.
      * It sets the position of the blocks, color, and type.
+     * It also sets the image of the blocks.
      */
 
     private void create() { //Create the blocks

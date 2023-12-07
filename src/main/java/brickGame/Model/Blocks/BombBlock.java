@@ -1,7 +1,7 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Interface.BlockType;
+import brickGame.Model.Interface.Blocks;
 import javafx.scene.paint.Color;
 
 import java.util.Timer;
@@ -16,8 +16,8 @@ import java.util.TimerTask;
  *
  */
 
-public class BombBlock extends BlockModel implements BlockType {
-    Main main;
+public class BombBlock extends BlockModel implements Blocks {
+    Main main; //Main instance to access the components of the game
 
     /**
      * This constructor initializes the bomb block.

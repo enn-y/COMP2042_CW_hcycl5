@@ -38,19 +38,16 @@ public class KeyboardController implements EventHandler<KeyEvent> {
                     main.getPlayer().move(PlayerModel.paddleLEFT); //Move the paddle to the left
             case RIGHT -> //If the right arrow key is pressed
                     main.getPlayer().move(PlayerModel.paddleRIGHT); //Move the paddle to the right
-            case SPACE -> {
-                // If the space-bar is pressed, pause or resume the game
+            case SPACE -> { // If the space-bar is pressed, pause or resume the game
                 main.getScore().showMessage("Game Paused", main);
                 main.getEngine().pause();
             }
-            case R -> {
-                // If the R key is pressed, restart the game
+            case R -> { // If the R key is pressed, restart the game
                 main.getScore().showMessage("Game Restarted", main);
                 main.getEngine().stop();
                 main.getState().restartGame();
             }
-            case Q -> {
-                // If the Q key is pressed, quit the game
+            case Q -> { // If the Q key is pressed, quit the game
                 main.getScore().showMessage("Game Quit?", main);
                 main.getEngine().pause(); //Pause the game
                 if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {

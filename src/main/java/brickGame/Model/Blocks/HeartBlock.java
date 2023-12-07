@@ -1,7 +1,7 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Interface.BlockType;
+import brickGame.Model.Interface.Blocks;
 import javafx.scene.paint.Color;
 
 /**
@@ -12,8 +12,8 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class HeartBlock extends BlockModel implements BlockType {
-    Main main;
+public class HeartBlock extends BlockModel implements Blocks {
+    Main main; //Main instance to access the components of the game
 
     /**
      * Constructor for the heart block.

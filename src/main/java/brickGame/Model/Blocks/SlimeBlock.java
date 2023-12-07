@@ -1,20 +1,16 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Interface.BlockType;
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import brickGame.Model.Interface.Blocks;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 /**
  * The SlimeBlock class represents the SlimeBlock object.
  * When the ball hits this block, the ball's horizontal speed is reduced by 70% for 3 seconds.
  */
 
-public class SlimeBlock extends BlockModel implements BlockType {
-    Main main;
+public class SlimeBlock extends BlockModel implements Blocks {
+    Main main; //Main instance to access the components of the game
 
     /**
      * Constructor initializes the SlimeBlock object.
@@ -33,19 +29,6 @@ public class SlimeBlock extends BlockModel implements BlockType {
      */
 
     public void blockType(){
-        double originalHorizontalSpeed = main.getBall().ballHorizontalSpeed;
-        double originalVerticalSpeed = main.getBall().ballVerticalSpeed;
         main.getBall().ballHorizontalSpeed *= 0.3;
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                main.getBall().ballHorizontalSpeed = originalHorizontalSpeed;
-                main.getBall().ballVerticalSpeed = originalVerticalSpeed;
-
-            }
-        });
-
-        pause.play();
     }
 }

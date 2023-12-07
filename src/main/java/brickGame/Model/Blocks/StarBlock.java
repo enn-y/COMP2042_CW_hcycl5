@@ -1,7 +1,7 @@
 package brickGame.Model.Blocks;
 
 import brickGame.Main;
-import brickGame.Model.Interface.BlockType;
+import brickGame.Model.Interface.Blocks;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -14,8 +14,8 @@ import javafx.scene.paint.ImagePattern;
  *
  */
 
-public class StarBlock extends BlockModel implements BlockType {
-    Main main;
+public class StarBlock extends BlockModel implements Blocks {
+    Main main; //Main instance to access the components of the game
 
     /**
      * Constructor is used to create a star block.

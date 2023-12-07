@@ -48,6 +48,7 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
     private long time = 0; //Time
 
     private Thread timeThread; //Thread to update the time
+    private int level; //Level of the game
 
     /**
      * Constructor initializes the game engine.
@@ -228,7 +229,7 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
     public void createBlock() {
         for (final BlockModel block : main.getEngine().blocks) {
             int hitCode = block.checkHitToBlock(main.getBall().ballXCoordinate, main.getBall().ballYCoordinate);
-            if (hitCode != BlockModel.NO_HIT) {
+            if (hitCode != BlockModel.NO_HIT) { //If the ball hits the block
                 main.currentScore += 1;
 
                 main.getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, main);
@@ -239,64 +240,72 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
                 //System.out.println("size is " + blocks.size());
                 main.getBall().resetCollideFlags();
 
-                if (block.type == BlockModel.BLOCK_CHOCOLATE) {
+                if (block.type == BlockModel.BLOCK_CHOCOLATE) { //Chocolate Block
                     ChocolateBlock chocolateBlock = new ChocolateBlock(block.row, block.column, main);
                     chocolateBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_STAR && !main.getBall().goldBall) {
+                if (block.type == BlockModel.BLOCK_STAR && !main.getBall().goldBall) { //Star Block
                     StarBlock starBlock = new StarBlock(block.row, block.column, main);
                     starBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_HEART) {
+                if (block.type == BlockModel.BLOCK_HEART) { //Heart Block
                     HeartBlock heartBlock = new HeartBlock(block.row, block.column, main);
                     heartBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_SLIME) {
+                if (block.type == BlockModel.BLOCK_SLIME) { //Slime Block
                     SlimeBlock slimeBlock = new SlimeBlock(block.row, block.column, main);
                     slimeBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_QUESTION){
+                if(block.type == BlockModel.BLOCK_QUESTION){ //Question Block
                     QuestionBlock questionBlock = new QuestionBlock(block.row, block.column, main);
                     questionBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_BOMB){
+                if(block.type == BlockModel.BLOCK_BOMB){ //Bomb Block
                     BombBlock bombBlock = new BombBlock(block.row, block.column, main);
                     bombBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_TELEPORT){
+                if(block.type == BlockModel.BLOCK_TELEPORT){ //Teleport Block
                     TeleportBlock teleportBlock = new TeleportBlock(block.row, block.column, main);
                     teleportBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_SPEED){
+                if(block.type == BlockModel.BLOCK_SPEED){ //Speed Block
                     SpeedBlock speedBlock = new SpeedBlock(block.row, block.column, main);
                     speedBlock.blockType();
                 }
 
-                if (hitCode == BlockModel.HIT_RIGHT) {
+                if (hitCode == BlockModel.HIT_RIGHT) { //Hit to right block
                     main.getBall().collideToRightBlock = true;
-                } else if (hitCode == BlockModel.HIT_BOTTOM) {
+                } else if (hitCode == BlockModel.HIT_BOTTOM) { //Hit to bottom block
                     main.getBall().collideToBottomBlock = true;
-                } else if (hitCode == BlockModel.HIT_LEFT) {
+                } else if (hitCode == BlockModel.HIT_LEFT) { //Hit to left block
                     main.getBall().collideToLeftBlock = true;
-                } else if (hitCode == BlockModel.HIT_TOP) {
+                } else if (hitCode == BlockModel.HIT_TOP) { //Hit to top block
                     main.getBall().collideToTopBlock = true;
                 }
             }
-            //TODO hit to break and some work here....
-            //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
         }
     }
+
+    /**
+     * The onInit method is called when the game is initialized.
+     * It is used to initialize the game.
+     */
 
     @Override
     public void onInit() {
     }
+
+    /**
+     * The onPhysicsUpdate method is called when the physics is updated.
+     * It is used to update the physics.
+     */
 
     public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
         Platform.runLater(new Runnable() {
@@ -328,7 +337,14 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
         });
     }
 
+    /**
+     * The onUpdate method is called when the game is updated.
+     * It is used to update the game.
+     * It is used to update the score label, heart label, paddle, ball, and bonus items.
+     */
+
     public void onUpdate() { //Update the game
+        level = main.currentLevel;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -346,21 +362,35 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
             }
         });
 
-        if (main.getBall().ballYCoordinate >= BlockModel.getPaddingTop() && main.getBall().ballYCoordinate <= (BlockModel.getHeight() * (main.currentLevel + 1)) + BlockModel.getPaddingTop()) {
+        if (main.getBall().ballYCoordinate >= BlockModel.getPaddingTop() && main.getBall().ballYCoordinate <= (BlockModel.getHeight() * (level + 1)) + BlockModel.getPaddingTop()) {
             main.getEngine().createBlock(); //Create the blocks
         }
     }
+
+    /**
+     * The onTime method is called when the time is updated.
+     * It is used to update the time.
+     * @param time The time to be updated.
+     */
 
     @Override
     public void onTime(long time) { //Update the time
         main.getPlayer().currentTime = time;
     }
 
+    /**
+     * The checkWin method is used to check if the player has won.
+     * It checks if the current level is greater than 1.
+     * If the current level is greater than 1, then display "Level Up :)".
+     * It also checks if the current level is 11. 10 is the maximum level, but the current level is 11 because it is incremented by 1 when a level is completed.
+     * If the current level is 11, then display "You Win :)".
+     */
+
     public void checkWin(){
         if(main.currentLevel > 1){
             main.getScore().showMessage("Level Up :)", main); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
         }
-        if (main.currentLevel == 10) {
+        if (main.currentLevel == 11) {
             main.getScore().showGameWin(main); //If level is 10, then display "You Win :)", inherited from Score.java
             try {
                 Thread.sleep(100);
@@ -373,6 +403,7 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
 
     /**
      * The checkGameOver method checks if the game is over.
+     * It checks if the gold ball is false and the number of hearts is 0.
      * If the game is over, the game over screen is displayed and game is stopped.
      */
 

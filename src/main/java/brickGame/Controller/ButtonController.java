@@ -43,12 +43,9 @@ public class ButtonController {
      */
 
     public EventHandler<ActionEvent> createLoadButtonHandler() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                main.getState().loadGame();
-                hideButtons();
-            }
+        return event -> {
+            main.getState().loadGame();
+            hideButtons();
         };
     }
 
@@ -59,14 +56,11 @@ public class ButtonController {
      */
 
     public EventHandler<ActionEvent> createNewGameButtonHandler() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                main.getEngine().setOnAction(new GameEngine(main));
-                main.getEngine().setFps(120);
-                main.getEngine().start();
-                hideButtons();
-            }
+        return event -> {
+            main.getEngine().setOnAction(new GameEngine(main));
+            main.getEngine().setFps(120);
+            main.getEngine().start();
+            hideButtons();
         };
     }
 
@@ -79,13 +73,10 @@ public class ButtonController {
      */
 
     public EventHandler<ActionEvent> createExitButtonHandler() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
-                    main.getGameScreen().primaryStage.close();
-                    hideButtons();
-                }
+        return event -> {
+            if (showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                main.getGameScreen().primaryStage.close();
+                hideButtons();
             }
         };
     }
@@ -98,12 +89,7 @@ public class ButtonController {
      */
 
     public EventHandler<ActionEvent> createInstructionsButtonHandler() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                showInstructionsDialog();
-            }
-        };
+        return event -> showInstructionsDialog();
     }
 
     /**

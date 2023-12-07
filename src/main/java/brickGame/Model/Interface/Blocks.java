@@ -8,7 +8,7 @@ package brickGame.Model.Interface;
  *
  */
 
-public interface BlockType {
+public interface Blocks {
     /**
      * The blockType method represents the behavior of different types of blocks.
      */

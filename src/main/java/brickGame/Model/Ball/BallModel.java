@@ -1,8 +1,8 @@
 package brickGame.Model.Ball;
 
 import brickGame.Main;
-import brickGame.Model.Interface.Ball;
-import brickGame.Model.Score;
+import brickGame.Model.Interface.BallPosition;
+import brickGame.Model.ScoreManager;
 import javafx.scene.shape.Circle;
 
 /**
@@ -14,8 +14,9 @@ import javafx.scene.shape.Circle;
  *
  */
 
-public class BallModel extends Circle implements Ball {
+public class BallModel extends Circle implements BallPosition {
     Main main; //Main class instance
+    private int level; //Level of the game
 
     public double ballXCoordinate; //x-coordinate of ball
     public double ballYCoordinate; //y-coordinate of ball
@@ -72,10 +73,12 @@ public class BallModel extends Circle implements Ball {
             goDownBall = false; //Ball moves upwards
             if (!goldBall) { //If the ball is NOT gold
                 main.getPlayer().numberOfHearts--; //Decrement the heart
-                new Score().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
+                new ScoreManager().show(main.getGameScreen().windowWidth / 2, main.getGameScreen().windowHeight / 2, -1, main);
                 main.getEngine().checkGameOver();
             }
         }
+
+        level = main.currentLevel;
 
         if (ballYCoordinate > main.getPlayer().paddleYPosition - main.getBall().ballRadius*1.5) { //If the ball collides with the paddle
             if (ballXCoordinate >= main.getPlayer().paddleXPosition && ballXCoordinate <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
@@ -89,9 +92,9 @@ public class BallModel extends Circle implements Ball {
                 if (Math.abs(relation) <= 0.3) { //If the relation is less than or equal to 0.3
                     ballHorizontalSpeed = Math.abs(relation); //Set the horizontal velocity of the ball to the absolute value of the relation
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) { //If the relation is greater than 0.3 and less than or equal to 0.7
-                    ballHorizontalSpeed = (Math.abs(relation) * 1.5) + (main.currentLevel / 3.500); //Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 1.5 and added to the current level divided by 3.500
+                    ballHorizontalSpeed = (Math.abs(relation) * 1.5) + (level / 3.500); //Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 1.5 and added to the current level divided by 3.500
                 } else { //If the relation is greater than 0.7
-                    ballHorizontalSpeed = (Math.abs(relation) * 2) + (main.currentLevel / 3.500); // Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 2 and added to the current level divided by 3.500
+                    ballHorizontalSpeed = (Math.abs(relation) * 2) + (level / 3.500); // Set the horizontal velocity of the ball to the absolute value of the relation multiplied by 2 and added to the current level divided by 3.500
                 }
 
                 collideToPaddleAndMoveToRight = ballXCoordinate - main.getPlayer().paddleCenter > 0; //Set the collideToPaddleAndMoveToRight flag to TRUE if the ball is moving to the right

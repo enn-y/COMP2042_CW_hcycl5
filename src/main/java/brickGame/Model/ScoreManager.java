@@ -1,7 +1,6 @@
 package brickGame.Model;
 
 import brickGame.Main;
-import brickGame.View.State;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,16 +13,17 @@ import javafx.scene.layout.Pane;
 /**
  * The Score class represents the score.
  * It is used to display the score, game over, and win.
- * It also animates the score.
+ * It also animates the score. It is used to display the message.
  *
  * @author Lua Chong En
  *
  */
 
-public class Score { //Methods include: show, showMessage, showGameOver, and showWin
+public class ScoreManager { //Methods include: show, showMessage, showGameOver, and showWin
 
     /**
      * The show method is used to display the score.
+     * It also animates the score.
      * @param x The x-coordinate of the score.
      * @param y The y-coordinate of the score.
      * @param score The score.
@@ -78,6 +78,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
 
     /**
      * The showMessage method is used to display the message.
+     * It also animates the message.
      * @param message The message to be displayed.
      * @param main The Main instance to access the components of the game.
      */
@@ -123,6 +124,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
 
     /**
      * The showGameOver method is used to display the game over screen.
+     * It also displays the score, level, and hearts information.
      * @param main The Main instance to access the components of the game.
      */
 
@@ -153,6 +155,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 heartsLabel.setLayoutY(300);
 
                 Button restart = new Button("Restart");
+                restart.setTooltip(new javafx.scene.control.Tooltip("Restart game")); //Set a tooltip for the new game button
                 restart.setTranslateX(150);
                 restart.setTranslateY(400);
                 restart.setPrefWidth(200); // Set a larger width
@@ -164,6 +167,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 });
 
                 Button exit = new Button("Exit");
+                exit.setTooltip(new javafx.scene.control.Tooltip("Exit game")); //Set a tooltip for the new game button
                 exit.setTranslateX(150);
                 exit.setTranslateY(450);
                 exit.setPrefWidth(200); // Set a larger width
@@ -188,6 +192,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
 
     /**
      * The showWin method is used to display the win screen.
+     * It also displays the score, level, and hearts information.
      * @param main The Main instance to access the components of the game.
      */
 
@@ -218,6 +223,7 @@ public class Score { //Methods include: show, showMessage, showGameOver, and sho
                 heartsLabel.setLayoutY(300);
 
                 Button exit = new Button("Exit");
+                exit.setTooltip(new javafx.scene.control.Tooltip("Exit game")); //Set a tooltip for the new game button
                 exit.setTranslateX(150);
                 exit.setTranslateY(450);
                 exit.setPrefWidth(200); // Set a larger width

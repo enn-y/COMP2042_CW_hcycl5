@@ -10,13 +10,12 @@ import java.util.Random;
 /**
  * The Bonus class is responsible for creating the bonus item.
  * The bonus item is created when a block is destroyed.
- * The class also implements Serializable.
  *
  * @author Lua Chong En
  *
  */
 
-public class Bonus implements Serializable { //Methods include: Bonus and draw, indicates that instances of this class can be serialized, making them suitable for saving or sending data between Java applications.
+public class Bonus { //Methods include: Bonus and draw, indicates that instances of this class can be serialized, making them suitable for saving or sending data between Java applications.
     public Rectangle chocolateBlock; //chocolate block, only chocolate block can create the bonus item
 
     public double x; //x coordinate of bonus item
@@ -42,6 +41,7 @@ public class Bonus implements Serializable { //Methods include: Bonus and draw, 
      * The create method is responsible for creating the bonus item.
      * The bonus item is created when a block is destroyed.
      * Sets the properties and image of the bonus item.
+     * The bonus item is randomly chosen from bonus1.png and bonus2.png.
      */
 
     private void create() {
