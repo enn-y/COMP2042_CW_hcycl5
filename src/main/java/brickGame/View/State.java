@@ -17,37 +17,37 @@ import java.util.Random;
  *
  */
 
-public class State { //Methods include: read
+public class State {
 
-    Main main; //Main instance to access the components of the game
-    public boolean isExistHeartBlock; //Status of heart block
-    public boolean isGoldStatus; //Status of gold ball
-    public boolean goDownBall; //Status of ball going down
-    public boolean goRightBall; //Status of ball going right
-    public boolean collideToPaddle; //Status of ball colliding to paddle
-    public boolean collideToPaddleAndMoveToRight; //Status of ball colliding to paddle and moving to right
-    public boolean collideToRightWall; //Status of ball colliding to right wall
-    public boolean collideToLeftWall; //Status of ball colliding to left wall
-    public boolean collideToRightBlock; //Status of ball colliding to right block
-    public boolean collideToBottomBlock; //Status of ball colliding to bottom block
-    public boolean collideToLeftBlock; //Status of ball colliding to left block
-    public boolean collideToTopBlock; //Status of ball colliding to top block
-    public int level; //Level of the game
-    public int score; //Score of the game
-    public int heart; //Heart of the game
-    public int destroyedBlockCount; //Number of destroyed blocks
-    public double xBall; //x-coordinate of ball
-    public double yBall; //y-coordinate of ball
-    public double xBreak; //x-coordinate of paddle
-    public double yBreak; //y-coordinate of paddle
-    public double centerBreakX; //Center of paddle
-    public long time; //Time of the game
-    public long goldTime; //Time of gold ball
-    public double vX; //Horizontal speed of ball
-    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>(); //Array list of blocks
-    public boolean loadFromSavedFile = false; //Status of loading from saved file
-    public static String savePath    = "D:/save/save.mdds"; //Path to save file
-    public static String savePathDir = "D:/save/"; //Path to save directory
+    Main main;
+    public boolean isExistHeartBlock;
+    public boolean isGoldStatus;
+    public boolean goDownBall;
+    public boolean goRightBall;
+    public boolean collideToPaddle;
+    public boolean collideToPaddleAndMoveToRight;
+    public boolean collideToRightWall;
+    public boolean collideToLeftWall;
+    public boolean collideToRightBlock;
+    public boolean collideToBottomBlock;
+    public boolean collideToLeftBlock;
+    public boolean collideToTopBlock;
+    public int level;
+    public int score;
+    public int heart;
+    public int destroyedBlockCount;
+    public double xBall;
+    public double yBall;
+    public double xBreak;
+    public double yBreak;
+    public double centerBreakX;
+    public long time;
+    public long goldTime;
+    public double vX;
+    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+    public boolean loadFromSavedFile = false;
+    public static String savePath    = "D:/save/save.mdds";
+    public static String savePathDir = "D:/save/";
 
     /**
      * Constructor used to save and load the game.
@@ -112,68 +112,64 @@ public class State { //Methods include: read
      * It also saves the variables to the saved file.
      */
 
-    public void saveGame() { //Save the game
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new File(savePathDir).mkdirs();
-                File file = new File(savePath);
-                ObjectOutputStream outputStream = null;
-                try { //Try to save the game, save all the variables
-                    outputStream = new ObjectOutputStream(new FileOutputStream(file));
+    public void saveGame() {
+        new Thread(() -> {
+            new File(savePathDir).mkdirs();
+            File file = new File(savePath);
+            ObjectOutputStream outputStream = null;
+            try {
+                outputStream = new ObjectOutputStream(new FileOutputStream(file));
 
-                    outputStream.writeInt(main.currentLevel);
-                    outputStream.writeInt(main.currentScore);
-                    outputStream.writeInt(main.getPlayer().numberOfHearts);
-                    outputStream.writeInt(main.getPlayer().destroyedBlockCount);
+                outputStream.writeInt(main.currentLevel);
+                outputStream.writeInt(main.currentScore);
+                outputStream.writeInt(main.getPlayer().numberOfHearts);
+                outputStream.writeInt(main.getPlayer().destroyedBlockCount);
 
-                    outputStream.writeDouble(main.getBall().ballXCoordinate);
-                    outputStream.writeDouble(main.getBall().ballYCoordinate);
-                    outputStream.writeDouble(main.getPlayer().paddleXPosition);
-                    outputStream.writeDouble(main.getPlayer().paddleYPosition);
-                    outputStream.writeDouble(main.getPlayer().paddleCenter);
-                    outputStream.writeLong(main.getPlayer().currentTime);
-                    outputStream.writeLong(main.getBall().goldTime);
-                    outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
+                outputStream.writeDouble(main.getBall().ballXCoordinate);
+                outputStream.writeDouble(main.getBall().ballYCoordinate);
+                outputStream.writeDouble(main.getPlayer().paddleXPosition);
+                outputStream.writeDouble(main.getPlayer().paddleYPosition);
+                outputStream.writeDouble(main.getPlayer().paddleCenter);
+                outputStream.writeLong(main.getPlayer().currentTime);
+                outputStream.writeLong(main.getBall().goldTime);
+                outputStream.writeDouble(main.getBall().ballHorizontalSpeed);
 
-                    outputStream.writeBoolean(main.getPlayer().existHeartBlock);
-                    outputStream.writeBoolean(main.getBall().goldBall);
-                    outputStream.writeBoolean(main.getBall().goDownBall);
-                    outputStream.writeBoolean(main.getBall().goRightBall);
-                    outputStream.writeBoolean(main.getBall().collideToPaddle);
-                    outputStream.writeBoolean(main.getBall().collideToPaddleAndMoveToRight);
-                    outputStream.writeBoolean(main.getBall().collideToRightWall);
-                    outputStream.writeBoolean(main.getBall().collideToLeftWall);
-                    outputStream.writeBoolean(main.getBall().collideToRightBlock);
-                    outputStream.writeBoolean(main.getBall().collideToBottomBlock);
-                    outputStream.writeBoolean(main.getBall().collideToLeftBlock);
-                    outputStream.writeBoolean(main.getBall().collideToTopBlock);
+                outputStream.writeBoolean(main.getPlayer().existHeartBlock);
+                outputStream.writeBoolean(main.getBall().goldBall);
+                outputStream.writeBoolean(main.getBall().goDownBall);
+                outputStream.writeBoolean(main.getBall().goRightBall);
+                outputStream.writeBoolean(main.getBall().collideToPaddle);
+                outputStream.writeBoolean(main.getBall().collideToPaddleAndMoveToRight);
+                outputStream.writeBoolean(main.getBall().collideToRightWall);
+                outputStream.writeBoolean(main.getBall().collideToLeftWall);
+                outputStream.writeBoolean(main.getBall().collideToRightBlock);
+                outputStream.writeBoolean(main.getBall().collideToBottomBlock);
+                outputStream.writeBoolean(main.getBall().collideToLeftBlock);
+                outputStream.writeBoolean(main.getBall().collideToTopBlock);
 
-                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (BlockModel block : main.getEngine().blocks) {
-                        if (block.isDestroyed) {
-                            continue;
-                        }
-                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
+                ArrayList<BlockSerializable> blockSerializables = new ArrayList<>();
+                for (BlockModel block : main.getEngine().blocks) {
+                    if (block.isDestroyed) {
+                        continue;
                     }
+                    blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
+                }
 
-                    outputStream.writeObject(blockSerializables);
+                outputStream.writeObject(blockSerializables);
 
-                    Platform.runLater(() -> {
-                        new ScoreManager().showMessage("Game Saved", main); //Display "Game Saved" when the game is saved
-                    });
+                Platform.runLater(() -> {
+                    new ScoreManager().showMessage("Game Saved", main);
+                });
 
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    assert outputStream != null;
+                    outputStream.flush();
+                    outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    try {
-                        outputStream.flush();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }).start();
@@ -188,8 +184,8 @@ public class State { //Methods include: read
      * It also sets the loadFromSavedFile to true, INDICATES that it is loading from saved file.
      */
 
-    public void loadGame() { //Load the game
-        read(); //Read the saved file, assign the variables to the saved variables
+    public void loadGame() {
+        read();
 
         main.getPlayer().existHeartBlock = isExistHeartBlock;
         main.getBall().goldBall = isGoldStatus;
@@ -242,7 +238,7 @@ public class State { //Methods include: read
      * It also sets the loadFromSavedFile to false, INDICATES that it is a new game.
      */
 
-    public void restartGame() { //Restart the game
+    public void restartGame() {
         try {
             main.getEngine().stop();
             level = 0;
@@ -250,7 +246,7 @@ public class State { //Methods include: read
             main.getPlayer().numberOfHearts = 3;
             main.currentScore = 0;
             main.getBall().ballHorizontalSpeed = 1.000;
-            main.getPlayer().destroyedBlockCount = 0; //Changes made here
+            main.getPlayer().destroyedBlockCount = 0;
             main.getBall().resetCollideFlags();
             main.getBall().goDownBall = true;
 
@@ -258,7 +254,7 @@ public class State { //Methods include: read
             main.getPlayer().existHeartBlock = false;
             main.getPlayer().hitTime = 0;
             main.getPlayer().currentTime = 0;
-            main.getBall().goldTime = 0; //Changes made here
+            main.getBall().goldTime = 0;
 
             blocks.clear();
             main.getEngine().bonusItems.clear();
@@ -275,12 +271,12 @@ public class State { //Methods include: read
      */
 
     public void checkLoadFromSavedFile(){
-        if (!loadFromSavedFile) { //If NOT loading from saved file
-            if (main.currentLevel > 1 && main.currentLevel < 10) { //If the level is greater than 1 and less than 18
-                main.getButtonControls().hideButtons(); //Hide the buttons
-                main.getEngine().setOnAction(new GameEngine(main)); //Listen for events
-                main.getEngine().setFps(120); //Set FPS
-                main.getEngine().start(); //Start the game engine
+        if (!loadFromSavedFile) {
+            if (main.currentLevel > 1 && main.currentLevel < 10) {
+                main.getButtonControls().hideButtons();
+                main.getEngine().setOnAction(new GameEngine(main));
+                main.getEngine().setFps(120);
+                main.getEngine().start();
             }
 
             main.getButtonControls().loadButton.setOnAction(main.getButtonControls().createLoadButtonHandler());
@@ -288,11 +284,11 @@ public class State { //Methods include: read
             main.getButtonControls().exitButton.setOnAction(main.getButtonControls().createExitButtonHandler());
             main.getButtonControls().instructionsButton.setOnAction(main.getButtonControls().createInstructionsButtonHandler());
 
-        } else { //But if IT IS loading from saved file
-            main.getEngine().setOnAction(new GameEngine(main)); //Listen for events
-            main.getEngine().setFps(120); //Set FPS
-            main.getEngine().start(); //Start the game engine
-            loadFromSavedFile = false; //Set loadFromSave to false, INDICATES that it is a new game
+        } else {
+            main.getEngine().setOnAction(new GameEngine(main));
+            main.getEngine().setFps(120);
+            main.getEngine().start();
+            loadFromSavedFile = false;
         }
     }
 }

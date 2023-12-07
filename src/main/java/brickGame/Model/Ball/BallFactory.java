@@ -16,7 +16,7 @@ import java.util.Random;
  */
 
 public class BallFactory {
-    Main main; //Main class instance
+    Main main;
 
     /**
      * Constructor for BallFactory class.
@@ -34,13 +34,13 @@ public class BallFactory {
      * The center of the ball is the same as the position of the ball.
      */
 
-    public void initializeBall() { //Initialize the ball
-        Random random = new Random(); //Random number generator
-        main.getBall().setBallXCoordinate(random.nextInt(main.getGameScreen().windowWidth) + 1); //Random x-coordinate of the ball
-        main.getBall().setBallYCoordinate(random.nextInt(main.getGameScreen().windowHeight - 200) + ((main.currentLevel + 1) * BlockModel.getHeight()) + 15); //Random y-coordinate of the ball
-        main.getBall().setCenterX(main.getBall().getBallXCoordinate()); //Set the center x-coordinate of the ball
+    public void initializeBall() {
+        Random random = new Random();
+        main.getBall().setBallXCoordinate(random.nextInt(main.getGameScreen().windowWidth) + 1);
+        main.getBall().setBallYCoordinate(random.nextInt(main.getGameScreen().windowHeight - 200) + ((main.currentLevel + 1) * BlockModel.getHeight()) + 15);
+        main.getBall().setCenterX(main.getBall().getBallXCoordinate());
         main.getBall().setCenterY(main.getBall().getBallYCoordinate());
-        main.getBall().setRadius(main.getBall().ballRadius); //Set the radius of the ball
-        main.getBall().setFill(new ImagePattern(new Image("ball.png"))); //Using ball.png as the image of the ball
+        main.getBall().setRadius(main.getBall().ballRadius);
+        main.getBall().setFill(new ImagePattern(new Image("ball.png")));
     }
 }

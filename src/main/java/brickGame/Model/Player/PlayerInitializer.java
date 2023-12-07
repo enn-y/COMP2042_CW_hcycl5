@@ -13,7 +13,7 @@ import javafx.scene.paint.ImagePattern;
  */
 
 public class PlayerInitializer {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor initializes the player initializer.
@@ -30,9 +30,9 @@ public class PlayerInitializer {
      * It also sets the image of the paddle.
      */
 
-    public void initializePaddle() { //Initialize the paddle
-        main.getPlayer().setX(main.getPlayer().paddleXPosition); //Set the x-coordinate of the paddle
-        main.getPlayer().setY(main.getPlayer().paddleYPosition); //Set the y-coordinate of the paddle
-        main.getPlayer().setFill(new ImagePattern(new Image("block.jpg"))); //Using ball.png as the image of the ball
+    public void initializePaddle() {
+        main.getPlayer().setX(main.getPlayer().paddleXPosition);
+        main.getPlayer().setY(main.getPlayer().paddleYPosition);
+        main.getPlayer().setFill(new ImagePattern(new Image("block.jpg")));
     }
 }

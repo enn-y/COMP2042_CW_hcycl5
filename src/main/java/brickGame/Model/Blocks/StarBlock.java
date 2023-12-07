@@ -15,7 +15,7 @@ import javafx.scene.paint.ImagePattern;
  */
 
 public class StarBlock extends BlockModel implements Blocks {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor is used to create a star block.

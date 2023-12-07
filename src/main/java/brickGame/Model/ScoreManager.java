@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-//import sun.plugin2.message.Message;
 
 /**
  * The Score class represents the score.
@@ -19,7 +18,7 @@ import javafx.scene.layout.Pane;
  *
  */
 
-public class ScoreManager { //Methods include: show, showMessage, showGameOver, and showWin
+public class ScoreManager {
 
     /**
      * The show method is used to display the score.
@@ -33,46 +32,33 @@ public class ScoreManager { //Methods include: show, showMessage, showGameOver, 
     public void show(final double x, final double y, int score, final Main main) {
 
         String sign;
-        if (score >= 0) { // if score is positive, add the "+" sign
+        if (score >= 0) {
             sign = "+";
-        } else { // if score is negative, add the "-" sign
+        } else {
             sign = "";
         }
-        final Label label = new Label(sign + score); //Create the label and assign the sign and score
-        label.setTranslateX(x); //Position of label on x-axis
-        label.setTranslateY(y); //Position of label on y-axis
+        final Label label = new Label(sign + score);
+        label.setTranslateX(x);
+        label.setTranslateY(y);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.getGameScreen().root.getChildren().add(label);
-            }
-        });
+        Platform.runLater(() -> main.getGameScreen().root.getChildren().add(label));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) { //Loop to animate the label, condition is i < 21 because we want to animate the label for 20 times
-                    try {
-                        double scale = 1.0 + i * 0.1; //Make the label smaller
-                        int tempI = i;
-                        Platform.runLater(() -> {
-                            label.setScaleX(scale);
-                            label.setScaleY(scale);
-                            label.setOpacity((20 - tempI) / 20.0);
-                        });
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            for (int i = 0; i < 21; i++) {
+                try {
+                    double scale = 1.0 + i * 0.1;
+                    int tempI = i;
+                    Platform.runLater(() -> {
+                        label.setScaleX(scale);
+                        label.setScaleY(scale);
+                        label.setOpacity((20 - tempI) / 20.0);
+                    });
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                Platform.runLater(new Runnable() { //To prevent the label from remaining on the screen
-                    @Override
-                    public void run() {
-                        main.getGameScreen().root.getChildren().remove(label);
-                    }
-                });
             }
+            Platform.runLater(() -> main.getGameScreen().root.getChildren().remove(label));
         }).start();
     }
 
@@ -88,37 +74,24 @@ public class ScoreManager { //Methods include: show, showMessage, showGameOver, 
         label.setTranslateX(220);
         label.setTranslateY(340);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.getGameScreen().root.getChildren().add(label);
-            }
-        });
+        Platform.runLater(() -> main.getGameScreen().root.getChildren().add(label));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) {
-                    try {
-                        double scale = Math.abs(i - 10) * 0.1 + 1.0; // Smaller scaling effect
-                        int finalI = i;
-                        Platform.runLater(() -> {
-                            label.setScaleX(scale);
-                            label.setScaleY(scale);
-                            label.setOpacity((20 - finalI) / 20.0);
-                        });
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            for (int i = 0; i < 21; i++) {
+                try {
+                    double scale = Math.abs(i - 10) * 0.1 + 1.0;
+                    int finalI = i;
+                    Platform.runLater(() -> {
+                        label.setScaleX(scale);
+                        label.setScaleY(scale);
+                        label.setOpacity((20 - finalI) / 20.0);
+                    });
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                Platform.runLater(new Runnable() { //To prevent the label from remaining on the screen
-                    @Override
-                    public void run() {
-                        main.getGameScreen().root.getChildren().remove(label);
-                    }
-                });
             }
+            Platform.runLater(() -> main.getGameScreen().root.getChildren().remove(label));
         }).start();
     }
 
@@ -129,64 +102,53 @@ public class ScoreManager { //Methods include: show, showMessage, showGameOver, 
      */
 
     public void showGameOver(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Pane gameOverLayout = new Pane();
+        Platform.runLater(() -> {
+            Pane gameOverLayout = new Pane();
 
-                // Large font title "Game Over"
-                Label gameOverLabel = new Label("Game Over!");
-                gameOverLabel.setStyle("-fx-font-size: 36;"); // Customize font size
-                gameOverLabel.setLayoutX(160);
-                gameOverLabel.setLayoutY(140);
+            // Large font title "Game Over"
+            Label gameOverLabel = new Label("Game Over!");
+            gameOverLabel.setStyle("-fx-font-size: 36;");
+            gameOverLabel.setLayoutX(160);
+            gameOverLabel.setLayoutY(140);
 
-                // Score, level, and hearts information
-                Label scoreLabel = new Label("Score: " + main.currentScore);
-                Label levelLabel = new Label("Level: " + main.currentLevel);
-                Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
-                scoreLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                scoreLabel.setLayoutX(200); // Center horizontally
-                scoreLabel.setLayoutY(240);
-                levelLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                levelLabel.setLayoutX(200); // Center horizontally
-                levelLabel.setLayoutY(270);
-                heartsLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                heartsLabel.setLayoutX(200); // Center horizontally
-                heartsLabel.setLayoutY(300);
+            // Score, level, and hearts information
+            Label scoreLabel = new Label("Score: " + main.currentScore);
+            Label levelLabel = new Label("Level: " + main.currentLevel);
+            Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
+            scoreLabel.setStyle("-fx-font-size: 24;");
+            scoreLabel.setLayoutX(200);
+            scoreLabel.setLayoutY(240);
+            levelLabel.setStyle("-fx-font-size: 24;");
+            levelLabel.setLayoutX(200);
+            levelLabel.setLayoutY(270);
+            heartsLabel.setStyle("-fx-font-size: 24;");
+            heartsLabel.setLayoutX(200);
+            heartsLabel.setLayoutY(300);
 
-                Button restart = new Button("Restart");
-                restart.setTooltip(new javafx.scene.control.Tooltip("Restart game")); //Set a tooltip for the new game button
-                restart.setTranslateX(150);
-                restart.setTranslateY(400);
-                restart.setPrefWidth(200); // Set a larger width
-                restart.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        main.getState().restartGame();
-                    }
-                });
+            Button restart = new Button("Restart");
+            restart.setTooltip(new javafx.scene.control.Tooltip("Restart game"));
+            restart.setTranslateX(150);
+            restart.setTranslateY(400);
+            restart.setPrefWidth(200);
+            restart.setOnAction(event -> main.getState().restartGame());
 
-                Button exit = new Button("Exit");
-                exit.setTooltip(new javafx.scene.control.Tooltip("Exit game")); //Set a tooltip for the new game button
-                exit.setTranslateX(150);
-                exit.setTranslateY(450);
-                exit.setPrefWidth(200); // Set a larger width
-                exit.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
-                            main.getGameScreen().primaryStage.close();
-                            main.getButtonControls().hideButtons();
-                        }
-                    }
-                });
+            Button exit = new Button("Exit");
+            exit.setTooltip(new javafx.scene.control.Tooltip("Exit game"));
+            exit.setTranslateX(150);
+            exit.setTranslateY(450);
+            exit.setPrefWidth(200);
+            exit.setOnAction(event -> {
+                if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                    main.getGameScreen().primaryStage.close();
+                    main.getButtonControls().hideButtons();
+                }
+            });
 
-                gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart, exit);
-                Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
+            gameOverLayout.getChildren().addAll(gameOverLabel, scoreLabel, levelLabel, heartsLabel, restart, exit);
+            Scene gameOverScene = new Scene(gameOverLayout, 500, 700);
 
-                main.getGameScreen().primaryStage.setScene(gameOverScene);
-                main.getGameScreen().primaryStage.show();
-            }
+            main.getGameScreen().primaryStage.setScene(gameOverScene);
+            main.getGameScreen().primaryStage.show();
         });
     }
 
@@ -197,51 +159,43 @@ public class ScoreManager { //Methods include: show, showMessage, showGameOver, 
      */
 
     public void showGameWin(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Pane gameWinLayout = new Pane();
+        Platform.runLater(() -> {
+            Pane gameWinLayout = new Pane();
 
-                // Large font title "Game Over"
-                Label gameWinLabel = new Label("Game Win!");
-                gameWinLabel.setStyle("-fx-font-size: 36;"); // Customize font size
-                gameWinLabel.setLayoutX(160);
-                gameWinLabel.setLayoutY(140);
+            Label gameWinLabel = new Label("Game Win!");
+            gameWinLabel.setStyle("-fx-font-size: 36;");
+            gameWinLabel.setLayoutX(160);
+            gameWinLabel.setLayoutY(140);
 
-                // Score, level, and hearts information
-                Label scoreLabel = new Label("Score: " + main.currentScore);
-                Label levelLabel = new Label("Level: " + main.currentLevel);
-                Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
-                scoreLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                scoreLabel.setLayoutX(200); // Center horizontally
-                scoreLabel.setLayoutY(240);
-                levelLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                levelLabel.setLayoutX(200); // Center horizontally
-                levelLabel.setLayoutY(270);
-                heartsLabel.setStyle("-fx-font-size: 24;"); // Customize font size
-                heartsLabel.setLayoutX(200); // Center horizontally
-                heartsLabel.setLayoutY(300);
+            Label scoreLabel = new Label("Score: " + main.currentScore);
+            Label levelLabel = new Label("Level: " + main.currentLevel);
+            Label heartsLabel = new Label("Hearts: " + main.getPlayer().numberOfHearts);
+            scoreLabel.setStyle("-fx-font-size: 24;");
+            scoreLabel.setLayoutX(200);
+            scoreLabel.setLayoutY(240);
+            levelLabel.setStyle("-fx-font-size: 24;");
+            levelLabel.setLayoutX(200);
+            levelLabel.setLayoutY(270);
+            heartsLabel.setStyle("-fx-font-size: 24;");
+            heartsLabel.setLayoutX(200);
+            heartsLabel.setLayoutY(300);
 
-                Button exit = new Button("Exit");
-                exit.setTooltip(new javafx.scene.control.Tooltip("Exit game")); //Set a tooltip for the new game button
-                exit.setTranslateX(150);
-                exit.setTranslateY(450);
-                exit.setPrefWidth(200); // Set a larger width
-                exit.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
-                            main.getGameScreen().primaryStage.close();
-                        }
-                    }
-                });
+            Button exit = new Button("Exit");
+            exit.setTooltip(new javafx.scene.control.Tooltip("Exit game"));
+            exit.setTranslateX(150);
+            exit.setTranslateY(450);
+            exit.setPrefWidth(200);
+            exit.setOnAction(event -> {
+                if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
+                    main.getGameScreen().primaryStage.close();
+                }
+            });
 
-                gameWinLayout.getChildren().addAll(gameWinLabel, scoreLabel, levelLabel, heartsLabel, exit);
-                Scene gameWinScene = new Scene(gameWinLayout, 500, 700);
+            gameWinLayout.getChildren().addAll(gameWinLabel, scoreLabel, levelLabel, heartsLabel, exit);
+            Scene gameWinScene = new Scene(gameWinLayout, 500, 700);
 
-                main.getGameScreen().primaryStage.setScene(gameWinScene);
-                main.getGameScreen().primaryStage.show();
-            }
+            main.getGameScreen().primaryStage.setScene(gameWinScene);
+            main.getGameScreen().primaryStage.show();
         });
     }
 }

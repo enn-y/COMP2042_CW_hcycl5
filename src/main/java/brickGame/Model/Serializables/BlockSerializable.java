@@ -10,10 +10,10 @@ import java.io.Serializable;
  *
  */
 
-public class BlockSerializable implements Serializable { //Allows for transfer of data between two different Java Virtual Machines
-    public final int row; //Indicates the row that the block is in
-    public final int column; //Indicates the column that the block is in
-    public final int type; //Indicates the type of block
+public class BlockSerializable implements Serializable {
+    public final int row;
+    public final int column;
+    public final int type;
 
     /**
      * Constructor is used to serialize the block.
@@ -22,7 +22,7 @@ public class BlockSerializable implements Serializable { //Allows for transfer o
      * @param type The type of the block.
      */
 
-    public BlockSerializable(int row , int column , int type) { //Constructor
+    public BlockSerializable(int row , int column , int type) {
         this.row = row;
         this.column = column;
         this.type = type;

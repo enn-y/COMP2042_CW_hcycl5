@@ -20,17 +20,16 @@ import java.util.ArrayList;
  *
  */
 
-public class GameEngine implements OnAction{ //Methods include: setOnAction, setFps, Update, Initialize, PhysicsCalculation, start, stop, TimeStart, and OnAction
-    Main main; //Main class instance
-
-    private OnAction onAction; //Interface to handle the actions
-    private int fps = 15; //Frames per second
-    private Thread updateThread; //Thread to update the game
-    private Thread physicsThread; //Thread to update the physics
-    public boolean isStopped = true; //Boolean to check if the game is stopped
-    public ArrayList<BlockModel> blocks = new ArrayList<BlockModel>(); //ArrayList to store the blocks
-    public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>(); //ArrayList to store the bonus items
-    public Color[] blockColors = new Color[]{ //Array of colors for the blocks
+public class GameEngine implements OnAction{
+    Main main;
+    private OnAction onAction;
+    private int fps = 15;
+    private Thread updateThread;
+    private Thread physicsThread;
+    public boolean isStopped = true;
+    public ArrayList<BlockModel> blocks = new ArrayList<BlockModel>();
+    public ArrayList<Bonus> bonusItems = new ArrayList<Bonus>();
+    public Color[] blockColors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -45,10 +44,9 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
             Color.TOMATO,
             Color.TAN,
     };
-    private long time = 0; //Time
+    private long time = 0;
 
-    private Thread timeThread; //Thread to update the time
-    private int level; //Level of the game
+    private Thread timeThread;
 
     /**
      * Constructor initializes the game engine.
@@ -82,21 +80,13 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
      */
 
     private synchronized void Update() {
-        updateThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!updateThread.isInterrupted()) {
-                    try {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                onAction.onUpdate();
-                            }
-                        });
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        updateThread = new Thread(() -> {
+            while (!updateThread.isInterrupted()) {
+                try {
+                    Platform.runLater(() -> onAction.onUpdate());
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -118,21 +108,13 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
      */
 
     private synchronized void PhysicsCalculation() {
-        physicsThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!physicsThread.isInterrupted()) {
-                    try {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                onAction.onPhysicsUpdate();
-                            }
-                        });
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        physicsThread = new Thread(() -> {
+            while (!physicsThread.isInterrupted()) {
+                try {
+                    Platform.runLater(() -> onAction.onPhysicsUpdate());
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -176,23 +158,15 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
      */
 
     private void TimeStart() {
-        timeThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        time++;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                onAction.onTime(time);
-                            }
-                        });
-                        Thread.sleep(1);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        timeThread = new Thread(() -> {
+            try {
+                while (true) {
+                    time++;
+                    Platform.runLater(() -> onAction.onTime(time));
+                    Thread.sleep(1);
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
         timeThread.start();
@@ -229,7 +203,7 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
     public void createBlock() {
         for (final BlockModel block : main.getEngine().blocks) {
             int hitCode = block.checkHitToBlock(main.getBall().ballXCoordinate, main.getBall().ballYCoordinate);
-            if (hitCode != BlockModel.NO_HIT) { //If the ball hits the block
+            if (hitCode != BlockModel.NO_HIT) {
                 main.currentScore += 1;
 
                 main.getScore().show(block.blockXCoordinate, block.blockYCoordinate, 1, main);
@@ -237,56 +211,55 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
                 block.rect.setVisible(false);
                 block.isDestroyed = true;
                 main.getPlayer().destroyedBlockCount++;
-                //System.out.println("size is " + blocks.size());
                 main.getBall().resetCollideFlags();
 
-                if (block.type == BlockModel.BLOCK_CHOCOLATE) { //Chocolate Block
+                if (block.type == BlockModel.BLOCK_CHOCOLATE) {
                     ChocolateBlock chocolateBlock = new ChocolateBlock(block.row, block.column, main);
                     chocolateBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_STAR && !main.getBall().goldBall) { //Star Block
+                if (block.type == BlockModel.BLOCK_STAR && !main.getBall().goldBall) {
                     StarBlock starBlock = new StarBlock(block.row, block.column, main);
                     starBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_HEART) { //Heart Block
+                if (block.type == BlockModel.BLOCK_HEART) {
                     HeartBlock heartBlock = new HeartBlock(block.row, block.column, main);
                     heartBlock.blockType();
                 }
 
-                if (block.type == BlockModel.BLOCK_SLIME) { //Slime Block
+                if (block.type == BlockModel.BLOCK_SLIME) {
                     SlimeBlock slimeBlock = new SlimeBlock(block.row, block.column, main);
                     slimeBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_QUESTION){ //Question Block
+                if(block.type == BlockModel.BLOCK_QUESTION){
                     QuestionBlock questionBlock = new QuestionBlock(block.row, block.column, main);
                     questionBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_BOMB){ //Bomb Block
+                if(block.type == BlockModel.BLOCK_BOMB){
                     BombBlock bombBlock = new BombBlock(block.row, block.column, main);
                     bombBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_TELEPORT){ //Teleport Block
+                if(block.type == BlockModel.BLOCK_TELEPORT){
                     TeleportBlock teleportBlock = new TeleportBlock(block.row, block.column, main);
                     teleportBlock.blockType();
                 }
 
-                if(block.type == BlockModel.BLOCK_SPEED){ //Speed Block
+                if(block.type == BlockModel.BLOCK_SPEED){
                     SpeedBlock speedBlock = new SpeedBlock(block.row, block.column, main);
                     speedBlock.blockType();
                 }
 
-                if (hitCode == BlockModel.HIT_RIGHT) { //Hit to right block
+                if (hitCode == BlockModel.HIT_RIGHT) {
                     main.getBall().collideToRightBlock = true;
-                } else if (hitCode == BlockModel.HIT_BOTTOM) { //Hit to bottom block
+                } else if (hitCode == BlockModel.HIT_BOTTOM) {
                     main.getBall().collideToBottomBlock = true;
-                } else if (hitCode == BlockModel.HIT_LEFT) { //Hit to left block
+                } else if (hitCode == BlockModel.HIT_LEFT) {
                     main.getBall().collideToLeftBlock = true;
-                } else if (hitCode == BlockModel.HIT_TOP) { //Hit to top block
+                } else if (hitCode == BlockModel.HIT_TOP) {
                     main.getBall().collideToTopBlock = true;
                 }
             }
@@ -307,32 +280,29 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
      * It is used to update the physics.
      */
 
-    public void onPhysicsUpdate() { //Updates game physics and logic during each frame of the game
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.getPlayer().blockDestroyedCount();
-                main.getBall().setPhysicsToBall();
+    public void onPhysicsUpdate() {
+        Platform.runLater(() -> {
+            main.getPlayer().blockDestroyedCount();
+            main.getBall().setPhysicsToBall();
 
-                if (main.getPlayer().currentTime - main.getBall().goldTime > 5000) { //Gold Ball
-                    main.getBall().setFill(new ImagePattern(new Image("ball.png")));
-                    main.getGameScreen().root.getStyleClass().remove("goldRoot");
-                    main.getBall().goldBall = false;
-                }
+            if (main.getPlayer().currentTime - main.getBall().goldTime > 5000) {
+                main.getBall().setFill(new ImagePattern(new Image("ball.png")));
+                main.getGameScreen().root.getStyleClass().remove("goldRoot");
+                main.getBall().goldBall = false;
+            }
 
-                for (Bonus choco : main.getEngine().bonusItems) { //Bonus Items
-                    if (choco.y > main.getGameScreen().windowHeight || choco.taken) {
-                        continue;
-                    }
-                    if (choco.y >= main.getPlayer().paddleYPosition && choco.y <= main.getPlayer().paddleYPosition + main.getPlayer().paddleHeight && choco.x >= main.getPlayer().paddleXPosition && choco.x <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
-                        System.out.println("You Got it and +3 score for you");
-                        choco.chocolateBlock.setVisible(false);
-                        choco.taken = true;
-                        main.currentScore += 3;
-                        main.getScore().show(choco.x, choco.y, 3, main);
-                    }
-                    choco.y += ((main.getPlayer().currentTime - choco.timeCreated) / 1000.000) + 1.000;
+            for (Bonus choco : main.getEngine().bonusItems) {
+                if (choco.y > main.getGameScreen().windowHeight || choco.taken) {
+                    continue;
                 }
+                if (choco.y >= main.getPlayer().paddleYPosition && choco.y <= main.getPlayer().paddleYPosition + main.getPlayer().paddleHeight && choco.x >= main.getPlayer().paddleXPosition && choco.x <= main.getPlayer().paddleXPosition + main.getPlayer().paddleWidth) {
+                    System.out.println("You Got it and +3 score for you");
+                    choco.chocolateBlock.setVisible(false);
+                    choco.taken = true;
+                    main.currentScore += 3;
+                    main.getScore().show(choco.x, choco.y, 3, main);
+                }
+                choco.y += ((main.getPlayer().currentTime - choco.timeCreated) / 1000.000) + 1.000;
             }
         });
     }
@@ -343,27 +313,23 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
      * It is used to update the score label, heart label, paddle, ball, and bonus items.
      */
 
-    public void onUpdate() { //Update the game
-        level = main.currentLevel;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.getGameScreen().scoreLabel.setText("Score: " + main.currentScore);
-                main.getGameScreen().heartLabel.setText("Heart : " + main.getPlayer().numberOfHearts);
+    public void onUpdate() {
+        Platform.runLater(() -> {
+            main.getGameScreen().scoreLabel.setText("Score: " + main.currentScore);
+            main.getGameScreen().heartLabel.setText("Heart : " + main.getPlayer().numberOfHearts);
 
-                main.getPlayer().setX(main.getPlayer().paddleXPosition);
-                main.getPlayer().setY(main.getPlayer().paddleYPosition);
-                main.getBall().setCenterX(main.getBall().ballXCoordinate);
-                main.getBall().setCenterY(main.getBall().ballYCoordinate);
+            main.getPlayer().setX(main.getPlayer().paddleXPosition);
+            main.getPlayer().setY(main.getPlayer().paddleYPosition);
+            main.getBall().setCenterX(main.getBall().ballXCoordinate);
+            main.getBall().setCenterY(main.getBall().ballYCoordinate);
 
-                for (Bonus choco : main.getEngine().bonusItems) { //Bonus Items
-                    choco.chocolateBlock.setY(choco.y); //Set the y-coordinate of the bonus item
-                }
+            for (Bonus choco : main.getEngine().bonusItems) {
+                choco.chocolateBlock.setY(choco.y);
             }
         });
 
-        if (main.getBall().ballYCoordinate >= BlockModel.getPaddingTop() && main.getBall().ballYCoordinate <= (BlockModel.getHeight() * (level + 1)) + BlockModel.getPaddingTop()) {
-            main.getEngine().createBlock(); //Create the blocks
+        if (main.getBall().ballYCoordinate >= BlockModel.getPaddingTop() && main.getBall().ballYCoordinate <= (BlockModel.getHeight() * (main.currentLevel + 1)) + BlockModel.getPaddingTop()) {
+            main.getEngine().createBlock();
         }
     }
 
@@ -388,10 +354,10 @@ public class GameEngine implements OnAction{ //Methods include: setOnAction, set
 
     public void checkWin(){
         if(main.currentLevel > 1){
-            main.getScore().showMessage("Level Up :)", main); //If the level is greater than 1, then display "Level Up :)", inherited from Score.java
+            main.getScore().showMessage("Level Up :)", main);
         }
         if (main.currentLevel == 11) {
-            main.getScore().showGameWin(main); //If level is 10, then display "You Win :)", inherited from Score.java
+            main.getScore().showGameWin(main);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

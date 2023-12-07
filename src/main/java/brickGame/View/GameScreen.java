@@ -18,14 +18,13 @@ import javafx.stage.Stage;
 
 public class GameScreen {
     Main main;
-
-    public int windowWidth = 500; //Game window width
-    public int windowHeight = 700; //Game window height
+    public int windowWidth = 500;
+    public int windowHeight = 700;
     public  Pane root;
-    public Label scoreLabel; //Label to display score
-    public Label heartLabel; //Label to display heart
-    public Label levelLabel; //Label to display level
-    public Stage primaryStage; //Stage is the top level JavaFX container, the window
+    public Label scoreLabel;
+    public Label heartLabel;
+    public Label levelLabel;
+    public Stage primaryStage;
 
     /**
      * Constructor initializes the game screen.
@@ -44,33 +43,33 @@ public class GameScreen {
      */
 
     public void AddButtons(){
-        main.getButtonControls().newGameButton = new Button("Start New Game"); //Initialize the new game button
-        main.getButtonControls().newGameButton.setTranslateX(160); //Set the size of the new game button, x-coordinate (220)
-        main.getButtonControls().newGameButton.setTranslateY(310); //Set the size of the new game button, y-coordinate (340)
-        main.getButtonControls().newGameButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().newGameButton = new Button("Start New Game");
+        main.getButtonControls().newGameButton.setTranslateX(160);
+        main.getButtonControls().newGameButton.setTranslateY(310);
+        main.getButtonControls().newGameButton.setPrefWidth(180);
         main.getButtonControls().newGameButton.setStyle("-fx-background-color: #013220; -fx-text-fill: white;");
-        main.getButtonControls().newGameButton.setTooltip(new javafx.scene.control.Tooltip("Start a new game")); //Set a tooltip for the new game button
+        main.getButtonControls().newGameButton.setTooltip(new javafx.scene.control.Tooltip("Start a new game"));
 
-        main.getButtonControls().loadButton = new Button("Load Game"); //Initialize the load button
-        main.getButtonControls().loadButton.setTranslateX(160); //Set the size of load button, x-coordinate (220)
-        main.getButtonControls().loadButton.setTranslateY(350); //Set the size of the load button, y-coordinate (300)
-        main.getButtonControls().loadButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().loadButton = new Button("Load Game");
+        main.getButtonControls().loadButton.setTranslateX(160);
+        main.getButtonControls().loadButton.setTranslateY(350);
+        main.getButtonControls().loadButton.setPrefWidth(180);
         main.getButtonControls().loadButton.setStyle("-fx-background-color: #013220; -fx-text-fill: white;");
-        main.getButtonControls().loadButton.setTooltip(new javafx.scene.control.Tooltip("Load a saved game")); //Set a tooltip for the load button
+        main.getButtonControls().loadButton.setTooltip(new javafx.scene.control.Tooltip("Load a saved game"));
 
-        main.getButtonControls().exitButton = new Button("Exit"); //Initialize the exit button
-        main.getButtonControls().exitButton.setTranslateX(160); //Set the size of the exit button, x-coordinate (220)
-        main.getButtonControls().exitButton.setTranslateY(390); //Set the size of the exit button, y-coordinate (370)
-        main.getButtonControls().exitButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().exitButton = new Button("Exit");
+        main.getButtonControls().exitButton.setTranslateX(160);
+        main.getButtonControls().exitButton.setTranslateY(390);
+        main.getButtonControls().exitButton.setPrefWidth(180);
         main.getButtonControls().exitButton.setStyle("-fx-background-color: #013220; -fx-text-fill: white;");
-        main.getButtonControls().exitButton.setTooltip(new javafx.scene.control.Tooltip("Exit the game")); //Set a tooltip for the exit button
+        main.getButtonControls().exitButton.setTooltip(new javafx.scene.control.Tooltip("Exit the game"));
 
-        main.getButtonControls().instructionsButton = new Button("Instructions"); //Initialize the instructions button
-        main.getButtonControls().instructionsButton.setTranslateX(160); //Set the size of the instructions button, x-coordinate (220)
-        main.getButtonControls().instructionsButton.setTranslateY(430); //Set the size of the instructions button, y-coordinate (400)
-        main.getButtonControls().instructionsButton.setPrefWidth(180); //Set a larger width
+        main.getButtonControls().instructionsButton = new Button("Instructions");
+        main.getButtonControls().instructionsButton.setTranslateX(160);
+        main.getButtonControls().instructionsButton.setTranslateY(430);
+        main.getButtonControls().instructionsButton.setPrefWidth(180);
         main.getButtonControls().instructionsButton.setStyle("-fx-background-color: #013220; -fx-text-fill: white;");
-        main.getButtonControls().instructionsButton.setTooltip(new javafx.scene.control.Tooltip("Display instructions")); //Set a tooltip for the instructions button
+        main.getButtonControls().instructionsButton.setTooltip(new javafx.scene.control.Tooltip("Display instructions"));
     }
 
     /**
@@ -80,12 +79,12 @@ public class GameScreen {
      */
 
     public void AddLabels(){
-        root = new Pane(); //Initialize the root pane, root is the instance of the JavaFX Pane class where Pane is a container to hold JavaFX elements
-        scoreLabel = new Label("Score: " + main.currentScore); //Initialize the score label
-        levelLabel = new Label("Level: " + main.currentLevel); //Initialize the level label
-        levelLabel.setTranslateY(20); //Set the size of the level label, y-coordinate (20)
-        heartLabel = new Label("Heart : " + main.getPlayer().numberOfHearts); //Initialize the heart label
-        heartLabel.setTranslateX(windowWidth - 70); //Set the size of the heart label, x-coordinate (sceneWidth - 70)
+        root = new Pane();
+        scoreLabel = new Label("Score: " + main.currentScore);
+        levelLabel = new Label("Level: " + main.currentLevel);
+        levelLabel.setTranslateY(20);
+        heartLabel = new Label("Heart : " + main.getPlayer().numberOfHearts);
+        heartLabel.setTranslateX(windowWidth - 70);
     }
 
     /**
@@ -95,13 +94,13 @@ public class GameScreen {
      */
 
     public void AddElements(){
-        if (!main.getState().loadFromSavedFile) { //If NOT loading from saved file
-            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton,  main.getButtonControls().exitButton, main.getButtonControls().instructionsButton); //Add the paddle, ball, score label, heart label, level label, and new game button to the root pane
-        } else { //But if IT IS loading from saved file
-            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel); //Add the paddle, ball, score label, heart label, and level label to the root pane, but NOT the new game button in this else block
+        if (!main.getState().loadFromSavedFile) {
+            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel, main.getButtonControls().newGameButton, main.getButtonControls().loadButton,  main.getButtonControls().exitButton, main.getButtonControls().instructionsButton);
+        } else {
+            root.getChildren().addAll(main.getPlayer(), main.getBall(), scoreLabel, heartLabel, levelLabel);
         }
-        for (BlockModel block : main.getEngine().blocks) { //For each block in the blocks ArrayList
-            root.getChildren().add(block.rect); //Add the block to the root pane
+        for (BlockModel block : main.getEngine().blocks) {
+            root.getChildren().add(block.rect);
         }
     }
 
@@ -111,11 +110,11 @@ public class GameScreen {
      */
 
     public void CreateScene(){
-        Scene scene = new Scene(root, windowWidth, windowHeight); //Initialize the scene, scene is the instance of the JavaFX Scene class where Scene is the container for all content in a scene graph
-        scene.getStylesheets().add("style.css"); //Add the style.css file to the scene
-        scene.setOnKeyPressed(main.getKeyboardControls()); //Listen for key presses
-        primaryStage.setTitle("Game"); //Set the title of the game window
-        primaryStage.setScene(scene); //Set the scene of the game window
-        primaryStage.show(); //Show the game window
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+        scene.getStylesheets().add("style.css");
+        scene.setOnKeyPressed(main.getKeyboardControls());
+        primaryStage.setTitle("Game");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

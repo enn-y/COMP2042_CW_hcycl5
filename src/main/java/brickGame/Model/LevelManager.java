@@ -32,30 +32,27 @@ public class LevelManager {
      * It also clears the blocks and bonus items.
      */
 
-    public void nextLevel() { //Go to the next level
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    main.getBall().ballHorizontalSpeed = 1.000;
+    public void nextLevel() {
+        Platform.runLater(() -> {
+            try {
+                main.getBall().ballHorizontalSpeed = 1.000;
 
-                    main.getBall().resetCollideFlags();
-                    main.getBall().goDownBall = true;
+                main.getBall().resetCollideFlags();
+                main.getBall().goDownBall = true;
 
-                    main.getBall().goldBall = false;
-                    main.getPlayer().existHeartBlock = false;
-                    main.getEngine().stop();
-                    main.getPlayer().hitTime = 0;
-                    main.getPlayer().currentTime = 0;
-                    main.getBall().goldTime = 0;
+                main.getBall().goldBall = false;
+                main.getPlayer().existHeartBlock = false;
+                main.getEngine().stop();
+                main.getPlayer().hitTime = 0;
+                main.getPlayer().currentTime = 0;
+                main.getBall().goldTime = 0;
 
-                    main.getEngine().blocks.clear();
-                    main.getEngine().bonusItems.clear();
-                    main.getPlayer().destroyedBlockCount = 0;
-                    main.start(main.getGameScreen().primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                main.getEngine().blocks.clear();
+                main.getEngine().bonusItems.clear();
+                main.getPlayer().destroyedBlockCount = 0;
+                main.start(main.getGameScreen().primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

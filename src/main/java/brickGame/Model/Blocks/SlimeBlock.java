@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 
 public class SlimeBlock extends BlockModel implements Blocks {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor initializes the SlimeBlock object.

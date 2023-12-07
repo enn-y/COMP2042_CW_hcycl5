@@ -15,13 +15,13 @@ import java.util.Random;
  *
  */
 
-public class Bonus { //Methods include: Bonus and draw, indicates that instances of this class can be serialized, making them suitable for saving or sending data between Java applications.
-    public Rectangle chocolateBlock; //chocolate block, only chocolate block can create the bonus item
+public class Bonus {
+    public Rectangle chocolateBlock;
 
-    public double x; //x coordinate of bonus item
-    public double y; //y coordinate of bonus item
-    public long timeCreated; //time created which means time when bonus item is created
-    public boolean taken = false; //bonus item is taken by the paddle or not
+    public double x;
+    public double y;
+    public long timeCreated;
+    public boolean taken = false;
 
     /**
      * Constructor initializes the bonus item.
@@ -30,9 +30,9 @@ public class Bonus { //Methods include: Bonus and draw, indicates that instances
      * @param column The column of the block
      */
 
-    public Bonus(int row, int column) { //constructor
-        x = (column * (BlockModel.getWidth())) + BlockModel.getPaddingH() + (BlockModel.getWidth() / 2) - 15; //set x coordinate of bonus item
-        y = (row * (BlockModel.getHeight())) + BlockModel.getPaddingTop() + (BlockModel.getHeight() / 2) - 15; //set y coordinate of bonus item
+    public Bonus(int row, int column) {
+        x = (column * (BlockModel.getWidth())) + BlockModel.getPaddingH() + (BlockModel.getWidth() / 2) - 15;
+        y = (row * (BlockModel.getHeight())) + BlockModel.getPaddingTop() + (BlockModel.getHeight() / 2) - 15;
 
         create();
     }
@@ -45,16 +45,16 @@ public class Bonus { //Methods include: Bonus and draw, indicates that instances
      */
 
     private void create() {
-        chocolateBlock = new Rectangle(); //create chocolate block
-        chocolateBlock.setWidth(30); //set width of chocolate block
-        chocolateBlock.setHeight(30); //set height of chocolate block
-        chocolateBlock.setX(x); //set x coordinate of chocolate block
-        chocolateBlock.setY(y); //set y coordinate of chocolate block
+        chocolateBlock = new Rectangle();
+        chocolateBlock.setWidth(30);
+        chocolateBlock.setHeight(30);
+        chocolateBlock.setX(x);
+        chocolateBlock.setY(y);
 
-        String imageFilePath; //image file path
+        String imageFilePath;
         int random = new Random().nextInt(2);
-        imageFilePath = (random == 0) ? "bonus1.png" : "bonus2.png"; //randomly choose bonus item, condition if random is 0 then choose bonus1.png, else choose bonus2.png
+        imageFilePath = (random == 0) ? "bonus1.png" : "bonus2.png";
 
-        chocolateBlock.setFill(new ImagePattern(new Image(imageFilePath))); //set image of chocolate block
+        chocolateBlock.setFill(new ImagePattern(new Image(imageFilePath)));
     }
 }

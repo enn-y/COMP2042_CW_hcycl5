@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  */
 
 public class SpeedBlock extends BlockModel implements Blocks {
-        Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor is used to create a speed block.
@@ -32,6 +32,6 @@ public class SpeedBlock extends BlockModel implements Blocks {
      */
 
     public void blockType() {
-        main.getBall().ballHorizontalSpeed *= 2; // Boosting the speed by a factor of 2
+        main.getBall().ballHorizontalSpeed *= 2;
     }
 }

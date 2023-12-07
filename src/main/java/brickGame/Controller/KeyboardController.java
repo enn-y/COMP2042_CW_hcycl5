@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyboardController implements EventHandler<KeyEvent> {
 
-    Main main; //Main class instance
+    Main main;
 
     /**
      * Constructor for the KeyboardControls class.
@@ -32,33 +32,33 @@ public class KeyboardController implements EventHandler<KeyEvent> {
      * @param event The KeyEvent object contains the key-press information.
      */
 
-    public void handle(KeyEvent event) { //Handle key presses, ARROW CONTROLS
-        switch (event.getCode()) { //Switch statement for key presses
-            case LEFT -> //If the left arrow key is pressed
-                    main.getPlayer().move(PlayerModel.paddleLEFT); //Move the paddle to the left
-            case RIGHT -> //If the right arrow key is pressed
-                    main.getPlayer().move(PlayerModel.paddleRIGHT); //Move the paddle to the right
-            case SPACE -> { // If the space-bar is pressed, pause or resume the game
+    public void handle(KeyEvent event) {
+        switch (event.getCode()) {
+            case LEFT ->
+                    main.getPlayer().move(PlayerModel.paddleLEFT);
+            case RIGHT ->
+                    main.getPlayer().move(PlayerModel.paddleRIGHT);
+            case SPACE -> {
                 main.getScore().showMessage("Game Paused", main);
                 main.getEngine().pause();
             }
-            case R -> { // If the R key is pressed, restart the game
+            case R -> {
                 main.getScore().showMessage("Game Restarted", main);
                 main.getEngine().stop();
                 main.getState().restartGame();
             }
-            case Q -> { // If the Q key is pressed, quit the game
+            case Q -> {
                 main.getScore().showMessage("Game Quit?", main);
-                main.getEngine().pause(); //Pause the game
+                main.getEngine().pause();
                 if (main.getButtonControls().showConfirmationDialog("Exit Confirmation", "Are you sure you want to exit?")) {
-                    main.getGameScreen().primaryStage.close(); //Close the game window
+                    main.getGameScreen().primaryStage.close();
                 } else {
                     main.getScore().showMessage("Game Resumed", main);
-                    main.getEngine().pause(); //Resume the game
+                    main.getEngine().pause();
                 }
             }
-            case S -> //If the S key is pressed
-                    main.getState().saveGame(); //Save the game
+            case S ->
+                    main.getState().saveGame();
         }
     }
 }

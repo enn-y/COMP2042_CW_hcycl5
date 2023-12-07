@@ -21,68 +21,66 @@ import javafx.stage.Stage;
  * It also contains the start method to start the game.
  */
 
-public class Main extends Application { //Application: JavaFX GUI, EventHandler: JavaFX Event, GameEngine.OnAction: GameEngine Event
-    BallModel ballModel; //Ball object
-    PlayerModel playerModel; //Paddle object
-    KeyboardController keyboardController; //KeyboardControls object
-    ButtonController buttonController; //ButtonControls object
-    LevelManager levelManager; //LevelManager object
-    GameScreen gameScreen; //GameScreen object
-    State state; //State object
-    ScoreManager score; //Score object
-    GameEngine engine; //GameEngine object
-    BallFactory ballFactory; //BallFactory object
-    PlayerInitializer playerInitializer; //PlayerFactory object
-    BlockFactory blockFactory; //BlockFactory object
-    public int currentLevel = 0; //Level, initialized at 0, increases by 1 when a level is completed
-    public int currentScore = 0; //Score, initialized at 0, increases by 1 when a block is destroyed
+public class Main extends Application {
+    BallModel ballModel;
+    PlayerModel playerModel;
+    KeyboardController keyboardController;
+    ButtonController buttonController;
+    LevelManager levelManager;
+    GameScreen gameScreen;
+    State state;
+    ScoreManager score;
+    GameEngine engine;
+    BallFactory ballFactory;
+    PlayerInitializer playerInitializer;
+    BlockFactory blockFactory;
+    public int currentLevel = 0;
+    public int currentScore = 0;
 
     /**
      * The start method starts the game.
      * It initializes the ball, paddle, game screen, state, button controls, game engine, score, level manager, ball factory, player factory, and block factory.
      * It also checks if the game is loading from a saved file.
      * @param primaryStage The game window.
-     * @throws Exception
      */
 
     @Override
-    public void start(Stage primaryStage) throws Exception { //Start method
-        ballModel = new BallModel(this); //Initialize the ball
-        playerModel = PlayerModel.getInstance(this); //Initialize the paddle, singleton design pattern
+    public void start(Stage primaryStage) {
+        ballModel = new BallModel(this);
+        playerModel = PlayerModel.getInstance(this);
         keyboardController = new KeyboardController(this);
-        gameScreen = new GameScreen(this); //Initialize the game screen
-        state = new State(this); //Initialize the state
-        buttonController = new ButtonController(this); //Initialize the button controls
-        engine = new GameEngine(this); //Initialize the game engine
-        score = new ScoreManager(); //Initialize the score
-        levelManager = new LevelManager(this); //Initialize the level manager
-        ballFactory = new BallFactory(this); //Initialize the ball factory, factory design pattern
-        playerInitializer = new PlayerInitializer(this); //Initialize the player factory
-        blockFactory = new BlockFactory(this); //Initialize the block factory, factory design pattern
+        gameScreen = new GameScreen(this);
+        state = new State(this);
+        buttonController = new ButtonController(this);
+        engine = new GameEngine(this);
+        score = new ScoreManager();
+        levelManager = new LevelManager(this);
+        ballFactory = new BallFactory(this);
+        playerInitializer = new PlayerInitializer(this);
+        blockFactory = new BlockFactory(this);
 
-        getGameScreen().primaryStage = primaryStage; //Set primaryStage which is the game window
+        getGameScreen().primaryStage = primaryStage;
 
-        if (!getState().loadFromSavedFile) { //If NOT loading from saved file
-            currentLevel++; //Set the level to 1
-            getEngine().checkWin(); //Check if the player has won
-            ballFactory.initializeBall(); //Initialize the ball
-            playerInitializer.initializePaddle(); //Initialize the paddle
-            blockFactory.initializeBlocks(); //Initialize the blocks
-            getGameScreen().AddButtons(); //Add the buttons
+        if (!getState().loadFromSavedFile) {
+            currentLevel++;
+            getEngine().checkWin();
+            ballFactory.initializeBall();
+            playerInitializer.initializePaddle();
+            blockFactory.initializeBlocks();
+            getGameScreen().AddButtons();
         }
-        getGameScreen().AddLabels(); //Add the labels
-        getGameScreen().AddElements(); //Add the elements
-        getGameScreen().CreateScene(); //Create the scene
-        getState().checkLoadFromSavedFile(); //Check if loading from saved file
+        getGameScreen().AddLabels();
+        getGameScreen().AddElements();
+        getGameScreen().CreateScene();
+        getState().checkLoadFromSavedFile();
     }
 
     /**
      * The main method launches the game.
-     * @param args
      */
 
-    public static void main(String[] args) { //Main method HERE
-        launch(args); //LAUNCH GAME
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**

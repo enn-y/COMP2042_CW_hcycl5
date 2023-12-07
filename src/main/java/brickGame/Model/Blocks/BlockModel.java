@@ -17,34 +17,34 @@ import java.io.Serializable;
  *
  */
 
-public class BlockModel implements Serializable { //Methods include: Block, draw, checkHitToBlock, getPaddingTop, getPaddingH, getHeight, and getWidth
-    public static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);   //block is a static variable of type BlockModel
-    public int row; //row of block
-    public int column; //column of block
-    public boolean isDestroyed = false; //isDestroyed is a boolean variable that is initialized to false
-    private Color color; //color of block
-    public int type; //type of block
-    public int blockXCoordinate; //x coordinate of block
-    public int blockYCoordinate; //y coordinate of block
-    public int width = 100; //width of block
-    public int height = 30; //height of block
-    public int paddingTop = height*2; //padding top of block
-    public int paddingH = 50; //padding horizontal of block
-    public Rectangle rect; //rectangle object
-    public static int NO_HIT = -1; //NO_HIT is a static variable of type int that is initialized to -1
-    public static int HIT_RIGHT = 0; //HIT_RIGHT is a static variable of type int that is initialized to 0
-    public static int HIT_BOTTOM = 1; //HIT_BOTTOM is a static variable of type int that is initialized to 1
-    public static int HIT_LEFT = 2; //HIT_LEFT is a static variable of type int that is initialized to 2
-    public static int HIT_TOP = 3; //HIT_TOP is a static variable of type int that is initialized to 3
-    public static int BLOCK_NORMAL = 99; //BLOCK_NORMAL is a static variable of type int that is initialized to 99
-    public static int BLOCK_CHOCOLATE = 100; //BLOCK_CHOCOLATE is a static variable of type int that is initialized to 100
-    public static int BLOCK_STAR = 101; //BLOCK_STAR is a static variable of type int that is initialized to 101
-    public static int BLOCK_HEART = 102; //BLOCK_HEART is a static variable of type int that is initialized to 102
-    public static int BLOCK_SLIME = 103; //slime block
-    public static int BLOCK_BOMB = 104; //explosion block
-    public static int BLOCK_QUESTION = 105; //question block
-    public static int BLOCK_TELEPORT = 106; //teleport block
-    public static int BLOCK_SPEED = 107; //mirror block
+public class BlockModel implements Serializable {
+    public static BlockModel block = new BlockModel(-1, -1, Color.TRANSPARENT, 99);
+    public int row;
+    public int column;
+    public boolean isDestroyed = false;
+    private Color color;
+    public int type;
+    public int blockXCoordinate;
+    public int blockYCoordinate;
+    public int width = 100;
+    public int height = 30;
+    public int paddingTop = height*2;
+    public int paddingH = 50;
+    public Rectangle rect;
+    public static int NO_HIT = -1;
+    public static int HIT_RIGHT = 0;
+    public static int HIT_BOTTOM = 1;
+    public static int HIT_LEFT = 2;
+    public static int HIT_TOP = 3;
+    public static int BLOCK_NORMAL = 99;
+    public static int BLOCK_CHOCOLATE = 100;
+    public static int BLOCK_STAR = 101;
+    public static int BLOCK_HEART = 102;
+    public static int BLOCK_SLIME = 103;
+    public static int BLOCK_BOMB = 104;
+    public static int BLOCK_QUESTION = 105;
+    public static int BLOCK_TELEPORT = 106;
+    public static int BLOCK_SPEED = 107;
 
     /**
      * The BlockModel method is the constructor for the BlockModel class.
@@ -69,7 +69,7 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
      * It also sets the image of the blocks.
      */
 
-    private void create() { //Create the blocks
+    private void create() {
         int padding = 2;
         blockXCoordinate = (column * (width+padding)) + paddingH;
         blockYCoordinate = (row * (height+padding)) + paddingTop;
@@ -108,12 +108,11 @@ public class BlockModel implements Serializable { //Methods include: Block, draw
      * @return The hit direction and NO_HIT if the block is not hit
      */
 
-    public int checkHitToBlock(double xBall, double yBall) { //Check if the ball hits the block
+    public int checkHitToBlock(double xBall, double yBall) {
         if (isDestroyed) {
             return NO_HIT;
         }
 
-        // Increase the sensitivity by adjusting the conditions
         if (xBall >= blockXCoordinate - 15 && xBall <= blockXCoordinate + width + 15 && yBall >= blockYCoordinate - 15 && yBall <= blockYCoordinate + height + 15) {
             return HIT_BOTTOM;
         }

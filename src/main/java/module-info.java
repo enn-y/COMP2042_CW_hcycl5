@@ -16,4 +16,6 @@ module brickGame {
     opens brickGame.Model.Player to javafx.fxml;
     exports brickGame.Model.Ball;
     opens brickGame.Model.Ball to javafx.fxml;
+    exports brickGame.Controller;
+    opens brickGame.Controller to javafx.fxml;
 }

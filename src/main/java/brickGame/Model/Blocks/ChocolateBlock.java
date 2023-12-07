@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 
 public class ChocolateBlock extends BlockModel implements Blocks {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor for the ChocolateBlock class.
@@ -35,12 +35,7 @@ public class ChocolateBlock extends BlockModel implements Blocks {
     public void blockType(){
         final Bonus choco = new Bonus(row, column);
         choco.timeCreated = main.getPlayer().currentTime;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.getGameScreen().root.getChildren().add(choco.chocolateBlock);
-            }
-        });
+        Platform.runLater(() -> main.getGameScreen().root.getChildren().add(choco.chocolateBlock));
         main.getEngine().bonusItems.add(choco);
     }
 }

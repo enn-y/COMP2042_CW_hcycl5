@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  */
 
 public class HeartBlock extends BlockModel implements Blocks {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * Constructor for the heart block.

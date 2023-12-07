@@ -17,7 +17,7 @@ import java.util.TimerTask;
  */
 
 public class BombBlock extends BlockModel implements Blocks {
-    Main main; //Main instance to access the components of the game
+    Main main;
 
     /**
      * This constructor initializes the bomb block.
@@ -40,12 +40,10 @@ public class BombBlock extends BlockModel implements Blocks {
     public void blockType(){
         main.getBall().setVisible(false);
 
-        // Set up a timer to make the ball visible again after 3 seconds
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                // Make the ball visible again after 3 seconds
                 main.getBall().setVisible(true);
             }
         }, 1000);

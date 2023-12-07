@@ -15,32 +15,31 @@ import java.util.Random;
  */
 
 public class TeleportBlock extends BlockModel implements Blocks {
-        Main main; //Main instance to access the components of the game
+    Main main;
 
-        /**
-         * Constructor is used to create a teleport block.
-         * @param row The row of the block.
-         * @param column The column of the block.
-         * @param main The Main instance to access the components of the game.
-         */
+    /**
+     * Constructor is used to create a teleport block.
+     * @param row The row of the block.
+     * @param column The column of the block.
+     * @param main The Main instance to access the components of the game.
+     */
 
-        public TeleportBlock(int row, int column, Main main) {
-            super(row, column, Color.TRANSPARENT, BLOCK_TELEPORT);
-            this.main = main;
-        }
+    public TeleportBlock(int row, int column, Main main) {
+        super(row, column, Color.TRANSPARENT, BLOCK_TELEPORT);
+        this.main = main;
+    }
 
-        /**
-         * The blockType method is used to teleport the ball to a random location.
-         */
+    /**
+     * The blockType method is used to teleport the ball to a random location.
+     */
 
-        public void blockType() {
-            Random random = new Random();
-            double randomX = random.nextDouble() * main.getGameScreen().windowWidth;
-            double randomY = random.nextDouble() * main.getGameScreen().windowHeight;
+    public void blockType() {
+        Random random = new Random();
+        double randomX = random.nextDouble() * main.getGameScreen().windowWidth;
+        double randomY = random.nextDouble() * main.getGameScreen().windowHeight;
 
-            // Teleport the ball to the random coordinates
-            main.getBall().ballXCoordinate = randomX;
-            main.getBall().ballYCoordinate = randomY;
-        }
+        main.getBall().ballXCoordinate = randomX;
+        main.getBall().ballYCoordinate = randomY;
+    }
 
 }

@@ -11,7 +11,7 @@ As part of the project, the code has incorporated refactoring, code maintenance,
 - **[New Additions](#new-additions)**<br>
 - **[Documentation](#documentation)**<br>
 
-##Project Setup
+## Project Setup 
 
 This project uses Java Version 19 on IntelliJ, on macOS
 ```
@@ -26,32 +26,27 @@ This project uses JavaFX on intellij, it is added as a library under project str
 /Users/en/Downloads/javafx-sdk-21.0.01/lib
 ```
 
-This project has also added JavaFX and JUnit depencies on maven, pom.xml file
+This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
 
 ```
 <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>19</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>19</version>
-    </dependency>
+	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+	<dependency>
+		<groupId>org.openjfx</groupId>
+		<artifactId>javafx-controls</artifactId>
+		<version>22-ea+16</version>
+	</dependency>
 
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>RELEASE</version>
-        <scope>test</scope>
-    </dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>RELEASE</version>
+		<scope>test</scope>
+	</dependency>
 </dependencies>
 ```
 
-##Utilization of Git
+## Utilization of Git
 - Frequent commit history from the start to the end of the project
 - Meaningful commit messages
 	- Bug fix
@@ -64,13 +59,13 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 - Use of branch and merge
 - Relevant .gitignore
 
-##Refactoring
+## Refactoring
 - Created new classes and organized classes into relevant packages
 - Basic code maintenance
 	- Renamed variables to improve readability
 	- Improved encapsulation by organizing code into classes
 	- Further improved encapsulation within classes by creating new methods to prevent long and unnescessary code
-	- Deleted unused imports and unneccessary lines of code
+	- Deleted unused imports and unnecessary lines of code
 	- Split up main class into smaller and more specific classes
 	- Added new interfaces
 	- Error handling
@@ -78,7 +73,7 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 	- Included comments to improve understanding
 	- Used setter and getter methods
 	- Code consistency throughout project, naming conventions and formatting the code for better readability
-	- Removed codesmells
+	- Removed code smells
 	- Meaningful git commit messages
 	- Relevant JUnit tests
 	- Fixed thread issues and improved thread usage throughout the code
@@ -89,7 +84,7 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 		- Ball (Directory), contains the ball and ball related methods
 		- Player (Directory), contains the paddle and player related methods
 		- Interfaces (Directory), contains interfaces
-		- Serializables (Directory), contains block serializable
+		- Serializable (Directory), contains block serializable
 		- GameEngine, contains game logic
 		- ScoreManager, contains score methods
 		- LevelManager, contains level methods
@@ -118,7 +113,7 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 	- GameScreenTest
 	- StateTest
 - Converted project to a Maven project to handle JUnit & JavaFX dependencies, added JUnit & JavaFX dependencies
-- Ensured that module-info.java is present in the folder, displays the
+  - Ensured that module-info.java is present in the folder, displays the metadata about the module
 - Bug Fixes
 	- Adjusted sensitivity of blocks, added additional padding to each block
 	- Added padding to the paddle and the walls to prevent ball from entering the objects
@@ -131,9 +126,9 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 	- Modified threads on the whole project to prevent errors
 	- Modified the game levels to 10 instead of 18, as 18 will mean the blocks will overflow the game screen
 
-##Additions
+## Additions
 - Added 5 new blocks
-	- Bomb Block: The ball will dissapear for 3 seconds, bomb image on the block
+	- Bomb Block: The ball will disappear for 3 seconds, bomb image on the block
 	- Speed Block: The ball will increase speed by 2x, lightning image on the block
 	- Slime Block: The ball will decrease by 70%, slime image on block
 	- Teleport Block: The ball x and y coordinate will randomly change within the game window, portal image on the block
@@ -164,7 +159,7 @@ This project has also added JavaFX and JUnit depencies on maven, pom.xml file
 	- Also present is the exit button to exit game
 - Added ToolTips to all buttons for enhanced user experience
 
-##Documentation
+## Documentation
 - Complete Readme.md
 	- All changes highlighted
 		- Use of git

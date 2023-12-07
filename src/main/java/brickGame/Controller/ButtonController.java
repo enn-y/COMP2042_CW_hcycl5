@@ -20,12 +20,12 @@ import java.util.Optional;
  */
 
 public class ButtonController {
-    Main main; //Main class instance
+    Main main;
 
-    public Button loadButton = null; //Button to load game
-    public Button newGameButton = null; //Button to start new game
-    public Button exitButton = null; //Button to exit game
-    public Button instructionsButton = null; //Button to display instructions
+    public Button loadButton = null;
+    public Button newGameButton = null;
+    public Button exitButton = null;
+    public Button instructionsButton = null;
 
     /**
      * Constructor for the ButtonControls class.
