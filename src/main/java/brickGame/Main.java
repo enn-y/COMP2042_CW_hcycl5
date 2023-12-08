@@ -77,6 +77,8 @@ public class Main extends Application {
 
     /**
      * The main method launches the game.
+     * @param args represents command-line arguments.
+     *
      */
 
     public static void main(String[] args) {

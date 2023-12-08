@@ -8,7 +8,7 @@ package brickGame.Model.Interface;
 public interface Playable {
     /**
      * The move method is used to move the paddle.
-     * @param direction
+     * @param direction integer representing the direction in which the paddle should move.
      */
     void move(int direction);
 }
