@@ -64,7 +64,7 @@ This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
 - Basic code maintenance
 	- Renamed variables to improve readability
 	- Improved encapsulation by organizing code into classes
-	- Further improved encapsulation within classes by creating new methods to prevent long and unnescessary code
+	- Improved encapsulation within classes by creating new methods to prevent long and unnecessary code
 	- Deleted unused imports and unnecessary lines of code
 	- Split up main class into smaller and more specific classes
 	- Added new interfaces
