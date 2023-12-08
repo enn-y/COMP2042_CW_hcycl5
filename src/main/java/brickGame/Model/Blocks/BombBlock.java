@@ -3,7 +3,6 @@ package brickGame.Model.Blocks;
 import brickGame.Main;
 import brickGame.Model.Interface.Blocks;
 import javafx.scene.paint.Color;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,7 +33,7 @@ public class BombBlock extends BlockModel implements Blocks {
 
     /**
      * The blockType method is called when the bomb block is hit.
-     * It makes the ball invisible for 3 seconds.
+     * It makes the ball invisible for 1 seconds.
      */
 
     public void blockType(){

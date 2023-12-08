@@ -26,7 +26,7 @@ This project uses JavaFX on intellij, it is added as a library under project str
 /Users/en/Downloads/javafx-sdk-21.0.01/lib
 ```
 
-This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
+This project has also added JavaFX and JUnit dependencies to Maven, pom.xml file
 
 ```
 <dependencies>
@@ -36,12 +36,17 @@ This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
 		<artifactId>javafx-controls</artifactId>
 		<version>22-ea+16</version>
 	</dependency>
-
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
 		<version>RELEASE</version>
 		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.13.2</version>
+		<scope>compile</scope>
 	</dependency>
 </dependencies>
 ```
@@ -49,7 +54,7 @@ This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
 ## Utilization of Git
 - Frequent commit history from the start to the end of the project
 - Meaningful commit messages
-	- Bug fix
+	- Bug fixes
 	- Refactoring
 	- Addition of new features
 	- Commenting
@@ -167,4 +172,5 @@ This project has also added JavaFX and JUnit dependencies on Maven, pom.xml file
 		- Additions
 		- Documentation
 - Informative, concise, and complete Javadocs
-- High-level class diagram:
+- High-level class diagram: 
+	- ![Class Diagram](src/main/resources/classdiagram.png)
