@@ -51,6 +51,12 @@ This project has also added JavaFX and JUnit dependencies to Maven, pom.xml file
 </dependencies>
 ```
 
+To run the game:
+1) Select your IDE of choice
+2) Add the JavaFX Library either by manually adding through the module settings or adding through VM arguments
+3) Run the Maven build and wait for maven dependencies to appear
+4) Run game, have fun!
+
 ## Utilization of Git
 - Frequent commit history from the start to the end of the project
 - Meaningful commit messages
@@ -131,13 +137,14 @@ This project has also added JavaFX and JUnit dependencies to Maven, pom.xml file
 	- Modified threads on the whole project to prevent errors
 	- Modified the game levels to 10 instead of 18, as 18 will mean the blocks will overflow the game screen
 
-## Additions
+## New Additions
 - Added 5 new blocks
 	- Bomb Block: The ball will disappear for 3 seconds, bomb image on the block
 	- Speed Block: The ball will increase speed by 2x, lightning image on the block
 	- Slime Block: The ball will decrease by 70%, slime image on block
 	- Teleport Block: The ball x and y coordinate will randomly change within the game window, portal image on the block
 	- Question Block: There is a 50% chance of getting a heart or losing a heart, question mark image on the block. However if the player is at 1 heart, the question block will always give a heart
+- Different effects for each newly added block
 - Added a pause game function
 	- Spacebar to pause game, corresponding message also displays
 	- Game pauses when spacebar is pressed
@@ -173,4 +180,4 @@ This project has also added JavaFX and JUnit dependencies to Maven, pom.xml file
 		- Documentation
 - Informative, concise, and complete Javadocs
 - High-level class diagram: 
-	- ![Class Diagram](src/main/resources/classdiagram.png)
+	![Class Diagram](src/main/resources/classdiagram.png)
