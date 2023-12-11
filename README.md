@@ -52,10 +52,11 @@ This project has also added JavaFX and JUnit dependencies to Maven, pom.xml file
 ```
 
 To run the game:
-1) Select your IDE of choice
+1) Select your IDE of choice, recommended IDE: Intellij, NetBeans, or Eclipse. These IDE provide support for Maven, JavaFX, and JUnit dependencies. 
 2) Add the JavaFX Library either by manually adding through the module settings or adding through VM arguments
-3) Run the Maven build and wait for maven dependencies to appear
-4) Run game, have fun!
+3) If you choose to add JavaFX manually, please download JavaFX SDK and then proceed to configure the project's library settings through module settings
+4) However, if you choose to use Maven, dependencies are already present and so run the build on Maven as it will compile the code and ensure that all necessary dependencies are included so the game runs smoothly
+5) Run game, have fun!
 
 ## Utilization of Git
 - Frequent commit history from the start to the end of the project
@@ -139,7 +140,7 @@ To run the game:
 
 ## New Additions
 - Added 5 new blocks
-	- Bomb Block: The ball will disappear for 3 seconds, bomb image on the block
+	- Bomb Block: The ball will disappear for 1 seconds, bomb image on the block
 	- Speed Block: The ball will increase speed by 2x, lightning image on the block
 	- Slime Block: The ball will decrease by 70%, slime image on block
 	- Teleport Block: The ball x and y coordinate will randomly change within the game window, portal image on the block
