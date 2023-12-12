@@ -13,7 +13,7 @@ public class LevelManagerTest {
     LevelManager levelManager = new LevelManager(main);
 
     @Test
-    public void nextLevel() {
+    public void testNextLevel() {
         new Thread(() -> {
             main.getEngine().blocks.add(new BlockModel(0, 0, Color.GREEN, BlockModel.BLOCK_NORMAL)); // Add a block to the list
             main.getEngine().blocks.add(new BlockModel(1, 1, Color.BLUE, BlockModel.BLOCK_NORMAL));

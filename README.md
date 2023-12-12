@@ -92,10 +92,10 @@ To run the game:
 - Ensured single responsibility among classes by splitting up code
 - Arranged overall code into MVC pattern
 	- Model
-		- Blocks (Directory), contains the blocks and block related methods
-		- Ball (Directory), contains the ball and ball related methods
-		- Player (Directory), contains the paddle and player related methods
-		- Interfaces (Directory), contains interfaces
+		- Blocks (Directory), contains the blocks and block related methods, factory design pattern used here
+		- Ball (Directory), contains the ball and ball related methods, factory design pattern used here
+		- Player (Directory), contains the paddle and player related methods, singleton design pattern used here
+		- Interfaces (Directory), contains interfaces, organizes the code and provides blueprint to classes
 		- Serializable (Directory), contains block serializable
 		- GameEngine, contains game logic
 		- ScoreManager, contains score methods
@@ -105,12 +105,12 @@ To run the game:
 		- State, contains methods to control save, read, load, checkgame methods
 	- Controller
 		- ButtonController, contains the logic for the buttons
-		- KeyboardController, contains the logic for the keyboard keys used in the game
+		- KeyboardController, contains the logic for the keyboard keys used in the game, uses eventhandler
 - Applied design patterns to relevant classes
-	- Block Factory
-	- Ball Factory
-	- Added Singleton to Player Class
-- Added meaningful JUnit tests
+	- Block Factory - Factory Design Pattern
+	- Ball Factory - Factory Design Pattern
+	- Added Singleton to Player Class - Singleton Design Pattern
+- Added meaningful JUnit tests, sufficient number of JUnit tests to test methods and classes of the game
 	- ButtonControllerTest
 	- KeyboardControllerTest
 	- BallFactoryTest
@@ -126,6 +126,8 @@ To run the game:
 	- StateTest
 - Converted project to a Maven project to handle JUnit & JavaFX dependencies, added JUnit & JavaFX dependencies
   - Ensured that module-info.java is present in the folder, displays the metadata about the module
+  - Added JUnit dependencies from mvnrepository.com
+  - Added JavaFX dependencies from mvnrepository.com
 - Bug Fixes
 	- Adjusted sensitivity of blocks, added additional padding to each block
 	- Added padding to the paddle and the walls to prevent ball from entering the objects
@@ -141,11 +143,16 @@ To run the game:
 ## New Additions
 - Added 5 new blocks
 	- Bomb Block: The ball will disappear for 1 seconds, bomb image on the block
+      - Simulates an explosion upon hitting the bomb block
 	- Speed Block: The ball will increase speed by 2x, lightning image on the block
+      - Simulates an increase of ball speed upon hitting the speed block
 	- Slime Block: The ball will decrease by 70%, slime image on block
+      - Simulates an decrease of ball speed upon hitting the slime block
 	- Teleport Block: The ball x and y coordinate will randomly change within the game window, portal image on the block
+      - Simulates a random change in ball position
 	- Question Block: There is a 50% chance of getting a heart or losing a heart, question mark image on the block. However if the player is at 1 heart, the question block will always give a heart
-- Different effects for each newly added block
+      - Simulates the heart block but with a twist
+- Different effects for each newly added block, every block is unique in its effects
 - Added a pause game function
 	- Spacebar to pause game, corresponding message also displays
 	- Game pauses when spacebar is pressed
@@ -170,7 +177,7 @@ To run the game:
 - Added a Game Win page
 	- Game Win page displays the score, level, and number of hearts
 	- Also present is the exit button to exit game
-- Added ToolTips to all buttons for enhanced user experience
+- Added ToolTips to all buttons for enhanced user experience, upon hovering, text will be shown
 
 ## Documentation
 - Complete Readme.md

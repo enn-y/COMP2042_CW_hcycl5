@@ -11,7 +11,7 @@ public class BallFactoryTest {
     BallFactory ballFactory = new BallFactory(main);
 
     @Test
-    public void initializeBall() {
+    public void testInitializeBall() {
         new Thread(() -> {
             ballFactory.initializeBall();
 

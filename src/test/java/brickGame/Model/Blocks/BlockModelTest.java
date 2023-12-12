@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class BlockModelTest {
     @Test
-    public void checkHitToBlock() {
+    public void testCheckHitToBlock() {
         BlockModel blockModel = new BlockModel(1, 2, Color.BLUE, BlockModel.BLOCK_NORMAL);
 
         double xBall = blockModel.blockXCoordinate + blockModel.getWidth() / 2; // Assume ball coordinates are within block boundaries
@@ -19,22 +19,22 @@ public class BlockModelTest {
     }
 
     @Test
-    public void getPaddingTop() {
+    public void testGetPaddingTop() {
         assertEquals(BlockModel.getPaddingTop(), BlockModel.block.paddingTop);
     }
 
     @Test
-    public void getPaddingH() {
+    public void testGetPaddingH() {
         assertEquals(BlockModel.getPaddingH(), BlockModel.block.paddingH);
     }
 
     @Test
-    public void getHeight() {
+    public void testGetHeight() {
         assertEquals(BlockModel.getHeight(), BlockModel.block.height);
     }
 
     @Test
-    public void getWidth() {
+    public void testGetWidth() {
         assertEquals(BlockModel.getWidth(), BlockModel.block.width);
     }
 }

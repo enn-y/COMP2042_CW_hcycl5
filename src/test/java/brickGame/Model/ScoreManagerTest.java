@@ -10,7 +10,7 @@ public class ScoreManagerTest {
     ScoreManager score = new ScoreManager();
 
     @Test
-    public void show() {
+    public void testShow() {
         new Thread(() -> {
             score.show(3, 30, 30, main);
             int childrenCount = main.getGameScreen().root.getChildren().size();
@@ -19,7 +19,7 @@ public class ScoreManagerTest {
     }
 
     @Test
-    public void showMessage() {
+    public void testShowMessage() {
         new Thread(() -> {
             score.showMessage("showMessageTest", main);
             int childrenCount = main.getGameScreen().root.getChildren().size();
@@ -28,7 +28,7 @@ public class ScoreManagerTest {
     }
 
     @Test
-    public void showGameOver() {
+    public void testShowGameOver() {
         new Thread(() -> {
             score.showGameOver(main);
             int childrenCount = main.getGameScreen().root.getChildren().size();
@@ -37,7 +37,7 @@ public class ScoreManagerTest {
     }
 
     @Test
-    public void showWin() {
+    public void testShowWin() {
         new Thread(() -> {
             score.showGameWin(main);
             int childrenCount = main.getGameScreen().root.getChildren().size();
